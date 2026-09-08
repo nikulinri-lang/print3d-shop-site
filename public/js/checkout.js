@@ -6,10 +6,15 @@
   var form = document.getElementById("checkoutForm");
   var addressField = document.getElementById("addressField");
   var resultEl = document.getElementById("checkoutResult");
+  var successEl = document.getElementById("checkoutSuccess");
+  var fallbackEl = document.getElementById("checkoutFallback");
   var summaryEl = document.getElementById("checkoutSummary");
   var copyBtn = document.getElementById("copyCheckoutBtn");
   var clearBtn = document.getElementById("clearCartBtn");
+  var submitBtn = form ? form.querySelector('button[type="submit"]') : null;
   if (!form) return;
+
+  var trackedStart = false;
 
   function renderSummary() {
     var items = window.PrintlabCart.get();
@@ -29,17 +34,24 @@
       </div>`;
     }).join("");
     subtotalEl.textContent = window.PrintlabCart.subtotal().toLocaleString("ru-RU") + " ₽";
+    if (!trackedStart) {
+      trackedStart = true;
+      if (window.PrintlabAnalytics) window.PrintlabAnalytics.trackGoal("checkout_start");
+    }
     return true;
   }
 
   form.querySelectorAll('input[name="method"]').forEach(function (r) {
     r.addEventListener("change", function () {
-      addressField.hidden = r.value !== "delivery" || !r.checked;
       form.querySelectorAll('input[name="method"]').forEach(function (radio) {
         if (radio.checked) addressField.hidden = radio.value !== "delivery";
       });
     });
   });
+
+  function methodLabel(method) {
+    return method === "delivery" ? "Доставка по России" : "Самовывоз в Брянске";
+  }
 
   function buildOrderText(data) {
     var items = window.PrintlabCart.get();
@@ -48,7 +60,6 @@
       var label = [item.variantName, item.colorName ? "цвет: " + item.colorName : ""].filter(Boolean).join(", ");
       return "— " + item.title + (label ? " (" + label + ")" : "") + " × " + item.qty + " = " + (unit * item.qty).toLocaleString("ru-RU") + " ₽";
     });
-    var methodLabel = data.method === "delivery" ? "Доставка по России" : "Самовывоз в Брянске";
     var out = [
       "Новый заказ с сайта PRINTLAB",
       "",
@@ -59,11 +70,27 @@
       "",
       "Имя: " + data.name,
       "Контакт: " + data.contact,
-      "Получение: " + methodLabel,
+      "Получение: " + methodLabel(data.method),
     ];
     if (data.method === "delivery" && data.address) out.push("Адрес: " + data.address);
     if (data.comment) out.push("Комментарий: " + data.comment);
     return out.join("\n");
+  }
+
+  function buildApiPayload(data) {
+    var items = window.PrintlabCart.get();
+    return {
+      kind: "order",
+      name: data.name,
+      contact: data.contact,
+      method: methodLabel(data.method),
+      address: data.method === "delivery" ? data.address : "",
+      comment: data.comment,
+      items: items.map(function (item) {
+        var label = [item.variantName, item.colorName ? "цвет: " + item.colorName : ""].filter(Boolean).join(", ");
+        return { title: item.title, variant: label, qty: item.qty };
+      }),
+    };
   }
 
   form.addEventListener("submit", function (e) {
@@ -76,11 +103,24 @@
       address: fd.get("address"),
       comment: fd.get("comment"),
     };
-    var text = buildOrderText(data);
-    summaryEl.textContent = text;
-    layoutEl.hidden = true;
-    resultEl.hidden = false;
-    resultEl.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Отправляем…"; }
+
+    window.PrintlabOrderApi.send(buildApiPayload(data)).then(function (result) {
+      if (window.PrintlabAnalytics) window.PrintlabAnalytics.trackGoal("order_submitted");
+      layoutEl.hidden = true;
+      resultEl.hidden = false;
+
+      if (result.ok) {
+        successEl.hidden = false;
+        fallbackEl.hidden = true;
+      } else {
+        summaryEl.textContent = buildOrderText(data);
+        successEl.hidden = true;
+        fallbackEl.hidden = false;
+      }
+      resultEl.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
   });
 
   if (copyBtn) {
@@ -97,6 +137,7 @@
     clearBtn.addEventListener("click", function () {
       window.PrintlabCart.clear();
       resultEl.hidden = true;
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = "Оформить заказ"; }
       renderSummary();
     });
   }

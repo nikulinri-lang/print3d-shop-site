@@ -81,9 +81,14 @@
     };
   }
 
+  function track() {
+    if (window.PrintlabAnalytics) window.PrintlabAnalytics.trackGoal("add_to_cart", { slug: product.slug });
+  }
+
   if (addBtn) {
     addBtn.addEventListener("click", function () {
       window.PrintlabCart.add(buildCartItem(), getQty());
+      track();
       var prev = addBtn.textContent;
       addBtn.textContent = "Добавлено ✓";
       setTimeout(function () { addBtn.textContent = prev; }, 1200);
@@ -92,6 +97,7 @@
   if (buyBtn) {
     buyBtn.addEventListener("click", function () {
       window.PrintlabCart.add(buildCartItem(), getQty());
+      track();
       location.href = "/cart";
     });
   }

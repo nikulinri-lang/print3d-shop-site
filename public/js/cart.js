@@ -105,6 +105,7 @@
       return;
     }
     add(product, 1);
+    if (window.PrintlabAnalytics) window.PrintlabAnalytics.trackGoal("add_to_cart", { slug: product.slug });
     btn.classList.add("added");
     var label = btn.querySelector(".add-label");
     var prevText = label ? label.textContent : btn.textContent;

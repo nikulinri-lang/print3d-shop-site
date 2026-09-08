@@ -9,14 +9,35 @@
  * уровне этой функции в исходниках сборки, не в браузере.
  */
 
-const { TELEGRAM_BOT_URL } = require("./constants");
+const { TELEGRAM_BOT_URL, YANDEX_METRIKA_ID, YANDEX_VERIFICATION, GOOGLE_VERIFICATION } = require("./constants");
 
 // Apache отдаёт CSS/JS с cache-control: max-age=31536000 (год) без
 // собственного billing-хэша — единственный способ инвалидировать кэш
 // у уже заходивших посетителей — вручную бампать эту версию при правке
-// tokens/base/components.css или любого /js/*.js. Держим её же на
-// templates/index.html (см. её собственные ?v= в <head>/перед </body>).
-const ASSET_V = 2;
+// tokens/base/components.css или любого /js/*.js.
+const ASSET_V = 3;
+
+function metrikaSnippet() {
+  if (!YANDEX_METRIKA_ID) return "";
+  return `<script>window.__YM_ID__ = ${YANDEX_METRIKA_ID};</script>
+<script>
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(${YANDEX_METRIKA_ID}, "init", {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/${YANDEX_METRIKA_ID}" style="position:absolute; left:-9999px;" alt="" /></div></noscript>`;
+}
+
+function verificationTags() {
+  const tags = [];
+  if (YANDEX_VERIFICATION) tags.push(`<meta name="yandex-verification" content="${YANDEX_VERIFICATION}"/>`);
+  if (GOOGLE_VERIFICATION) tags.push(`<meta name="google-site-verification" content="${GOOGLE_VERIFICATION}"/>`);
+  return tags.join("\n");
+}
 
 function navLink(href, label, activeHref) {
   const active = href === activeHref ? ' aria-current="page"' : "";
@@ -46,6 +67,7 @@ function renderLayout({
 <meta property="og:image" content="https://3-d-shop.ru${ogImage}">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🖨️</text></svg>">
+${verificationTags()}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/tokens.css?v=${ASSET_V}">
@@ -58,6 +80,7 @@ function renderLayout({
   }
 }
 </script>
+${metrikaSnippet()}
 ${extraHead}
 </head>
 <body>
@@ -109,6 +132,8 @@ ${bodyContent}
 <script type="module" src="/js/three-background.js?v=${ASSET_V}"></script>
 <script src="/js/scroll-animations.js?v=${ASSET_V}"></script>
 <script src="/js/cart.js?v=${ASSET_V}"></script>
+<script src="/js/analytics.js?v=${ASSET_V}"></script>
+<script src="/js/order-api.js?v=${ASSET_V}"></script>
 ${extraScripts}
 </body>
 </html>

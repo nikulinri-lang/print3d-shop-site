@@ -24,6 +24,15 @@ const CATEGORY_TILES = [
   { key: "custom", label: "На заказ", icon: "🛠", kind: "custom" },
 ];
 
+// Заполнить, когда придут реальные значения (см. finalный отчёт в чате):
+// - YANDEX_METRIKA_ID: номер счётчика с metrika.yandex.ru
+// - YANDEX_VERIFICATION: код с webmaster.yandex.ru -> Добавить сайт -> HTML-тег
+// - GOOGLE_VERIFICATION: код с search.google.com/search-console -> HTML-тег
+// Пока пусто — соответствующий тег/скрипт просто не выводится (см. layout.js).
+const YANDEX_METRIKA_ID = "";
+const YANDEX_VERIFICATION = "";
+const GOOGLE_VERIFICATION = "";
+
 module.exports = {
   TELEGRAM_BOT_URL,
   TELEGRAM_HANDLE,
@@ -32,4 +41,7 @@ module.exports = {
   LEAD_TIME,
   LEAD_TIME_LONG,
   CATEGORY_TILES,
+  YANDEX_METRIKA_ID,
+  YANDEX_VERIFICATION,
+  GOOGLE_VERIFICATION,
 };

@@ -281,6 +281,7 @@ function productPage(p, allProducts) {
         <span>⚡ Изготовление: ${LEAD_TIME}</span>
         <span>📦 Доставка по России</span>
         ${p.colors && p.colors.length ? "<span>🎨 Можно выбрать цвет</span>" : ""}
+        <span>💳 Оплата после подтверждения заказа менеджером</span>
       </div>
       <div class="product-specs">
         ${productSpecsRows(p.specs)}
@@ -304,7 +305,7 @@ ${similarBlock}
 <script>
 window.__PRODUCT__ = ${JSON.stringify(productData)};
 </script>
-<script src="/js/product-page.js?v=2"></script>`;
+<script src="/js/product-page.js?v=3"></script>`;
 
   return renderLayout({
     title: `${p.title} — купить за ${p.price.toLocaleString("ru-RU")} ₽ | PRINTLAB`,

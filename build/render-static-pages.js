@@ -69,7 +69,7 @@ function deliveryPage() {
         <div class="delivery-card-icon">📍</div>
         <h3>${CITY}: самовывоз</h3>
         <p>Забираете готовое изделие сами. Точку и время встречи согласовываем в Telegram после того, как заказ напечатан — обычно это ${LEAD_TIME} с момента оформления.</p>
-        <p>Оплата — на месте, наличными или картой.</p>
+        <p>💳 Оплата после подтверждения заказа менеджером.</p>
       </div>
       <div class="delivery-card">
         <div class="delivery-card-icon">📦</div>
@@ -148,13 +148,21 @@ function customOrderPage() {
         <button type="submit" class="btn btn-primary btn-block">Сформировать заявку</button>
       </form>
 
-      <div class="custom-order-result" id="customOrderResult" hidden>
-        <h3>Заявка готова</h3>
-        <p>Скопируйте текст и отправьте его первым сообщением в Telegram-боте — так мы сразу увидим все детали.</p>
-        <pre class="custom-order-summary" id="customOrderSummary"></pre>
-        <div class="custom-order-actions">
-          <button type="button" class="btn btn-ghost" id="copyOrderBtn">Скопировать заявку</button>
-          <a href="${TELEGRAM_BOT_URL}" class="btn btn-primary" target="_blank" rel="noopener" id="openTelegramBtn">Открыть Telegram-бота</a>
+      <div id="customOrderResult" hidden>
+        <div class="order-success" id="customOrderSuccess" hidden>
+          <div class="order-success-icon">✅</div>
+          <h3>Заявка отправлена!</h3>
+          <p>Наш менеджер свяжется с вами в ближайшее время, чтобы уточнить детали и стоимость.</p>
+          <a href="${TELEGRAM_BOT_URL}" class="btn btn-primary" target="_blank" rel="noopener">Написать в Telegram</a>
+        </div>
+        <div class="custom-order-result" id="customOrderFallback" hidden>
+          <h3>Заявка готова</h3>
+          <p>Не получилось отправить её автоматически — скопируйте текст и отправьте его первым сообщением в Telegram-боте, так мы сразу увидим все детали.</p>
+          <pre class="custom-order-summary" id="customOrderSummary"></pre>
+          <div class="custom-order-actions">
+            <button type="button" class="btn btn-ghost" id="copyOrderBtn">Скопировать заявку</button>
+            <a href="${TELEGRAM_BOT_URL}" class="btn btn-primary" target="_blank" rel="noopener" id="openTelegramBtn">Открыть Telegram-бота</a>
+          </div>
         </div>
       </div>
 
@@ -196,7 +204,7 @@ function customOrderPage() {
     canonical: "/custom-order",
     activeNav: "/custom-order",
     bodyContent: body,
-    extraScripts: `${crumbScript([["Главная", "/"], ["Кастомный заказ", "/custom-order"]])}\n<script src="/js/custom-order.js?v=2"></script>`,
+    extraScripts: `${crumbScript([["Главная", "/"], ["Кастомный заказ", "/custom-order"]])}\n<script src="/js/custom-order.js?v=3"></script>`,
   });
 }
 
@@ -222,6 +230,7 @@ function cartPage() {
           <span class="mono" id="cartSubtotal">0 ₽</span>
         </div>
         <p class="form-hint">Стоимость доставки по России уточняем в Telegram при оформлении — зависит от размера и веса изделий.</p>
+        <p class="form-hint">💳 Оплата после подтверждения заказа менеджером.</p>
         <a href="/checkout" class="btn btn-primary btn-block">Оформить заказ</a>
       </aside>
     </div>
@@ -234,7 +243,7 @@ function cartPage() {
     canonical: "/cart",
     activeNav: "/cart",
     bodyContent: body,
-    extraScripts: `<script src="/js/cart-page.js?v=2"></script>`,
+    extraScripts: `<script src="/js/cart-page.js?v=3"></script>`,
   });
 }
 
@@ -256,15 +265,15 @@ function checkoutPage() {
       <form class="custom-order-form" id="checkoutForm">
         <div id="checkoutLines" class="checkout-lines"></div>
         <label class="form-field">
-          <span>Имя</span>
+          <span>Имя и фамилия</span>
           <input type="text" name="name" required>
         </label>
         <label class="form-field">
-          <span>Telegram или телефон</span>
+          <span>Телефон или Telegram</span>
           <input type="text" name="contact" placeholder="@username или +7…" required>
         </label>
         <fieldset class="form-field">
-          <span>Получение</span>
+          <span>Способ получения</span>
           <label class="radio-row"><input type="radio" name="method" value="pickup" checked> Самовывоз в ${CITY_PREP}</label>
           <label class="radio-row"><input type="radio" name="method" value="delivery"> Доставка по России</label>
         </fieldset>
@@ -276,7 +285,7 @@ function checkoutPage() {
           <span>Комментарий к заказу</span>
           <textarea name="comment" rows="3" placeholder="Необязательно"></textarea>
         </label>
-        <button type="submit" class="btn btn-primary btn-block">Сформировать заказ</button>
+        <button type="submit" class="btn btn-primary btn-block">Оформить заказ</button>
       </form>
 
       <aside class="cart-summary">
@@ -284,30 +293,38 @@ function checkoutPage() {
           <span>Товары</span>
           <span class="mono" id="checkoutSubtotal">0 ₽</span>
         </div>
-        <p class="form-hint">Оплата — при самовывозе в ${CITY_PREP} (наличными или картой на месте) либо по договорённости при доставке. Онлайн-оплата на сайте пока не подключена.</p>
+        <p class="form-hint">💳 Оплата после подтверждения заказа менеджером.</p>
       </aside>
     </div>
 
-    <div class="custom-order-result" id="checkoutResult" hidden>
-      <h3>Заказ сформирован</h3>
-      <p>Скопируйте текст и отправьте его первым сообщением в Telegram-боте — мы подтвердим заказ и сроки.</p>
-      <pre class="custom-order-summary" id="checkoutSummary"></pre>
-      <div class="custom-order-actions">
-        <button type="button" class="btn btn-ghost" id="copyCheckoutBtn">Скопировать заказ</button>
-        <a href="${TELEGRAM_BOT_URL}" class="btn btn-primary" target="_blank" rel="noopener">Открыть Telegram-бота</a>
+    <div id="checkoutResult" hidden>
+      <div class="order-success" id="checkoutSuccess" hidden>
+        <div class="order-success-icon">✅</div>
+        <h3>Спасибо за заказ!</h3>
+        <p>Наш менеджер свяжется с вами в ближайшее время для подтверждения и оплаты.</p>
+        <a href="${TELEGRAM_BOT_URL}" class="btn btn-primary" target="_blank" rel="noopener">Написать в Telegram</a>
       </div>
-      <button type="button" class="btn btn-ghost" id="clearCartBtn" style="margin-top: var(--space-md);">Заказ отправлен — очистить корзину</button>
+      <div class="custom-order-result" id="checkoutFallback" hidden>
+        <h3>Заказ сформирован</h3>
+        <p>Не получилось отправить его автоматически — скопируйте текст и отправьте его первым сообщением в Telegram-боте, мы подтвердим заказ и сроки.</p>
+        <pre class="custom-order-summary" id="checkoutSummary"></pre>
+        <div class="custom-order-actions">
+          <button type="button" class="btn btn-ghost" id="copyCheckoutBtn">Скопировать заказ</button>
+          <a href="${TELEGRAM_BOT_URL}" class="btn btn-primary" target="_blank" rel="noopener">Открыть Telegram-бота</a>
+        </div>
+      </div>
+      <button type="button" class="btn btn-ghost" id="clearCartBtn" style="margin-top: var(--space-md);">Очистить корзину</button>
     </div>
   </div>
 </section>`;
 
   return renderLayout({
     title: "Оформление заказа — PRINTLAB",
-    description: "Оформление заказа PRINTLAB: самовывоз в Брянске или доставка по России, подтверждение заказа в Telegram.",
+    description: "Оформление заказа PRINTLAB: самовывоз в Брянске или доставка по России, оплата после подтверждения менеджером.",
     canonical: "/checkout",
     activeNav: "/checkout",
     bodyContent: body,
-    extraScripts: `<script src="/js/checkout.js?v=2"></script>`,
+    extraScripts: `<script src="/js/checkout.js?v=3"></script>`,
   });
 }
 

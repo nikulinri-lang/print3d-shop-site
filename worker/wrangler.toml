@@ -1,0 +1,7 @@
+name = "printlab-order-notifier"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+# Секреты (НЕ хранить здесь, задаются командой ниже — см. worker/README.md):
+#   wrangler secret put BOT_TOKEN
+#   wrangler secret put OWNER_CHAT_ID
