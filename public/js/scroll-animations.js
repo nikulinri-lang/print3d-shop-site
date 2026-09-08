@@ -21,7 +21,7 @@ function initScrollAnimations() {
     if (prefersReducedMotion) {
       gsap.set(stepEls, { opacity: 1, y: 0 });
       if (connectorPath) gsap.set(connectorPath, { strokeDashoffset: 0 });
-      gsap.set(connectorDots, { scale: 1, opacity: 1 });
+      if (connectorDots.length) gsap.set(connectorDots, { scale: 1, opacity: 1 });
     } else {
       gsap.set(stepEls, { opacity: 0, y: 28 });
       if (connectorPath) {
@@ -29,7 +29,9 @@ function initScrollAnimations() {
         connectorPath.style.strokeDasharray = String(len);
         gsap.set(connectorPath, { strokeDashoffset: len });
       }
-      gsap.set(connectorDots, { scale: 0, opacity: 0, transformOrigin: '50% 50%' });
+      if (connectorDots.length) {
+        gsap.set(connectorDots, { scale: 0, opacity: 0, transformOrigin: '50% 50%' });
+      }
 
       ScrollTrigger.create({
         trigger: stepsSection,

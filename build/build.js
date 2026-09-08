@@ -1,12 +1,13 @@
-/* Сборщик сайта — сейчас копирует public/ и уже готовые страницы из
- * templates/ в dist/ как есть. Пока в проекте только главная страница
- * (прототип, см. ТЗ п.3) — рендер каталога/товаров/блога из
- * content/products.json и content/blog/*.md добавится отдельными
- * шагами (render-products.js, render-blog.js) после подтверждения
- * дизайна, чтобы не собирать шаблоны для страниц, которых ещё нет.
+/* Сборщик сайта: копирует public/ как есть, кладёт vendor-библиотеки
+ * (Three.js/GSAP), копирует главную (templates/index.html — отдельный
+ * самодостаточный файл, не через layout.js) и генерирует страницы
+ * каталога/товаров/блога/принтера из content/ через общий layout.js.
  */
 const fs = require("fs");
 const path = require("path");
+const renderProducts = require("./render-products");
+const renderBlog = require("./render-blog");
+const renderPrinter = require("./render-printer");
 
 const ROOT = path.resolve(__dirname, "..");
 const DIST = path.join(ROOT, "dist");
@@ -106,6 +107,9 @@ function build() {
   copyPublicAssets();
   copyVendorLibs();
   copyReadyPages();
+  renderProducts.render(DIST);
+  renderBlog.render(DIST);
+  renderPrinter.render(DIST);
   console.log("Готово.");
 }
 
