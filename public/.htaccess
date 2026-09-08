@@ -1,6 +1,25 @@
 DirectoryIndex index.html index.htm
 
+# Apache отдаёт автоматический 301 на /path/ для реальных директорий
+# (catalog/, blog/) сам, но не знает, что соединение пришло по HTTPS —
+# Timeweb терминирует SSL до Apache, поэтому такой редирект уходит на
+# http://, понижая протокол у живых пользователей. Отключаем встроенный
+# редирект и делаем его сами ниже с явным https://.
+DirectorySlash Off
+
 RewriteEngine On
+
+# Принудительный HTTPS. %{HTTPS} тут всегда off (SSL терминируется до
+# Apache) — проверка X-Forwarded-Proto вместо него, иначе зацикливание
+# редиректа (см. историю laserlove32-site).
+RewriteCond %{HTTP:X-Forwarded-Proto} =http
+RewriteRule ^(.*)$ https://3-d-shop.ru/$1 [R=301,L]
+
+# /catalog, /blog (реальные директории) -> /catalog/, /blog/ — со своим
+# явным https://, без опоры на определение схемы сервером.
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteCond %{REQUEST_URI} !/$
+RewriteRule ^(.*[^/])$ https://3-d-shop.ru/$1/ [R=301,L]
 
 # example.html -> example (канонические extensionless-ссылки)
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(.+)\.html[\s?] [NC]
