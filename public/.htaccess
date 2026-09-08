@@ -1,1 +1,18 @@
 DirectoryIndex index.html index.htm
+
+RewriteEngine On
+
+# example.html -> example (канонические extensionless-ссылки)
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(.+)\.html[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L]
+
+# /page/index.html -> /page/
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(.*)index\.html[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L]
+
+# Внутренний rewrite extensionless-запроса в соответствующий .html-файл
+# (только если запрошенный путь — не реальная директория, чтобы не
+# конфликтовать с /catalog/, /blog/, где лежат страницы товаров/статей)
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.*)$ $1.html [L]

@@ -123,12 +123,15 @@ function render(distDir) {
   const blogDir = path.join(distDir, "blog");
   fs.mkdirSync(blogDir, { recursive: true });
 
-  fs.writeFileSync(path.join(distDir, "blog.html"), blogIndexPage(posts));
+  // index.html внутри blog/ (не соседний blog.html) — та же причина,
+  // что и у catalog/index.html: избегаем конфликта имени файла с
+  // директорией blog/, где лежат сами статьи.
+  fs.writeFileSync(path.join(blogDir, "index.html"), blogIndexPage(posts));
   for (const post of posts) {
     fs.writeFileSync(path.join(blogDir, `${post.slug}.html`), blogPostPage(post));
   }
 
-  console.log(`  ✓ blog.html + ${posts.length} статей`);
+  console.log(`  ✓ blog/index.html + ${posts.length} статей`);
   return posts;
 }
 

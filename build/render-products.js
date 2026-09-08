@@ -172,12 +172,17 @@ function render(distDir) {
   const catalogDir = path.join(distDir, "catalog");
   fs.mkdirSync(catalogDir, { recursive: true });
 
-  fs.writeFileSync(path.join(distDir, "catalog.html"), catalogPage(products, categories));
+  // index.html внутри catalog/ (а не соседний catalog.html) — иначе имя
+  // файла конфликтует с директорией catalog/, где лежат страницы товаров
+  // (Apache отдаёт 403 при запросе /catalog, т.к. .htaccess не может
+  // одновременно rewrite'ить extensionless-путь и в файл, и открыть
+  // одноимённую директорию).
+  fs.writeFileSync(path.join(catalogDir, "index.html"), catalogPage(products, categories));
   for (const p of products) {
     fs.writeFileSync(path.join(catalogDir, `${p.slug}.html`), productPage(p, products));
   }
 
-  console.log(`  ✓ catalog.html + ${products.length} страниц товаров`);
+  console.log(`  ✓ catalog/index.html + ${products.length} страниц товаров`);
   return { products, categories, productCard, fmtPrice };
 }
 
