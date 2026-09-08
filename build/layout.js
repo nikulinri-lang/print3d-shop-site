@@ -12,6 +12,13 @@
 
 const TELEGRAM_BOT_URL = "https://t.me/Shop3D_online_bot";
 
+// Apache отдаёт CSS/JS с cache-control: max-age=31536000 (год) без
+// собственного billing-хэша — единственный способ инвалидировать кэш
+// у уже заходивших посетителей — вручную бампать эту версию при правке
+// tokens/base/components.css или любого /js/*.js. Держим её же на
+// templates/index.html (см. её собственные ?v= в <head>/перед </body>).
+const ASSET_V = 1;
+
 function navLink(href, label, activeHref) {
   const active = href === activeHref ? ' aria-current="page"' : "";
   return `<li><a href="${href}"${active}>${label}</a></li>`;
@@ -42,13 +49,13 @@ function renderLayout({
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🖨️</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/tokens.css">
-<link rel="stylesheet" href="/css/base.css">
-<link rel="stylesheet" href="/css/components.css">
+<link rel="stylesheet" href="/css/tokens.css?v=${ASSET_V}">
+<link rel="stylesheet" href="/css/base.css?v=${ASSET_V}">
+<link rel="stylesheet" href="/css/components.css?v=${ASSET_V}">
 <script type="importmap">
 {
   "imports": {
-    "three": "/js/vendor/three.module.js"
+    "three": "/js/vendor/three.module.js?v=${ASSET_V}"
   }
 }
 </script>
@@ -98,10 +105,10 @@ ${bodyContent}
   </div>
 </footer>
 
-<script src="/js/vendor/gsap.min.js"></script>
-<script src="/js/vendor/ScrollTrigger.min.js"></script>
-<script type="module" src="/js/three-background.js"></script>
-<script src="/js/scroll-animations.js"></script>
+<script src="/js/vendor/gsap.min.js?v=${ASSET_V}"></script>
+<script src="/js/vendor/ScrollTrigger.min.js?v=${ASSET_V}"></script>
+<script type="module" src="/js/three-background.js?v=${ASSET_V}"></script>
+<script src="/js/scroll-animations.js?v=${ASSET_V}"></script>
 ${extraScripts}
 </body>
 </html>
