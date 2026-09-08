@@ -42,7 +42,7 @@
     if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Отправляем…"; }
 
     window.PrintlabOrderApi.send(payload).then(function (result) {
-      if (window.PrintlabAnalytics) window.PrintlabAnalytics.trackGoal("custom_order_submitted");
+      if (window.PrintlabAnalytics) window.PrintlabAnalytics.trackGoal("custom_order");
       form.hidden = true;
       resultEl.hidden = false;
 

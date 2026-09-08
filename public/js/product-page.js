@@ -6,6 +6,8 @@
   var product = window.__PRODUCT__;
   if (!product) return;
 
+  if (window.PrintlabAnalytics) window.PrintlabAnalytics.trackGoal("product_view", { slug: product.slug });
+
   var qtyInput = document.getElementById("qtyValue");
   var qtyMinus = document.getElementById("qtyMinus");
   var qtyPlus = document.getElementById("qtyPlus");

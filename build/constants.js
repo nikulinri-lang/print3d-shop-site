@@ -29,7 +29,7 @@ const CATEGORY_TILES = [
 // - YANDEX_VERIFICATION: код с webmaster.yandex.ru -> Добавить сайт -> HTML-тег
 // - GOOGLE_VERIFICATION: код с search.google.com/search-console -> HTML-тег
 // Пока пусто — соответствующий тег/скрипт просто не выводится (см. layout.js).
-const YANDEX_METRIKA_ID = "";
+const YANDEX_METRIKA_ID = "112399054";
 const YANDEX_VERIFICATION = "";
 const GOOGLE_VERIFICATION = "";
 

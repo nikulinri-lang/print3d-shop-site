@@ -305,7 +305,7 @@ ${similarBlock}
 <script>
 window.__PRODUCT__ = ${JSON.stringify(productData)};
 </script>
-<script src="/js/product-page.js?v=3"></script>`;
+<script src="/js/product-page.js?v=4"></script>`;
 
   return renderLayout({
     title: `${p.title} — купить за ${p.price.toLocaleString("ru-RU")} ₽ | PRINTLAB`,
