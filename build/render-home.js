@@ -1,0 +1,260 @@
+const fs = require("fs");
+const path = require("path");
+const { renderLayout, TELEGRAM_BOT_URL } = require("./layout");
+const { CATEGORY_TILES, LEAD_TIME, CITY_PREP } = require("./constants");
+const { loadProducts, productCard, customOrderTeaser } = require("./render-products");
+const { loadPosts, fmtDate } = require("./render-blog");
+
+function categoryHref(tile) {
+  if (tile.kind === "custom") return "/custom-order";
+  if (tile.kind === "featured") return "/catalog?category=featured";
+  return `/catalog?category=${encodeURIComponent(tile.key)}`;
+}
+
+function categoriesSection() {
+  const tiles = CATEGORY_TILES.map(
+    (t) => `<a href="${categoryHref(t)}" class="category-tile">
+        <span class="category-tile-icon">${t.icon}</span>
+        <span class="category-tile-label">${t.label}</span>
+      </a>`
+  ).join("\n      ");
+
+  return `<section class="section">
+  <div class="container">
+    <div class="section-head"><span class="kicker">Каталог</span><h2>Категории</h2></div>
+    <div class="categories-grid">
+      ${tiles}
+    </div>
+  </div>
+</section>`;
+}
+
+function popularSection(products) {
+  const featured = products.filter((p) => p.featured);
+  const cards = featured.map((p) => productCard(p)).join("\n      ");
+  return `<section class="section products-section">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">Каталог</span>
+      <h2>🔥 Популярное</h2>
+    </div>
+  </div>
+  <div class="products-pin-wrap">
+    <div class="products-track">
+      ${cards}
+    </div>
+  </div>
+</section>`;
+}
+
+const WHY_US = [
+  { icon: "⚡", title: "Изготовление от 1 дня", text: "Печатаем сами на своём принтере — без посредников и без ожидания чужой очереди." },
+  { icon: "🎨", title: "Разные цвета и материалы", text: "PLA, PETG, ABS, TPU — подбираем материал под задачу, а не только под то, что есть." },
+  { icon: "🛠", title: "Изготовление под заказ", text: "Не нашли нужную вещь в каталоге — напечатаем по вашему файлу, эскизу или фото." },
+  { icon: "📦", title: "Доставка по России", text: "Самовывоз в Брянске или отправка в любой другой город." },
+  { icon: "💬", title: "Поможем подобрать товар", text: "Не уверены, что выбрать — напишите в Telegram, подскажем вариант под задачу." },
+];
+
+function whyUsSection() {
+  const cards = WHY_US.map(
+    (w) => `<div class="why-us-card">
+        <div class="why-us-icon">${w.icon}</div>
+        <h3>${w.title}</h3>
+        <p>${w.text}</p>
+      </div>`
+  ).join("\n      ");
+  return `<section class="section print-layers">
+  <div class="container">
+    <div class="section-head"><span class="kicker">Почему мы</span><h2>Почему PRINTLAB?</h2></div>
+    <div class="why-us-grid">
+      ${cards}
+    </div>
+  </div>
+</section>`;
+}
+
+const FAQ = [
+  { q: "Сколько изготавливается заказ?", a: `Обычно ${LEAD_TIME} — зависит от размера и сложности изделия.` },
+  { q: "Можно ли выбрать цвет?", a: "Да, если у товара в каталоге указаны цветовые варианты — выбор доступен прямо на странице товара. Для остальных позиций уточняйте в Telegram." },
+  { q: "Можно ли заказать своё изделие?", a: "Да — заполните форму кастомного заказа или напишите в Telegram с описанием, файлом или эскизом." },
+  { q: "Можно ли сделать деталь по фотографии?", a: "Да, если по фото понятны форма и примерные размеры. Для точных деталей лучше приложить размеры или 3D-модель." },
+  { q: "Отправляете ли вы по России?", a: "Да, доставляем в другие города — способ и стоимость уточняем в Telegram при оформлении заказа." },
+  { q: "Можно ли заказать несколько изделий?", a: "Да, любое количество — для партий и сувенирных тиражей есть отдельный раздел «Нужна партия изделий» на странице кастомного заказа." },
+];
+
+function faqSection() {
+  const items = FAQ.map(
+    (f) => `<details class="faq-item">
+        <summary>${f.q}</summary>
+        <p>${f.a}</p>
+      </details>`
+  ).join("\n      ");
+  return `<section class="section">
+  <div class="container container--article">
+    <div class="section-head"><span class="kicker">Вопросы</span><h2>FAQ</h2></div>
+    <div class="faq-list">
+      ${items}
+    </div>
+  </div>
+</section>`;
+}
+
+function faqSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQ.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+}
+
+function blogPreviewSection(posts) {
+  const cards = posts
+    .slice(0, 3)
+    .map(
+      (p) => `<a href="/blog/${p.slug}" class="blog-card">
+        <div class="blog-card-media"><div class="blog-card-photo"></div><span class="placeholder-label mono">[ обложка ]</span></div>
+        <div class="blog-card-date mono">${fmtDate(p.date)}</div>
+        <h3>${p.title}</h3>
+        <p>${p.excerpt}</p>
+      </a>`
+    )
+    .join("\n      ");
+  return `<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">Блог</span>
+      <h2>Читаем перед печатью</h2>
+    </div>
+    <div class="blog-grid">
+      ${cards}
+    </div>
+  </div>
+</section>`;
+}
+
+function printerTeaserSection() {
+  return `<section class="section">
+  <div class="container printer-teaser-grid">
+    <img src="/images/printer/p2s-angle.webp" alt="Bambu Lab P2S Combo — принтер, на котором печатается каждый заказ" class="printer-teaser-photo" loading="lazy">
+    <div class="printer-teaser-content">
+      <span class="kicker">Наше оборудование</span>
+      <h2>Печатаем на Bambu Lab P2S Combo</h2>
+      <p class="lede" style="margin-bottom: 0;">Быстро, точно и с многоцветной печатью за один проход — значит выше качество и короче срок изготовления вашего заказа.</p>
+      <div class="printer-teaser-specs">
+        <div class="printer-teaser-spec">
+          <span class="printer-teaser-spec-icon">⚡</span>
+          <span class="printer-teaser-spec-text"><span class="printer-teaser-spec-value mono">Высокая скорость</span><span class="printer-teaser-spec-label">короче срок изготовления</span></span>
+        </div>
+        <div class="printer-teaser-spec">
+          <span class="printer-teaser-spec-icon">🎯</span>
+          <span class="printer-teaser-spec-text"><span class="printer-teaser-spec-value mono">Высокая точность</span><span class="printer-teaser-spec-label">±0.05 мм, без доработки</span></span>
+        </div>
+        <div class="printer-teaser-spec">
+          <span class="printer-teaser-spec-icon">🎨</span>
+          <span class="printer-teaser-spec-text"><span class="printer-teaser-spec-value mono">До 16 цветов</span><span class="printer-teaser-spec-label">за один проход печати</span></span>
+        </div>
+        <div class="printer-teaser-spec">
+          <span class="printer-teaser-spec-icon">🧪</span>
+          <span class="printer-teaser-spec-text"><span class="printer-teaser-spec-value mono">4 материала</span><span class="printer-teaser-spec-label">PLA, PETG, ABS, TPU</span></span>
+        </div>
+      </div>
+      <a href="/printer" class="btn btn-primary">Подробнее о производстве</a>
+    </div>
+  </div>
+</section>`;
+}
+
+function homePage() {
+  const products = loadProducts();
+  const posts = loadPosts();
+
+  const body = `<section class="hero">
+  <div class="hero-visual">
+    <canvas id="hero-canvas" aria-hidden="true"></canvas>
+  </div>
+  <div class="container hero-content">
+    <span class="kicker">Магазин 3D-печатных товаров</span>
+    <h1>Необычные вещи,<br>созданные на 3D-принтере</h1>
+    <p class="lede">Готовые 3D-товары, подарки, полезные аксессуары и изделия на заказ.</p>
+    <div class="hero-actions">
+      <a href="/catalog" class="btn btn-primary">Смотреть каталог</a>
+      <a href="/custom-order" class="btn btn-ghost">Создать свою вещь</a>
+    </div>
+  </div>
+</section>
+
+${popularSection(products)}
+
+${categoriesSection()}
+
+<section class="section print-layers">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">Процесс</span>
+      <h2>Как это работает</h2>
+    </div>
+    <div class="steps">
+      <svg class="steps-connector" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M 16.6 50 L 83.3 50" />
+        <circle cx="16.6" cy="50" r="2.6" />
+        <circle cx="50" cy="50" r="2.6" />
+        <circle cx="83.3" cy="50" r="2.6" />
+      </svg>
+      <div class="step">
+        <div class="step-num mono">01</div>
+        <h3>Выбираешь модель</h3>
+        <p>В каталоге — готовые изделия с ценой и характеристиками, или форма кастомного заказа под свою идею.</p>
+      </div>
+      <div class="step">
+        <div class="step-num mono">02</div>
+        <h3>Оформляешь заказ</h3>
+        <p>Кладёшь товар в корзину и подтверждаешь заказ в Telegram — так мы точно не потеряем детали.</p>
+      </div>
+      <div class="step">
+        <div class="step-num mono">03</div>
+        <h3>Получаешь изделие</h3>
+        <p>Печать занимает ${LEAD_TIME}. Готовое — забираешь сам в ${CITY_PREP} или получаешь посылкой.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+${printerTeaserSection()}
+
+${whyUsSection()}
+
+<section class="section">
+  <div class="container">
+    ${customOrderTeaser()}
+  </div>
+</section>
+
+${blogPreviewSection(posts)}
+
+${faqSection()}`;
+
+  const extraScripts = `<script type="application/ld+json">${JSON.stringify(faqSchema())}</script>
+<script type="module" src="/js/three-hero.js?v=2"></script>
+<script src="/js/hero-text-reveal.js?v=2"></script>
+<script src="/js/product-tilt.js?v=2"></script>`;
+
+  return renderLayout({
+    title: "PRINTLAB — необычные вещи, созданные на 3D-принтере",
+    description: "Готовые 3D-печатные товары, подарки и полезные аксессуары. Изготовление на заказ по фото, эскизу или модели. Самовывоз в Брянске, доставка по России.",
+    canonical: "/",
+    activeNav: "/",
+    bodyContent: body,
+    extraScripts,
+  });
+}
+
+function render(distDir) {
+  fs.writeFileSync(path.join(distDir, "index.html"), homePage());
+  console.log("  ✓ index.html");
+}
+
+module.exports = { render };

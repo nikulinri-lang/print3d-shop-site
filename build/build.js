@@ -1,18 +1,19 @@
 /* Сборщик сайта: копирует public/ как есть, кладёт vendor-библиотеки
- * (Three.js/GSAP), копирует главную (templates/index.html — отдельный
- * самодостаточный файл, не через layout.js) и генерирует страницы
- * каталога/товаров/блога/принтера из content/ через общий layout.js.
+ * (Three.js/GSAP) и генерирует все HTML-страницы из content/ через общий
+ * layout.js (главная тоже — см. render-home.js).
  */
 const fs = require("fs");
 const path = require("path");
 const renderProducts = require("./render-products");
 const renderBlog = require("./render-blog");
 const renderPrinter = require("./render-printer");
+const renderStaticPages = require("./render-static-pages");
+const renderSitemap = require("./render-sitemap");
+const renderHome = require("./render-home");
 
 const ROOT = path.resolve(__dirname, "..");
 const DIST = path.join(ROOT, "dist");
 const PUBLIC = path.join(ROOT, "public");
-const TEMPLATES = path.join(ROOT, "templates");
 const NODE_MODULES = path.join(ROOT, "node_modules");
 
 function clean() {
@@ -90,26 +91,17 @@ function copyVendorLibs() {
   console.log(`  ✓ vendor: three.module.js, three-jsm/ (${THREE_JSM_FILES.length} файлов), gsap.min.js, ScrollTrigger.min.js`);
 }
 
-function copyReadyPages() {
-  const readyPages = ["index.html"];
-  for (const page of readyPages) {
-    const src = path.join(TEMPLATES, page);
-    if (fs.existsSync(src)) {
-      fs.copyFileSync(src, path.join(DIST, page));
-      console.log(`  ✓ ${page}`);
-    }
-  }
-}
-
 function build() {
   console.log("Сборка сайта в dist/...");
   clean();
   copyPublicAssets();
   copyVendorLibs();
-  copyReadyPages();
-  renderProducts.render(DIST);
-  renderBlog.render(DIST);
+  const { products } = renderProducts.render(DIST);
+  const blogPosts = renderBlog.render(DIST);
   renderPrinter.render(DIST);
+  renderStaticPages.render(DIST);
+  renderHome.render(DIST);
+  renderSitemap.render(DIST, { products, blogPosts });
   console.log("Готово.");
 }
 

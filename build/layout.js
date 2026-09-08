@@ -1,23 +1,22 @@
-/* Общий каркас (header/footer/подключение стилей и скриптов) для всех
- * СГЕНЕРИРОВАННЫХ страниц (каталог, товар, блог, принтер) — чтобы не
- * копировать вручную в каждом render-скрипте. index.html остаётся
- * отдельным самодостаточным файлом (первая страница, уже отлажена
- * и проверена вживую — не переводим её на этот каркас, чтобы не
- * рисковать регрессией).
+/* Общий каркас (header/footer/подключение стилей и скриптов) для ВСЕХ
+ * страниц сайта, включая главную (см. render-home.js) — раньше
+ * index.html был отдельным самодостаточным файлом с ручной копией
+ * header/footer, из-за чего эти копии разошлись (например, ссылка
+ * "О нас" вела на несуществующую /about). Теперь один источник правды.
  *
- * Каждая СГЕНЕРИРОВАННАЯ страница — всё равно полностью самодостаточный
- * HTML-файл на выходе (без клиентских include'ов) — дублирование живёт
- * только на уровне этой функции в исходниках сборки, не в браузере.
+ * Каждая страница — всё равно полностью самодостаточный HTML-файл на
+ * выходе (без клиентских include'ов) — дублирование живёт только на
+ * уровне этой функции в исходниках сборки, не в браузере.
  */
 
-const TELEGRAM_BOT_URL = "https://t.me/Shop3D_online_bot";
+const { TELEGRAM_BOT_URL } = require("./constants");
 
 // Apache отдаёт CSS/JS с cache-control: max-age=31536000 (год) без
 // собственного billing-хэша — единственный способ инвалидировать кэш
 // у уже заходивших посетителей — вручную бампать эту версию при правке
 // tokens/base/components.css или любого /js/*.js. Держим её же на
 // templates/index.html (см. её собственные ?v= в <head>/перед </body>).
-const ASSET_V = 1;
+const ASSET_V = 2;
 
 function navLink(href, label, activeHref) {
   const active = href === activeHref ? ' aria-current="page"' : "";
@@ -75,7 +74,7 @@ ${extraHead}
       ${navLink("/about", "О нас", activeNav)}
     </ul>
     <div class="nav-actions">
-      <a href="/cart" class="cart-icon" aria-label="Корзина">🛒<span class="count">2</span></a>
+      <a href="/cart" class="cart-icon" aria-label="Корзина"><span aria-hidden="true">🛒</span><span class="count" id="cartCount" hidden>0</span></a>
       <a href="${TELEGRAM_BOT_URL}" class="btn btn-ghost" target="_blank" rel="noopener">Telegram</a>
     </div>
   </div>
@@ -94,9 +93,9 @@ ${bodyContent}
       <li><a href="/blog">Блог</a></li>
       <li><a href="/printer">Производство</a></li>
       <li><a href="/about">О нас</a></li>
+      <li><a href="/delivery">Доставка</a></li>
     </ul>
     <div class="footer-actions">
-      <a href="#" class="social-icon" aria-label="Авито" title="Авито">A</a>
       <a href="${TELEGRAM_BOT_URL}" class="btn btn-primary btn-telegram" target="_blank" rel="noopener">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 4L2.5 11.5c-1 .4-1 1.5.1 1.8l4.4 1.4 1.7 5.3c.2.7 1.1.9 1.6.3l2.4-2.7 4.6 3.4c.7.5 1.7.1 1.9-.7L22 4.9c.2-.8-.6-1.4-1-.9z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
         Написать в Telegram
@@ -109,6 +108,7 @@ ${bodyContent}
 <script src="/js/vendor/ScrollTrigger.min.js?v=${ASSET_V}"></script>
 <script type="module" src="/js/three-background.js?v=${ASSET_V}"></script>
 <script src="/js/scroll-animations.js?v=${ASSET_V}"></script>
+<script src="/js/cart.js?v=${ASSET_V}"></script>
 ${extraScripts}
 </body>
 </html>

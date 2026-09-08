@@ -5,11 +5,39 @@
     "title": "Кольцо-кубик Fidget",
     "category": "Антистресс",
     "price": 350,
-    "variants": [{"name": "Красный PLA", "extra": 0}, {"name": "Чёрный PETG", "extra": 50}],
+    "variants": [
+      {
+        "name": "Красный PLA",
+        "extra": 0
+      },
+      {
+        "name": "Чёрный PETG",
+        "extra": 50
+      }
+    ],
     "stock": 5,
     "featured": true,
     "description": "Механическая головоломка-антистресс: вращающиеся сегменты крутятся независимо друг от друга. Помещается в кармане, приятная тактильная механика без пружин и подшипников — меньше ломается.",
-    "specs": {"material": "PLA / PETG", "size": "30×30×30 мм", "weight": "8 г"}
+    "specs": {
+      "material": "PLA / PETG",
+      "size": "30×30×30 мм",
+      "weight": "8 г"
+    },
+    "categories": [
+      "Антистресс",
+      "Прикольные штуки"
+    ],
+    "shortDesc": "Крутите в руках вместо скролла ленты",
+    "colors": [
+      {
+        "name": "Красный",
+        "hex": "#C0392B"
+      },
+      {
+        "name": "Чёрный",
+        "hex": "#1C1C22"
+      }
+    ]
   },
   {
     "id": "gear-spinner",
@@ -17,11 +45,26 @@
     "title": "Спиннер-шестерёнка",
     "category": "Антистресс",
     "price": 420,
-    "variants": [{"name": "PLA", "extra": 0}],
+    "variants": [
+      {
+        "name": "PLA",
+        "extra": 0
+      }
+    ],
     "stock": 6,
     "featured": false,
     "description": "Три шестерёнки сцеплены между собой — крутишь одну, вращаются все. Печатается сразу в собранном виде, без постобработки и склейки.",
-    "specs": {"material": "PLA", "size": "60×60×12 мм", "weight": "22 г"}
+    "specs": {
+      "material": "PLA",
+      "size": "60×60×12 мм",
+      "weight": "22 г"
+    },
+    "categories": [
+      "Антистресс",
+      "Прикольные штуки"
+    ],
+    "shortDesc": "Три шестерёнки сцеплены — крутится сразу вся сборка",
+    "colors": null
   },
   {
     "id": "snake-puzzle",
@@ -29,11 +72,30 @@
     "title": "Змейка-трансформер",
     "category": "Антистресс",
     "price": 390,
-    "variants": [{"name": "Однотонная", "extra": 0}, {"name": "Градиент (мультицвет AMS)", "extra": 150}],
+    "variants": [
+      {
+        "name": "Однотонная",
+        "extra": 0
+      },
+      {
+        "name": "Градиент (мультицвет AMS)",
+        "extra": 150
+      }
+    ],
     "stock": 4,
     "featured": false,
     "description": "Классическая головоломка из подвижных сегментов, которая складывается в десятки фигур. Печатаем сразу собранной — сегменты соединены и подвижны прямо из-под сопла.",
-    "specs": {"material": "PLA", "size": "200×20×20 мм (в линию)", "weight": "45 г"}
+    "specs": {
+      "material": "PLA",
+      "size": "200×20×20 мм (в линию)",
+      "weight": "45 г"
+    },
+    "categories": [
+      "Антистресс",
+      "Игры и хобби"
+    ],
+    "shortDesc": "Больше 80 фигур из одной игрушки-трансформера",
+    "colors": null
   },
   {
     "id": "puzzle-cube",
@@ -41,11 +103,26 @@
     "title": "Кубик-головоломка",
     "category": "Антистресс",
     "price": 480,
-    "variants": [{"name": "PLA", "extra": 0}],
+    "variants": [
+      {
+        "name": "PLA",
+        "extra": 0
+      }
+    ],
     "stock": 3,
     "featured": false,
     "description": "Секретный кубик с потайным механизмом открытия — внутри полость для маленького подарка или записки. Хорошо держит форму, стенки печатаем с усиленным заполнением.",
-    "specs": {"material": "PLA", "size": "50×50×50 мм", "weight": "60 г"}
+    "specs": {
+      "material": "PLA",
+      "size": "50×50×50 мм",
+      "weight": "60 г"
+    },
+    "categories": [
+      "Антистресс",
+      "Игры и хобби"
+    ],
+    "shortDesc": "Секретный тайник внутри головоломки-кубика",
+    "colors": null
   },
   {
     "id": "maze-ball",
@@ -53,24 +130,57 @@
     "title": "Шар-лабиринт",
     "category": "Антистресс",
     "price": 550,
-    "variants": [{"name": "PETG", "extra": 0}],
+    "variants": [
+      {
+        "name": "PETG",
+        "extra": 0
+      }
+    ],
     "stock": 3,
     "featured": false,
     "description": "Внутри прозрачного корпуса — трёхмерный лабиринт с шариком: нужно провести его от старта до финиша, наклоняя шар в руках. Печатаем из PETG — прочнее и меньше царапается, чем PLA.",
-    "specs": {"material": "PETG", "size": "70×70×70 мм", "weight": "50 г"}
+    "specs": {
+      "material": "PETG",
+      "size": "70×70×70 мм",
+      "weight": "50 г"
+    },
+    "categories": [
+      "Антистресс",
+      "Игры и хобби"
+    ],
+    "shortDesc": "Классический лабиринт — веди шарик до финиша",
+    "colors": null
   },
-
   {
     "id": "cable-organizer",
     "slug": "cable-organizer",
     "title": "Органайзер для кабелей",
     "category": "Органайзеры",
     "price": 650,
-    "variants": [{"name": "На 4 кабеля", "extra": 0}, {"name": "На 6 кабелей", "extra": 150}],
+    "variants": [
+      {
+        "name": "На 4 кабеля",
+        "extra": 0
+      },
+      {
+        "name": "На 6 кабелей",
+        "extra": 150
+      }
+    ],
     "stock": 8,
     "featured": true,
     "description": "Держит провода на столе в порядке — каждый в своём пазе, не путаются и не падают на пол. Клеится на нижнюю сторону столешницы двусторонним скотчем (в комплект не входит).",
-    "specs": {"material": "PETG", "size": "120×30×25 мм", "weight": "18 г"}
+    "specs": {
+      "material": "PETG",
+      "size": "120×30×25 мм",
+      "weight": "18 г"
+    },
+    "categories": [
+      "Для дома",
+      "Полезные детали"
+    ],
+    "shortDesc": "Провода на столе больше не путаются и не падают",
+    "colors": null
   },
   {
     "id": "headphone-stand",
@@ -78,11 +188,38 @@
     "title": "Держатель для наушников",
     "category": "Органайзеры",
     "price": 450,
-    "variants": [{"name": "Чёрный", "extra": 0}, {"name": "Белый", "extra": 0}],
+    "variants": [
+      {
+        "name": "Чёрный",
+        "extra": 0
+      },
+      {
+        "name": "Белый",
+        "extra": 0
+      }
+    ],
     "stock": 7,
     "featured": true,
     "description": "Настольная стойка для полноразмерных наушников — снимает нагрузку с оголовья и не даёт им валяться на столе. Устойчивое основание с утяжелённой геометрией заполнения.",
-    "specs": {"material": "PLA", "size": "90×90×180 мм", "weight": "70 г"}
+    "specs": {
+      "material": "PLA",
+      "size": "90×90×180 мм",
+      "weight": "70 г"
+    },
+    "categories": [
+      "Для дома"
+    ],
+    "shortDesc": "Снимает нагрузку с оголовья наушников на столе",
+    "colors": [
+      {
+        "name": "Чёрный",
+        "hex": "#1C1C22"
+      },
+      {
+        "name": "Белый",
+        "hex": "#F2F2F2"
+      }
+    ]
   },
   {
     "id": "makeup-brush-holder",
@@ -90,11 +227,25 @@
     "title": "Подставка для кистей",
     "category": "Органайзеры",
     "price": 380,
-    "variants": [{"name": "На 8 отделений", "extra": 0}],
+    "variants": [
+      {
+        "name": "На 8 отделений",
+        "extra": 0
+      }
+    ],
     "stock": 6,
     "featured": false,
     "description": "Разделённая на секции подставка для косметических кистей и карандашей — держит их вертикально и раздельно, легко моется.",
-    "specs": {"material": "PETG", "size": "100×100×90 мм", "weight": "55 г"}
+    "specs": {
+      "material": "PETG",
+      "size": "100×100×90 мм",
+      "weight": "55 г"
+    },
+    "categories": [
+      "Для дома"
+    ],
+    "shortDesc": "Кисти стоят вертикально и раздельно, легко моется",
+    "colors": null
   },
   {
     "id": "desk-cable-box",
@@ -102,11 +253,25 @@
     "title": "Кабель-бокс настольный",
     "category": "Органайзеры",
     "price": 720,
-    "variants": [{"name": "PLA", "extra": 0}],
+    "variants": [
+      {
+        "name": "PLA",
+        "extra": 0
+      }
+    ],
     "stock": 4,
     "featured": false,
     "description": "Закрытый короб для сетевого фильтра и лишней длины проводов под столом — прячет провода из вида, оставляя только нужные разъёмы снаружи.",
-    "specs": {"material": "PLA", "size": "250×90×90 мм", "weight": "140 г"}
+    "specs": {
+      "material": "PLA",
+      "size": "250×90×90 мм",
+      "weight": "140 г"
+    },
+    "categories": [
+      "Для дома"
+    ],
+    "shortDesc": "Прячет сетевой фильтр и лишнюю длину проводов",
+    "colors": null
   },
   {
     "id": "small-parts-organizer",
@@ -114,24 +279,61 @@
     "title": "Органайзер для мелочей",
     "category": "Органайзеры",
     "price": 590,
-    "variants": [{"name": "9 ячеек", "extra": 0}, {"name": "16 ячеек", "extra": 120}],
+    "variants": [
+      {
+        "name": "9 ячеек",
+        "extra": 0
+      },
+      {
+        "name": "16 ячеек",
+        "extra": 120
+      }
+    ],
     "stock": 5,
     "featured": false,
     "description": "Модульный поддон с ячейками для шурупов, бисера, SD-карт и прочей мелочи. Модули стыкуются между собой — можно собрать сетку под свой стол.",
-    "specs": {"material": "PETG", "size": "150×150×20 мм", "weight": "65 г"}
+    "specs": {
+      "material": "PETG",
+      "size": "150×150×20 мм",
+      "weight": "65 г"
+    },
+    "categories": [
+      "Для дома",
+      "Полезные детали"
+    ],
+    "shortDesc": "Раскладывает шурупы, бисер и мелочь по ячейкам",
+    "colors": null
   },
-
   {
     "id": "geo-vase",
     "slug": "geo-vase",
     "title": "Ваза геометрическая",
     "category": "Декор",
     "price": 590,
-    "variants": [{"name": "Матовая", "extra": 0}, {"name": "Градиент (мультицвет AMS)", "extra": 200}],
+    "variants": [
+      {
+        "name": "Матовая",
+        "extra": 0
+      },
+      {
+        "name": "Градиент (мультицвет AMS)",
+        "extra": 200
+      }
+    ],
     "stock": 5,
     "featured": false,
     "description": "Гранёная ваза с фасеточной поверхностью — печатается по спирали (vase mode), без видимых швов между слоями. Для сухоцветов и искусственных растений, не для воды без обработки.",
-    "specs": {"material": "PLA", "size": "120×120×220 мм", "weight": "95 г"}
+    "specs": {
+      "material": "PLA",
+      "size": "120×120×220 мм",
+      "weight": "95 г"
+    },
+    "categories": [
+      "Для дома",
+      "Подарки"
+    ],
+    "shortDesc": "Гранёная ваза без единого видимого шва",
+    "colors": null
   },
   {
     "id": "mug-coaster",
@@ -139,11 +341,30 @@
     "title": "Подставка под кружку",
     "category": "Декор",
     "price": 300,
-    "variants": [{"name": "Однотонная", "extra": 0}, {"name": "Узор (мультицвет AMS)", "extra": 100}],
+    "variants": [
+      {
+        "name": "Однотонная",
+        "extra": 0
+      },
+      {
+        "name": "Узор (мультицвет AMS)",
+        "extra": 100
+      }
+    ],
     "stock": 12,
     "featured": true,
     "description": "Плотная подставка с бортиком, не даёт горячей кружке оставить след на столе. Печатается набором — берём от 4 штук в одном заказе с одинаковым узором.",
-    "specs": {"material": "PLA", "size": "Ø100×8 мм", "weight": "25 г"}
+    "specs": {
+      "material": "PLA",
+      "size": "Ø100×8 мм",
+      "weight": "25 г"
+    },
+    "categories": [
+      "Для дома",
+      "Подарки"
+    ],
+    "shortDesc": "Кружка больше не оставит след на столе",
+    "colors": null
   },
   {
     "id": "honeycomb-lamp",
@@ -151,11 +372,26 @@
     "title": "Ночник «Соты»",
     "category": "Декор",
     "price": 890,
-    "variants": [{"name": "PLA полупрозрачный", "extra": 0}],
-    "stock": 3,
+    "variants": [
+      {
+        "name": "PLA полупрозрачный",
+        "extra": 0
+      }
+    ],
+    "stock": 0,
     "featured": false,
     "description": "Абажур с сотовой структурой рассеивает свет мягкими бликами. Печатается на прозрачном PLA — под LED-лампочку E14 (лампа и патрон в комплект не входят).",
-    "specs": {"material": "PLA (полупрозрачный)", "size": "150×150×160 мм", "weight": "110 г"}
+    "specs": {
+      "material": "PLA (полупрозрачный)",
+      "size": "150×150×160 мм",
+      "weight": "110 г"
+    },
+    "categories": [
+      "Для дома",
+      "Подарки"
+    ],
+    "shortDesc": "Мягкий рассеянный свет через сотовую структуру",
+    "colors": null
   },
   {
     "id": "wall-planter",
@@ -163,11 +399,25 @@
     "title": "Кашпо настенное",
     "category": "Декор",
     "price": 450,
-    "variants": [{"name": "PETG", "extra": 0}],
+    "variants": [
+      {
+        "name": "PETG",
+        "extra": 0
+      }
+    ],
     "stock": 6,
     "featured": false,
     "description": "Треугольное кашпо для суккулентов и мелких растений, крепится на стену на один шуруп. В дне предусмотрено дренажное отверстие.",
-    "specs": {"material": "PETG", "size": "110×110×90 мм", "weight": "60 г"}
+    "specs": {
+      "material": "PETG",
+      "size": "110×110×90 мм",
+      "weight": "60 г"
+    },
+    "categories": [
+      "Для дома"
+    ],
+    "shortDesc": "Кашпо для суккулентов на одном шурупе",
+    "colors": null
   },
   {
     "id": "twisted-candleholder",
@@ -175,24 +425,65 @@
     "title": "Подсвечник витой",
     "category": "Декор",
     "price": 340,
-    "variants": [{"name": "PLA", "extra": 0}],
+    "variants": [
+      {
+        "name": "PLA",
+        "extra": 0
+      }
+    ],
     "stock": 8,
     "featured": false,
     "description": "Спиральный подсвечник под тонкую свечу-конус. Печатается в режиме vase mode — гладкая поверхность без ступенек слоёв.",
-    "specs": {"material": "PLA", "size": "Ø45×160 мм", "weight": "35 г"}
+    "specs": {
+      "material": "PLA",
+      "size": "Ø45×160 мм",
+      "weight": "35 г"
+    },
+    "categories": [
+      "Для дома",
+      "Подарки"
+    ],
+    "shortDesc": "Спиральный подсвечник без ступенек слоёв печати",
+    "colors": null
   },
-
   {
     "id": "phone-stand",
     "slug": "phone-stand",
     "title": "Подставка для телефона",
     "category": "Подставки",
     "price": 900,
-    "variants": [{"name": "Чёрная", "extra": 0}, {"name": "Белая", "extra": 50}],
+    "variants": [
+      {
+        "name": "Чёрная",
+        "extra": 0
+      },
+      {
+        "name": "Белая",
+        "extra": 50
+      }
+    ],
     "stock": 5,
     "featured": true,
     "description": "Устойчивая подставка под телефон для стола — фиксированный угол наклона, удобно смотреть видео или следить за уведомлениями во время работы.",
-    "specs": {"material": "PLA", "size": "90×70×80 мм", "weight": "45 г"}
+    "specs": {
+      "material": "PLA",
+      "size": "90×70×80 мм",
+      "weight": "45 г"
+    },
+    "categories": [
+      "Для телефона"
+    ],
+    "shortDesc": "Видео и уведомления на столе — без рук",
+    "colors": [
+      {
+        "name": "Чёрная",
+        "hex": "#1C1C22"
+      },
+      {
+        "name": "Белая",
+        "hex": "#F2F2F2"
+      }
+    ]
   },
   {
     "id": "tablet-stand",
@@ -200,11 +491,25 @@
     "title": "Подставка для планшета",
     "category": "Подставки",
     "price": 950,
-    "variants": [{"name": "PETG", "extra": 0}],
-    "stock": 4,
+    "variants": [
+      {
+        "name": "PETG",
+        "extra": 0
+      }
+    ],
+    "stock": 0,
     "featured": false,
     "description": "Складная подставка с тремя положениями угла наклона — под чтение, видеозвонки и рисование стилусом. Держит планшеты до 11 дюймов.",
-    "specs": {"material": "PETG", "size": "180×140×20 мм (сложенная)", "weight": "160 г"}
+    "specs": {
+      "material": "PETG",
+      "size": "180×140×20 мм (сложенная)",
+      "weight": "160 г"
+    },
+    "categories": [
+      "Для дома"
+    ],
+    "shortDesc": "Три угла наклона — под чтение, звонки, рисование",
+    "colors": null
   },
   {
     "id": "glasses-holder",
@@ -212,11 +517,25 @@
     "title": "Держатель для очков",
     "category": "Подставки",
     "price": 320,
-    "variants": [{"name": "PLA", "extra": 0}],
+    "variants": [
+      {
+        "name": "PLA",
+        "extra": 0
+      }
+    ],
     "stock": 9,
     "featured": false,
     "description": "Компактная настольная подставка для очков — держит дужки раскрытыми, не даёт поцарапать стёкла о стол.",
-    "specs": {"material": "PLA", "size": "150×40×40 мм", "weight": "20 г"}
+    "specs": {
+      "material": "PLA",
+      "size": "150×40×40 мм",
+      "weight": "20 г"
+    },
+    "categories": [
+      "Для дома"
+    ],
+    "shortDesc": "Дужки раскрыты, стёкла не касаются стола",
+    "colors": null
   },
   {
     "id": "laptop-stand",
@@ -224,11 +543,25 @@
     "title": "Подставка под ноутбук",
     "category": "Подставки",
     "price": 1200,
-    "variants": [{"name": "PETG", "extra": 0}],
-    "stock": 3,
+    "variants": [
+      {
+        "name": "PETG",
+        "extra": 0
+      }
+    ],
+    "stock": 0,
     "featured": false,
     "description": "Приподнимает ноутбук на 8 см — улучшает вентиляцию и угол обзора экрана. Рассчитана на диагонали до 15.6″, нагрузка до 3 кг.",
-    "specs": {"material": "PETG", "size": "260×220×80 мм", "weight": "210 г"}
+    "specs": {
+      "material": "PETG",
+      "size": "260×220×80 мм",
+      "weight": "210 г"
+    },
+    "categories": [
+      "Для дома"
+    ],
+    "shortDesc": "+8 см высоты — лучше вентиляция и обзор экрана",
+    "colors": null
   },
   {
     "id": "charger-holder",
@@ -236,24 +569,52 @@
     "title": "Держатель для кабеля зарядки",
     "category": "Подставки",
     "price": 280,
-    "variants": [{"name": "PLA", "extra": 0}],
+    "variants": [
+      {
+        "name": "PLA",
+        "extra": 0
+      }
+    ],
     "stock": 10,
     "featured": false,
     "description": "Клипса-держатель фиксирует кабель зарядки на краю стола или тумбочки — конец кабеля всегда под рукой и не падает вниз.",
-    "specs": {"material": "PLA", "size": "40×30×25 мм", "weight": "6 г"}
+    "specs": {
+      "material": "PLA",
+      "size": "40×30×25 мм",
+      "weight": "6 г"
+    },
+    "categories": [
+      "Для телефона"
+    ],
+    "shortDesc": "Кабель зарядки всегда под рукой, не падает вниз",
+    "colors": null
   },
-
   {
     "id": "wall-hook",
     "slug": "wall-hook",
     "title": "Настенный крючок",
     "category": "Полезные детали",
     "price": 280,
-    "variants": [{"name": "PETG", "extra": 0}],
+    "variants": [
+      {
+        "name": "PETG",
+        "extra": 0
+      }
+    ],
     "stock": 15,
     "featured": true,
     "description": "Прочный крючок под ключи, полотенце или сумку — крепится на один шуруп. Печатается из PETG для дополнительной ударопрочности.",
-    "specs": {"material": "PETG", "size": "50×30×60 мм", "weight": "15 г"}
+    "specs": {
+      "material": "PETG",
+      "size": "50×30×60 мм",
+      "weight": "15 г"
+    },
+    "categories": [
+      "Для дома",
+      "Полезные детали"
+    ],
+    "shortDesc": "Крючок под ключи и полотенце на одном шурупе",
+    "colors": null
   },
   {
     "id": "door-handle-cover",
@@ -261,11 +622,25 @@
     "title": "Накладка на дверную ручку",
     "category": "Полезные детали",
     "price": 350,
-    "variants": [{"name": "PLA", "extra": 0}],
+    "variants": [
+      {
+        "name": "PLA",
+        "extra": 0
+      }
+    ],
     "stock": 8,
     "featured": false,
     "description": "Эргономичная накладка на ручку двери — приятнее держать и легче открывать локтем, когда руки заняты.",
-    "specs": {"material": "PLA", "size": "120×30×25 мм", "weight": "20 г"}
+    "specs": {
+      "material": "PLA",
+      "size": "120×30×25 мм",
+      "weight": "20 г"
+    },
+    "categories": [
+      "Полезные детали"
+    ],
+    "shortDesc": "Открывайте дверь локтем, когда заняты руки",
+    "colors": null
   },
   {
     "id": "bottle-bike-mount",
@@ -273,11 +648,25 @@
     "title": "Крепление для фляги на велосипед",
     "category": "Полезные детали",
     "price": 420,
-    "variants": [{"name": "PETG", "extra": 0}],
+    "variants": [
+      {
+        "name": "PETG",
+        "extra": 0
+      }
+    ],
     "stock": 6,
     "featured": false,
     "description": "Держатель фляги для велосипедной рамы — крепится штатными винтами (не входят в комплект). Печатаем из PETG — держит форму на жаре, не трескается от вибрации.",
-    "specs": {"material": "PETG", "size": "80×70×110 мм", "weight": "40 г"}
+    "specs": {
+      "material": "PETG",
+      "size": "80×70×110 мм",
+      "weight": "40 г"
+    },
+    "categories": [
+      "Полезные детали"
+    ],
+    "shortDesc": "Держит флягу на раме, не боится вибрации и жары",
+    "colors": null
   },
   {
     "id": "chess-miniature",
@@ -285,11 +674,26 @@
     "title": "Миниатюра-шахматы",
     "category": "Полезные детали",
     "price": 550,
-    "variants": [{"name": "Полный набор фигур", "extra": 0}],
+    "variants": [
+      {
+        "name": "Полный набор фигур",
+        "extra": 0
+      }
+    ],
     "stock": 4,
     "featured": true,
     "description": "Комплект шахматных фигур в едином минималистичном стиле — 32 фигуры, две контрастные расцветки печатаются отдельными тиражами.",
-    "specs": {"material": "PLA", "size": "король 60 мм", "weight": "180 г (комплект)"}
+    "specs": {
+      "material": "PLA",
+      "size": "король 60 мм",
+      "weight": "180 г (комплект)"
+    },
+    "categories": [
+      "Игры и хобби",
+      "Подарки"
+    ],
+    "shortDesc": "32 фигуры в едином минималистичном стиле",
+    "colors": null
   },
   {
     "id": "dragon-keychain",
@@ -297,10 +701,38 @@
     "title": "Брелок-дракон",
     "category": "Полезные детали",
     "price": 500,
-    "variants": [{"name": "Красный", "extra": 100}, {"name": "Чёрный", "extra": 0}],
+    "variants": [
+      {
+        "name": "Красный",
+        "extra": 100
+      },
+      {
+        "name": "Чёрный",
+        "extra": 0
+      }
+    ],
     "stock": 10,
     "featured": true,
     "description": "Гибкий подвижный брелок-дракон — сегменты соединены прямо при печати, никакой сборки. Приятно крутить в руках, держится на кольце для ключей.",
-    "specs": {"material": "PLA", "size": "150×40×30 мм", "weight": "25 г"}
+    "specs": {
+      "material": "PLA",
+      "size": "150×40×30 мм",
+      "weight": "25 г"
+    },
+    "categories": [
+      "Подарки",
+      "Прикольные штуки"
+    ],
+    "shortDesc": "Гибкий дракон крутится в руках без сборки",
+    "colors": [
+      {
+        "name": "Красный",
+        "hex": "#C0392B"
+      },
+      {
+        "name": "Чёрный",
+        "hex": "#1C1C22"
+      }
+    ]
   }
 ]
