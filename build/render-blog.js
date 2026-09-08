@@ -29,23 +29,40 @@ function loadPosts() {
         title: data.title,
         date: data.date,
         excerpt: data.excerpt,
+        cover: data.cover || null,
         html: marked.parse(content),
       };
     })
     .sort((a, b) => new Date(b.date) - new Date(a.date));
 }
 
-function blogIndexPage(posts) {
-  const cards = posts
-    .map(
-      (p) => `<a href="/blog/${p.slug}" class="blog-card">
-        <div class="blog-card-media"><div class="blog-card-photo"></div><span class="placeholder-label mono">[ обложка ]</span></div>
+// Реальное фото есть пока не у всех статей — для остальных остаётся
+// градиент-плейсхолдер с подписью "[ обложка ]", один источник разметки
+// карточки переиспользуется и на /blog, и в блоке блога на главной
+// (render-home.js), чтобы они не разъезжались друг с другом.
+function blogCardMedia(p) {
+  if (!p.cover) {
+    return `<div class="blog-card-media"><div class="blog-card-photo"></div><span class="placeholder-label mono">[ обложка ]</span></div>`;
+  }
+  return `<div class="blog-card-media blog-card-media--photo">
+        <picture>
+          <source srcset="${p.cover}.webp" type="image/webp">
+          <img src="${p.cover}.jpg" alt="${p.title}" loading="lazy">
+        </picture>
+      </div>`;
+}
+
+function blogCardHTML(p) {
+  return `<a href="/blog/${p.slug}" class="blog-card">
+        ${blogCardMedia(p)}
         <div class="blog-card-date mono">${fmtDate(p.date)}</div>
         <h3>${p.title}</h3>
         <p>${p.excerpt}</p>
-      </a>`
-    )
-    .join("\n      ");
+      </a>`;
+}
+
+function blogIndexPage(posts) {
+  const cards = posts.map(blogCardHTML).join("\n      ");
 
   const body = `<section class="page-hero">
   <div class="container">
@@ -135,4 +152,4 @@ function render(distDir) {
   return posts;
 }
 
-module.exports = { render, loadPosts, fmtDate };
+module.exports = { render, loadPosts, fmtDate, blogCardHTML };

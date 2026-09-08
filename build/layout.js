@@ -15,7 +15,7 @@ const { TELEGRAM_BOT_URL, YANDEX_METRIKA_ID, YANDEX_VERIFICATION, GOOGLE_VERIFIC
 // собственного billing-хэша — единственный способ инвалидировать кэш
 // у уже заходивших посетителей — вручную бампать эту версию при правке
 // tokens/base/components.css или любого /js/*.js.
-const ASSET_V = 4;
+const ASSET_V = 5;
 
 function metrikaSnippet() {
   if (!YANDEX_METRIKA_ID) return "";

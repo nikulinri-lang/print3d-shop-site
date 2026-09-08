@@ -3,7 +3,7 @@ const path = require("path");
 const { renderLayout, TELEGRAM_BOT_URL } = require("./layout");
 const { CATEGORY_TILES, LEAD_TIME, CITY_PREP } = require("./constants");
 const { loadProducts, productCard, customOrderTeaser } = require("./render-products");
-const { loadPosts, fmtDate } = require("./render-blog");
+const { loadPosts, blogCardHTML } = require("./render-blog");
 
 function categoryHref(tile) {
   if (tile.kind === "custom") return "/custom-order";
@@ -12,10 +12,14 @@ function categoryHref(tile) {
 }
 
 function categoriesSection() {
+  // Иконка+подпись уже нарисованы на самом фото (см. public/images/categories/),
+  // поэтому поверх ничего не дублируем — только доступный alt для скринридеров.
   const tiles = CATEGORY_TILES.map(
-    (t) => `<a href="${categoryHref(t)}" class="category-tile">
-        <span class="category-tile-icon">${t.icon}</span>
-        <span class="category-tile-label">${t.label}</span>
+    (t) => `<a href="${categoryHref(t)}" class="category-tile category-tile--photo">
+        <picture>
+          <source srcset="/images/categories/${t.img}.webp" type="image/webp">
+          <img src="/images/categories/${t.img}.jpg" alt="${t.label}" loading="lazy">
+        </picture>
       </a>`
   ).join("\n      ");
 
@@ -112,17 +116,7 @@ function faqSchema() {
 }
 
 function blogPreviewSection(posts) {
-  const cards = posts
-    .slice(0, 3)
-    .map(
-      (p) => `<a href="/blog/${p.slug}" class="blog-card">
-        <div class="blog-card-media"><div class="blog-card-photo"></div><span class="placeholder-label mono">[ обложка ]</span></div>
-        <div class="blog-card-date mono">${fmtDate(p.date)}</div>
-        <h3>${p.title}</h3>
-        <p>${p.excerpt}</p>
-      </a>`
-    )
-    .join("\n      ");
+  const cards = posts.slice(0, 3).map(blogCardHTML).join("\n      ");
   return `<section class="section">
   <div class="container">
     <div class="section-head">

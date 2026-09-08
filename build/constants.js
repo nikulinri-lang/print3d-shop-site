@@ -13,15 +13,15 @@ const LEAD_TIME_LONG = "Изготовление занимает 1–3 дня �
 // товара, а computed-выборка featured:true. "На заказ" — не фильтр по
 // товарам, а плитка-переход к форме кастомного заказа.
 const CATEGORY_TILES = [
-  { key: "featured", label: "Популярное", icon: "🔥", kind: "featured" },
-  { key: "Подарки", label: "Подарки", icon: "🎁", kind: "category" },
-  { key: "Прикольные штуки", label: "Прикольные штуки", icon: "😂", kind: "category" },
-  { key: "Для дома", label: "Для дома", icon: "🏠", kind: "category" },
-  { key: "Для телефона", label: "Для телефона", icon: "📱", kind: "category" },
-  { key: "Игры и хобби", label: "Игры и хобби", icon: "🎮", kind: "category" },
-  { key: "Антистресс", label: "Антистресс", icon: "🧩", kind: "category" },
-  { key: "Полезные детали", label: "Полезные детали", icon: "⚙️", kind: "category" },
-  { key: "custom", label: "На заказ", icon: "🛠", kind: "custom" },
+  { key: "featured", label: "Популярное", icon: "🔥", kind: "featured", img: "featured" },
+  { key: "Подарки", label: "Подарки", icon: "🎁", kind: "category", img: "gifts" },
+  { key: "Прикольные штуки", label: "Прикольные штуки", icon: "😂", kind: "category", img: "fun-stuff" },
+  { key: "Для дома", label: "Для дома", icon: "🏠", kind: "category", img: "home" },
+  { key: "Для телефона", label: "Для телефона", icon: "📱", kind: "category", img: "phone" },
+  { key: "Игры и хобби", label: "Игры и хобби", icon: "🎮", kind: "category", img: "hobby" },
+  { key: "Антистресс", label: "Антистресс", icon: "🧩", kind: "category", img: "antistress" },
+  { key: "Полезные детали", label: "Полезные детали", icon: "⚙️", kind: "category", img: "parts" },
+  { key: "custom", label: "На заказ", icon: "🛠", kind: "custom", img: "custom" },
 ];
 
 // Заполнить, когда придут реальные значения (см. finalный отчёт в чате):
