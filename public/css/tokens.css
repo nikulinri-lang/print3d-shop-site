@@ -1,0 +1,82 @@
+:root {
+  /* ===== Цвета ===== */
+  --color-bg: #0A0A0F;
+  --color-surface: #12121A;
+  --color-surface-raised: #16161F;
+  --color-accent-1: #FF6B00;   /* оранжевый — экструдер */
+  --color-accent-2: #00D4FF;   /* голубой — LCD-дисплей */
+  --color-text: #E8E8F0;
+  --color-text-muted: #6B6B8A;
+  --color-border: rgba(232, 232, 240, 0.08);
+  --color-border-strong: rgba(232, 232, 240, 0.16);
+
+  /* Прозрачные варианты акцентов — для подсветок/фонов/hover без нового цвета */
+  --color-accent-1-10: rgba(255, 107, 0, 0.10);
+  --color-accent-1-25: rgba(255, 107, 0, 0.25);
+  --color-accent-2-10: rgba(0, 212, 255, 0.10);
+  --color-accent-2-15: rgba(0, 212, 255, 0.15);
+
+  /* ===== Типографика ===== */
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-lg: 20px;
+  --text-xl: 28px;
+  --text-2xl: 40px;
+  --text-3xl: 56px;
+  --text-4xl: 76px;
+
+  --leading-tight: 1.1;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.75;
+
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.04em;
+
+  /* ===== Отступы (модульная шкала, кратная 4) ===== */
+  --space-3xs: 4px;
+  --space-2xs: 8px;
+  --space-xs: 12px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 40px;
+  --space-xl: 64px;
+  --space-2xl: 96px;
+  --space-3xl: 144px;
+
+  /* ===== Радиусы — намеренно разные по компонентам, не единый rounded-стиль ===== */
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-pill: 100px;
+
+  /* ===== Тени / свечения ===== */
+  --glow-accent-1-sm: 0 0 16px rgba(255, 107, 0, 0.2);
+  --glow-accent-1-lg: 0 0 48px rgba(255, 107, 0, 0.25);
+  --glow-accent-2-sm: 0 0 16px rgba(0, 212, 255, 0.18);
+  --glow-accent-2-lg: 0 0 48px rgba(0, 212, 255, 0.2);
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.4);
+
+  /* ===== Переходы ===== */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 0.15s;
+  --duration-base: 0.3s;
+  --duration-slow: 0.6s;
+
+  /* ===== Контейнер ===== */
+  --container-max: 1280px;
+  --container-padding: 24px;
+}
+
+@media (max-width: 720px) {
+  :root {
+    --text-4xl: 44px;
+    --text-3xl: 36px;
+    --text-2xl: 28px;
+    --container-padding: 20px;
+  }
+}

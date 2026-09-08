@@ -1,0 +1,10 @@
+{
+  "name": "print3d-shop-site",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Сайт магазина 3D-печатных изделий — статика, деплой на Timeweb",
+  "scripts": {
+    "build": "node build/build.js",
+    "dev": "npm run build && npx --yes serve dist -l 3000"
+  }
+}
