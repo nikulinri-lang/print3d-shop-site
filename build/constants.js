@@ -30,8 +30,11 @@ const CATEGORY_TILES = [
 // - GOOGLE_VERIFICATION: код с search.google.com/search-console -> HTML-тег
 // Пока пусто — соответствующий тег/скрипт просто не выводится (см. layout.js).
 const YANDEX_METRIKA_ID = "112399054";
+// Яндекс подтверждается отдельным файлом (public/yandex_c95da4ec46ec707d.html),
+// не мета-тегом — см. .htaccess (исключение из .html-редиректа) — так что
+// эта константа для Яндекса не используется.
 const YANDEX_VERIFICATION = "";
-const GOOGLE_VERIFICATION = "";
+const GOOGLE_VERIFICATION = "G_Qt8RV3r5sIUm7vLWDagkfA51Vx1qoxjynC9tehG-o";
 
 module.exports = {
   TELEGRAM_BOT_URL,

@@ -21,6 +21,11 @@ RewriteCond %{REQUEST_FILENAME} -d
 RewriteCond %{REQUEST_URI} !/$
 RewriteRule ^(.*[^/])$ https://3-d-shop.ru/$1/ [R=301,L]
 
+# Файлы-подтверждения поисковиков (yandex_*.html, google*.html) должны
+# отвечать 200 РОВНО по адресу с .html — общее правило ниже сняло бы
+# .html 301-редиректом и сломало бы верификацию сайта.
+RewriteRule ^(yandex_[a-f0-9]+\.html|google[a-f0-9]+\.html)$ - [L]
+
 # example.html -> example (канонические extensionless-ссылки)
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(.+)\.html[\s?] [NC]
 RewriteRule ^ /%1 [R=301,L]
