@@ -5,9 +5,7 @@
  * показывает покупателю запасной вариант — скопировать текст заказа и
  * отправить его в Telegram-бот вручную. Заказ никогда не теряется. */
 (function () {
-  // Заполнить после `wrangler deploy` (см. worker/README.md), например:
-  // "https://printlab-order-notifier.your-subdomain.workers.dev"
-  var ORDER_ENDPOINT = "";
+  var ORDER_ENDPOINT = "https://printlab-order-notifier.printlab3d.workers.dev";
 
   async function send(payload) {
     if (!ORDER_ENDPOINT) return { ok: false, error: "not configured" };
