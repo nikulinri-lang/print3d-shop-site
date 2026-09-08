@@ -26,12 +26,35 @@ function copyPublicAssets() {
   }
 }
 
+// Полное дерево examples/jsm/ — 430+ файлов, из которых реально
+// используется 13 (остальное — неиспользуемые лоадеры/пассы других
+// форматов). Копирование всего дерева раздувало FTP-деплой до многих
+// минут (каждый файл — отдельная FTP-транзакция). Список ниже —
+// результат явной трассировки import-графа от GLTFLoader/EffectComposer/
+// UnrealBloomPass/OutputPass (см. их import-заголовки) — если добавляете
+// новый addon из three-jsm, проверьте его импорты и дополните список.
+const THREE_JSM_FILES = [
+  "loaders/GLTFLoader.js",
+  "utils/BufferGeometryUtils.js",
+  "utils/SkeletonUtils.js",
+  "postprocessing/EffectComposer.js",
+  "postprocessing/RenderPass.js",
+  "postprocessing/UnrealBloomPass.js",
+  "postprocessing/OutputPass.js",
+  "postprocessing/Pass.js",
+  "postprocessing/MaskPass.js",
+  "postprocessing/ShaderPass.js",
+  "shaders/CopyShader.js",
+  "shaders/LuminosityHighPassShader.js",
+  "shaders/OutputShader.js",
+];
+
 function copyVendorLibs() {
   // Нет бандлера — Three.js/GSAP отдаём браузеру как есть, тем же
   // способом, каким их публикуют сами авторы для прямого <script type="module">
-  // подключения. GLTFLoader импортирует 'three' голым спецификатором и
-  // соседние файлы из examples/jsm относительными путями — поэтому копируем
-  // всё поддерево jsm/, а не один файл, и добавляем importmap в HTML.
+  // подключения. GLTFLoader импортирует 'three' голым спецификатором
+  // (резолвится через importmap в HTML) и соседние файлы из examples/jsm
+  // относительными путями — поэтому сохраняем их относительную структуру.
   const vendor = path.join(DIST, "js", "vendor");
   fs.mkdirSync(vendor, { recursive: true });
 
@@ -46,11 +69,15 @@ function copyVendorLibs() {
     path.join(NODE_MODULES, "three", "build", "three.core.js"),
     path.join(vendor, "three.core.js")
   );
-  fs.cpSync(
-    path.join(NODE_MODULES, "three", "examples", "jsm"),
-    path.join(vendor, "three-jsm"),
-    { recursive: true }
-  );
+
+  const jsmSrc = path.join(NODE_MODULES, "three", "examples", "jsm");
+  const jsmDest = path.join(vendor, "three-jsm");
+  for (const rel of THREE_JSM_FILES) {
+    const dest = path.join(jsmDest, rel);
+    fs.mkdirSync(path.dirname(dest), { recursive: true });
+    fs.copyFileSync(path.join(jsmSrc, rel), dest);
+  }
+
   fs.copyFileSync(
     path.join(NODE_MODULES, "gsap", "dist", "gsap.min.js"),
     path.join(vendor, "gsap.min.js")
@@ -59,7 +86,7 @@ function copyVendorLibs() {
     path.join(NODE_MODULES, "gsap", "dist", "ScrollTrigger.min.js"),
     path.join(vendor, "ScrollTrigger.min.js")
   );
-  console.log("  ✓ vendor: three.module.js, three-jsm/, gsap.min.js, ScrollTrigger.min.js");
+  console.log(`  ✓ vendor: three.module.js, three-jsm/ (${THREE_JSM_FILES.length} файлов), gsap.min.js, ScrollTrigger.min.js`);
 }
 
 function copyReadyPages() {
