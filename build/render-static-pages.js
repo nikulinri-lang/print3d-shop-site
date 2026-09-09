@@ -251,7 +251,7 @@ function checkoutPage() {
   const body = `<section class="page-hero">
   <div class="container">
     <span class="kicker">Оформление заказа</span>
-    <h1>Оформить заказ</h1>
+    <h1 data-letter-reveal>Оформить заказ</h1>
   </div>
 </section>
 
@@ -272,10 +272,20 @@ function checkoutPage() {
           <span>Телефон или Telegram</span>
           <input type="text" name="contact" placeholder="@username или +7…" required>
         </label>
-        <fieldset class="form-field">
+        <fieldset class="form-field method-field">
           <span>Способ получения</span>
-          <label class="radio-row"><input type="radio" name="method" value="pickup" checked> Самовывоз в ${CITY_PREP}</label>
-          <label class="radio-row"><input type="radio" name="method" value="delivery"> Доставка по России</label>
+          <div class="method-cards">
+            <label class="method-card">
+              <input type="radio" name="method" value="pickup" checked>
+              <span class="method-card-icon">🏠</span>
+              <span class="method-card-label">Самовывоз в ${CITY_PREP}</span>
+            </label>
+            <label class="method-card">
+              <input type="radio" name="method" value="delivery">
+              <span class="method-card-icon">🚚</span>
+              <span class="method-card-label">Доставка по России</span>
+            </label>
+          </div>
         </fieldset>
         <label class="form-field" id="addressField" hidden>
           <span>Город и адрес доставки</span>
@@ -324,7 +334,7 @@ function checkoutPage() {
     canonical: "/checkout",
     activeNav: "/checkout",
     bodyContent: body,
-    extraScripts: `<script defer src="/js/checkout.js?v=4"></script>`,
+    extraScripts: `<script defer src="/js/hero-text-reveal.js?v=3"></script>\n<script defer src="/js/checkout.js?v=5"></script>`,
   });
 }
 

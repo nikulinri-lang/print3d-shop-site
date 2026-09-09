@@ -1192,7 +1192,14 @@ span.qty-value { display: inline-flex; align-items: center; justify-content: cen
   resize: vertical;
 }
 
-.form-field input:focus, .form-field textarea:focus, .catalog-search:focus, .catalog-select:focus {
+.form-field input:focus, .form-field textarea:focus {
+  outline: none;
+  border-color: var(--color-border-strong);
+  border-bottom: 2px solid var(--color-accent-1);
+  box-shadow: 0 0 12px rgba(255, 107, 0, 0.2);
+}
+
+.catalog-search:focus, .catalog-select:focus {
   outline: none;
   border-color: var(--color-accent-2);
 }
@@ -1218,6 +1225,59 @@ span.qty-value { display: inline-flex; align-items: center; justify-content: cen
 }
 
 .radio-row input { accent-color: var(--color-accent-1); }
+
+/* fieldset без сброса получает нативную "canvas"-рамку (обычно светлую
+   groove-обводку) — она и создавала белую рамку вокруг блока способа
+   получения */
+fieldset.form-field {
+  border: none;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+.method-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.method-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  flex: 1;
+  min-width: 200px;
+  padding: 14px 16px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out);
+}
+
+.method-card input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.method-card-icon { font-size: 20px; line-height: 1; }
+.method-card-label { font-size: var(--text-sm); color: var(--color-text); }
+
+.method-card.is-selected {
+  border-color: var(--color-accent-1);
+  background: var(--color-accent-1-10);
+  box-shadow: var(--glow-accent-1-sm);
+}
+
+.method-card:focus-within {
+  outline: 2px solid var(--color-accent-2);
+  outline-offset: 2px;
+}
 
 .btn-block { width: 100%; justify-content: center; }
 
@@ -1402,6 +1462,40 @@ span.qty-value { display: inline-flex; align-items: center; justify-content: cen
   gap: var(--space-sm);
   font-size: var(--text-sm);
   color: var(--color-text-muted);
+}
+
+#checkoutLayout .cart-summary {
+  border-top: 2px solid var(--color-accent-1);
+}
+
+#checkoutForm button[type="submit"]:hover {
+  box-shadow: 0 0 20px rgba(255, 107, 0, 0.4);
+  transform: scale(1.02);
+}
+
+@keyframes orderSuccessPop {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes orderSuccessGlow {
+  0%, 100% { filter: drop-shadow(0 0 0 rgba(255, 107, 0, 0)); }
+  50% { filter: drop-shadow(0 0 14px rgba(255, 107, 0, 0.6)); }
+}
+
+.order-success:not([hidden]) {
+  animation: orderSuccessPop 0.5s var(--ease-out) both;
+}
+
+.order-success:not([hidden]) .order-success-icon {
+  animation: orderSuccessGlow 1.8s ease-in-out 0.3s 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .order-success:not([hidden]),
+  .order-success:not([hidden]) .order-success-icon {
+    animation: none;
+  }
 }
 
 /* ===== Главная: категории ===== */

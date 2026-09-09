@@ -5,11 +5,12 @@
  * через gsap.set(), а не CSS "opacity:0 по умолчанию". */
 function initHeroReveal() {
   const gsap = window.gsap;
-  const h1 = document.querySelector('.hero-content h1');
-  const lede = document.querySelector('.hero-content .lede');
-  const actions = document.querySelector('.hero-content .hero-actions');
-  const kicker = document.querySelector('.hero-content .kicker');
+  const h1 = document.querySelector('.hero-content h1, [data-letter-reveal]');
   if (!gsap || !h1) return;
+  const section = h1.closest('.hero, .page-hero') || h1.parentElement;
+  const lede = section.querySelector('.lede');
+  const actions = section.querySelector('.hero-actions');
+  const kicker = section.querySelector('.kicker');
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (prefersReducedMotion) return; // текст уже виден как обычный HTML — ничего делать не нужно

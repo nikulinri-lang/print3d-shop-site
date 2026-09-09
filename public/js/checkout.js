@@ -41,13 +41,17 @@
     return true;
   }
 
-  form.querySelectorAll('input[name="method"]').forEach(function (r) {
-    r.addEventListener("change", function () {
-      form.querySelectorAll('input[name="method"]').forEach(function (radio) {
-        if (radio.checked) addressField.hidden = radio.value !== "delivery";
-      });
+  function syncMethodCards() {
+    form.querySelectorAll('input[name="method"]').forEach(function (radio) {
+      var card = radio.closest(".method-card");
+      if (card) card.classList.toggle("is-selected", radio.checked);
+      if (radio.checked) addressField.hidden = radio.value !== "delivery";
     });
+  }
+  form.querySelectorAll('input[name="method"]').forEach(function (r) {
+    r.addEventListener("change", syncMethodCards);
   });
+  syncMethodCards();
 
   function methodLabel(method) {
     return method === "delivery" ? "Доставка по России" : "Самовывоз в Брянске";
