@@ -9,15 +9,17 @@ DirectorySlash Off
 
 RewriteEngine On
 
-# ВРЕМЕННО: диагностика — узнать, что реально приходит в X-Forwarded-Proto
-# (удалить после проверки). /__debug_xfp -> редирект, в Location виден
-# заголовок, увиденный Apache, без риска для остального сайта.
-RewriteRule ^__debug_xfp$ /?xfp=%{HTTP:X-Forwarded-Proto}&https=%{HTTPS} [R=302,L]
-
 # Принудительный HTTPS. %{HTTPS} тут всегда off (SSL терминируется до
-# Apache) — проверка X-Forwarded-Proto вместо него, иначе зацикливание
-# редиректа (см. историю laserlove32-site).
-RewriteCond %{HTTP:X-Forwarded-Proto} =http
+# Apache) — проверяем X-Forwarded-Proto вместо него. Диагностикой
+# подтверждено (09.09.2026): при реальном HTTPS-запросе nginx кладёт сюда
+# ровно "https"; при реальном HTTP — заголовка нет вообще (пустая
+# строка), а НЕ "http". Поэтому сравнение !=https (а не =http) — иначе
+# редирект никогда не срабатывал для большинства страниц, кроме тех, что
+# ловились соседним directory-slash правилом ниже. !=https безопасен от
+# зацикливания именно потому, что для настоящего HTTPS сервер всегда
+# ставит "https" (проверено), так что уже-https запросы это условие не
+# матчат и повторно не редиректятся.
+RewriteCond %{HTTP:X-Forwarded-Proto} !=https
 RewriteRule ^(.*)$ https://3-d-shop.ru/$1 [R=301,L]
 
 # /catalog, /blog (реальные директории) -> /catalog/, /blog/ — со своим
