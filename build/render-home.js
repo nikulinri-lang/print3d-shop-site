@@ -232,9 +232,9 @@ ${blogPreviewSection(posts)}
 ${faqSection()}`;
 
   const extraScripts = `<script type="application/ld+json">${JSON.stringify(faqSchema())}</script>
-<script type="module" src="/js/three-hero.js?v=2"></script>
-<script src="/js/hero-text-reveal.js?v=2"></script>
-<script src="/js/product-tilt.js?v=2"></script>`;
+<script type="module" src="/js/three-hero.js?v=3"></script>
+<script defer src="/js/hero-text-reveal.js?v=2"></script>
+<script defer src="/js/product-tilt.js?v=2"></script>`;
 
   return renderLayout({
     title: "PRINTLAB — необычные вещи, созданные на 3D-принтере",

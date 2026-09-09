@@ -204,7 +204,7 @@ function customOrderPage() {
     canonical: "/custom-order",
     activeNav: "/custom-order",
     bodyContent: body,
-    extraScripts: `${crumbScript([["Главная", "/"], ["Кастомный заказ", "/custom-order"]])}\n<script src="/js/custom-order.js?v=4"></script>`,
+    extraScripts: `${crumbScript([["Главная", "/"], ["Кастомный заказ", "/custom-order"]])}\n<script defer src="/js/custom-order.js?v=4"></script>`,
   });
 }
 
@@ -243,7 +243,7 @@ function cartPage() {
     canonical: "/cart",
     activeNav: "/cart",
     bodyContent: body,
-    extraScripts: `<script src="/js/cart-page.js?v=3"></script>`,
+    extraScripts: `<script defer src="/js/cart-page.js?v=3"></script>`,
   });
 }
 
@@ -324,7 +324,7 @@ function checkoutPage() {
     canonical: "/checkout",
     activeNav: "/checkout",
     bodyContent: body,
-    extraScripts: `<script src="/js/checkout.js?v=4"></script>`,
+    extraScripts: `<script defer src="/js/checkout.js?v=4"></script>`,
   });
 }
 

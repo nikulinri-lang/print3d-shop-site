@@ -149,7 +149,7 @@ function catalogPage(products, categories, colorNames) {
     canonical: "/catalog",
     activeNav: "/catalog",
     bodyContent: body,
-    extraScripts: `<script type="application/ld+json">${JSON.stringify(breadcrumbSchema([["Главная", "/"], ["Каталог", "/catalog"]]))}</script>\n<script src="/js/catalog-filters.js?v=2"></script>`,
+    extraScripts: `<script type="application/ld+json">${JSON.stringify(breadcrumbSchema([["Главная", "/"], ["Каталог", "/catalog"]]))}</script>\n<script defer src="/js/catalog-filters.js?v=2"></script>`,
   });
 }
 
@@ -310,7 +310,7 @@ ${similarBlock}
 <script>
 window.__PRODUCT__ = ${JSON.stringify(productData)};
 </script>
-<script src="/js/product-page.js?v=4"></script>`;
+<script defer src="/js/product-page.js?v=4"></script>`;
 
   return renderLayout({
     title: `${p.title} — купить за ${p.price.toLocaleString("ru-RU")} ₽ | PRINTLAB`,

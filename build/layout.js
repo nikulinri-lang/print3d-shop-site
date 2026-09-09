@@ -24,7 +24,7 @@ const ORGANIZATION_SCHEMA = {
 // собственного billing-хэша — единственный способ инвалидировать кэш
 // у уже заходивших посетителей — вручную бампать эту версию при правке
 // tokens/base/components.css или любого /js/*.js.
-const ASSET_V = 5;
+const ASSET_V = 6;
 
 function metrikaSnippet() {
   if (!YANDEX_METRIKA_ID) return "";
@@ -147,13 +147,13 @@ ${bodyContent}
   </div>
 </footer>
 
-<script src="/js/vendor/gsap.min.js?v=${ASSET_V}"></script>
-<script src="/js/vendor/ScrollTrigger.min.js?v=${ASSET_V}"></script>
+<script defer src="/js/vendor/gsap.min.js?v=${ASSET_V}"></script>
+<script defer src="/js/vendor/ScrollTrigger.min.js?v=${ASSET_V}"></script>
 <script type="module" src="/js/three-background.js?v=${ASSET_V}"></script>
-<script src="/js/scroll-animations.js?v=${ASSET_V}"></script>
-<script src="/js/cart.js?v=${ASSET_V}"></script>
-<script src="/js/analytics.js?v=${ASSET_V}"></script>
-<script src="/js/order-api.js?v=${ASSET_V}"></script>
+<script defer src="/js/scroll-animations.js?v=${ASSET_V}"></script>
+<script defer src="/js/cart.js?v=${ASSET_V}"></script>
+<script defer src="/js/analytics.js?v=${ASSET_V}"></script>
+<script defer src="/js/order-api.js?v=${ASSET_V}"></script>
 ${extraScripts}
 </body>
 </html>

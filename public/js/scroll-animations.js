@@ -114,5 +114,14 @@ function initScrollAnimations() {
   }
 }
 
-if (document.readyState !== 'loading') initScrollAnimations();
-else document.addEventListener('DOMContentLoaded', initScrollAnimations);
+// ScrollTrigger.create() сам по себе синхронно измеряет layout — не
+// нужно к моменту первой отрисовки (анимации всё равно триггерятся при
+// скролле), поэтому откладываем до простоя браузера. Lighthouse mobile
+// показывал тут ~1.3s одной длинной задачи на критическом пути до фикса.
+function schedule(fn) {
+  if ('requestIdleCallback' in window) requestIdleCallback(fn, { timeout: 1500 });
+  else setTimeout(fn, 200);
+}
+
+if (document.readyState !== 'loading') schedule(initScrollAnimations);
+else document.addEventListener('DOMContentLoaded', () => schedule(initScrollAnimations));

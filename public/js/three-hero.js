@@ -153,5 +153,13 @@ function initHero() {
   }
 }
 
-if (document.readyState !== 'loading') initHero();
-else document.addEventListener('DOMContentLoaded', initHero);
+// Та же логика, что в three-background.js — тяжёлая сцена (плюс
+// bloom-постпроцессинг) откладывается до простоя браузера, чтобы не
+// блокировать первую отрисовку заголовка hero.
+function schedule(fn) {
+  if ('requestIdleCallback' in window) requestIdleCallback(fn, { timeout: 1500 });
+  else setTimeout(fn, 200);
+}
+
+if (document.readyState !== 'loading') schedule(initHero);
+else document.addEventListener('DOMContentLoaded', () => schedule(initHero));

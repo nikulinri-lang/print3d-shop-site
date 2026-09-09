@@ -59,5 +59,15 @@ function initBackground() {
   animate();
 }
 
-if (document.readyState !== 'loading') initBackground();
-else document.addEventListener('DOMContentLoaded', initBackground);
+// Декоративный фон не нужен к моменту первой отрисовки — откладываем
+// инициализацию (создание WebGL-контекста, компиляция шейдера) до
+// простоя браузера, чтобы не конкурировать с LCP/TBT за главный поток
+// (Lighthouse mobile: этот файл давал ~700ms bootup-time на критическом
+// пути до фикса).
+function schedule(fn) {
+  if ('requestIdleCallback' in window) requestIdleCallback(fn, { timeout: 1500 });
+  else setTimeout(fn, 200);
+}
+
+if (document.readyState !== 'loading') schedule(initBackground);
+else document.addEventListener('DOMContentLoaded', () => schedule(initBackground));
