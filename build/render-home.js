@@ -40,7 +40,7 @@ function popularSection(products) {
   <div class="container">
     <div class="section-head">
       <span class="kicker">Каталог</span>
-      <h2>🔥 Популярное</h2>
+      <h2>Популярное</h2>
     </div>
   </div>
   <div class="products-pin-wrap">
@@ -133,7 +133,7 @@ function blogPreviewSection(posts) {
 function printerTeaserSection() {
   return `<section class="section">
   <div class="container printer-teaser-grid">
-    <img src="/images/printer/p2s-angle.webp" alt="Bambu Lab P2S Combo — принтер, на котором печатается каждый заказ" class="printer-teaser-photo" loading="lazy">
+    <img src="/images/printer/p2s-angle.webp" srcset="/images/printer/p2s-angle-480.webp 480w, /images/printer/p2s-angle-800.webp 800w, /images/printer/p2s-angle.webp 1600w" sizes="(max-width: 767px) 90vw, 600px" alt="Bambu Lab P2S Combo — принтер, на котором печатается каждый заказ" class="printer-teaser-photo" loading="lazy">
     <div class="printer-teaser-content">
       <span class="kicker">Наше оборудование</span>
       <h2>Печатаем на Bambu Lab P2S Combo</h2>

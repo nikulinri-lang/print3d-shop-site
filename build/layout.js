@@ -9,7 +9,16 @@
  * уровне этой функции в исходниках сборки, не в браузере.
  */
 
-const { TELEGRAM_BOT_URL, YANDEX_METRIKA_ID, YANDEX_VERIFICATION, GOOGLE_VERIFICATION } = require("./constants");
+const { TELEGRAM_BOT_URL, YANDEX_METRIKA_ID, YANDEX_VERIFICATION, GOOGLE_VERIFICATION, CITY } = require("./constants");
+
+const ORGANIZATION_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "PRINTLAB",
+  url: "https://3-d-shop.ru",
+  address: { "@type": "PostalAddress", addressLocality: CITY, addressCountry: "RU" },
+  sameAs: [TELEGRAM_BOT_URL],
+};
 
 // Apache отдаёт CSS/JS с cache-control: max-age=31536000 (год) без
 // собственного billing-хэша — единственный способ инвалидировать кэш
@@ -86,6 +95,7 @@ ${verificationTags()}
 }
 </script>
 ${metrikaSnippet()}
+<script type="application/ld+json">${JSON.stringify(ORGANIZATION_SCHEMA)}</script>
 ${extraHead}
 </head>
 <body>

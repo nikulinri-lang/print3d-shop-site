@@ -68,7 +68,10 @@ function materialCard(m) {
 function printerPage() {
   const body = `<section class="hero hero--printer">
   <div class="hero-visual">
-    <img src="/images/printer/p2s-front.webp" alt="Bambu Lab P2S Combo" class="printer-hero-photo">
+    <img src="/images/printer/p2s-front.webp"
+      srcset="/images/printer/p2s-front-480.webp 480w, /images/printer/p2s-front-800.webp 800w, /images/printer/p2s-front.webp 1600w"
+      sizes="(max-width: 767px) 90vw, 560px"
+      alt="Bambu Lab P2S Combo" class="printer-hero-photo" loading="eager" fetchpriority="high">
   </div>
   <div class="container hero-content">
     <span class="kicker">Наше оборудование</span>
@@ -108,9 +111,9 @@ function printerPage() {
   <div class="container">
     <div class="section-head"><span class="kicker">Фотогалерея</span><h2>Принтер вживую</h2></div>
     <div class="printer-gallery">
-      <img src="/images/printer/p2s-angle.webp" alt="Bambu Lab P2S Combo, вид спереди с AMS 2 Pro" loading="lazy">
-      <img src="/images/printer/p2s-side.webp" alt="Bambu Lab P2S Combo, вид сбоку" loading="lazy">
-      <img src="/images/printer/p2s-front.webp" alt="Bambu Lab P2S Combo, фронтальный вид" loading="lazy">
+      <img src="/images/printer/p2s-angle.webp" srcset="/images/printer/p2s-angle-480.webp 480w, /images/printer/p2s-angle-800.webp 800w, /images/printer/p2s-angle.webp 1600w" sizes="(max-width: 767px) 90vw, 400px" alt="Bambu Lab P2S Combo, вид спереди с AMS 2 Pro" loading="lazy">
+      <img src="/images/printer/p2s-side.webp" srcset="/images/printer/p2s-side-480.webp 480w, /images/printer/p2s-side-800.webp 800w, /images/printer/p2s-side.webp 1600w" sizes="(max-width: 767px) 90vw, 400px" alt="Bambu Lab P2S Combo, вид сбоку" loading="lazy">
+      <img src="/images/printer/p2s-front.webp" srcset="/images/printer/p2s-front-480.webp 480w, /images/printer/p2s-front-800.webp 800w, /images/printer/p2s-front.webp 1600w" sizes="(max-width: 767px) 90vw, 400px" alt="Bambu Lab P2S Combo, фронтальный вид" loading="lazy">
     </div>
   </div>
 </section>
@@ -135,6 +138,7 @@ function printerPage() {
     ogImage: "/images/printer/p2s-front.webp",
     activeNav: "/printer",
     bodyContent: body,
+    extraHead: `<link rel="preload" as="image" href="/images/printer/p2s-front-800.webp" imagesrcset="/images/printer/p2s-front-480.webp 480w, /images/printer/p2s-front-800.webp 800w, /images/printer/p2s-front.webp 1600w" imagesizes="(max-width: 767px) 90vw, 560px">`,
   });
 }
 

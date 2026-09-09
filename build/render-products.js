@@ -167,12 +167,17 @@ function breadcrumbSchema(items) {
 }
 
 function productSchema(p) {
+  // Поля image/gid/gtin не указываем — у товаров пока нет настоящих фото
+  // (только сгенерированные SVG-превью категории), а придумывать URL
+  // несуществующей фотографии хуже для доверия к разметке, чем пропустить
+  // необязательное поле.
   return {
     "@context": "https://schema.org",
     "@type": "Product",
     name: p.title,
     description: p.description,
     category: (p.categories || [])[0] || "",
+    material: p.specs && p.specs.material ? p.specs.material : undefined,
     offers: {
       "@type": "Offer",
       priceCurrency: "RUB",
