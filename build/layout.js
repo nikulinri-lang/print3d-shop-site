@@ -9,7 +9,7 @@
  * уровне этой функции в исходниках сборки, не в браузере.
  */
 
-const { TELEGRAM_BOT_URL, YANDEX_METRIKA_ID, YANDEX_VERIFICATION, GOOGLE_VERIFICATION, CITY } = require("./constants");
+const { TELEGRAM_BOT_URL, TELEGRAM_HANDLE, YANDEX_METRIKA_ID, YANDEX_VERIFICATION, GOOGLE_VERIFICATION, CITY } = require("./constants");
 
 const ORGANIZATION_SCHEMA = {
   "@context": "https://schema.org",
@@ -124,7 +124,9 @@ ${bodyContent}
   <div class="container footer-grid">
     <div class="footer-brand">
       <div class="logo"><span class="logo-mark">◆</span> PRINTLAB</div>
-      <div class="footer-meta">© 2026 PRINTLAB · Брянск</div>
+      <div class="footer-meta">© 2026 PRINTLAB · Самовывоз: ${CITY}<!-- TODO: добавить точный адрес самовывоза после уточнения у владельца --></div>
+      <div class="footer-meta"><a href="${TELEGRAM_BOT_URL}" target="_blank" rel="noopener">${TELEGRAM_HANDLE}</a></div>
+      <!-- TODO: добавить реквизиты (ИП/самозанятость) после оформления -->
     </div>
     <ul class="footer-links">
       <li><a href="/catalog">Каталог</a></li>
@@ -132,6 +134,9 @@ ${bodyContent}
       <li><a href="/printer">Производство</a></li>
       <li><a href="/about">О нас</a></li>
       <li><a href="/delivery">Доставка</a></li>
+      <li><a href="/custom-order">Кастомный заказ</a></li>
+      <li><a href="/offer">Оферта</a></li>
+      <li><a href="/privacy">Конфиденциальность</a></li>
     </ul>
     <div class="footer-actions">
       <a href="${TELEGRAM_BOT_URL}" class="btn btn-primary btn-telegram" target="_blank" rel="noopener">

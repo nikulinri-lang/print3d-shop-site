@@ -19,6 +19,8 @@ function render(distDir, { products, blogPosts }) {
     { loc: "/about", lastmod: buildDate },
     { loc: "/delivery", lastmod: buildDate },
     { loc: "/custom-order", lastmod: buildDate },
+    { loc: "/offer", lastmod: buildDate },
+    { loc: "/privacy", lastmod: buildDate },
     { loc: "/blog", lastmod: buildDate },
     ...products.map((p) => ({ loc: `/catalog/${p.slug}`, lastmod: buildDate })),
     ...blogPosts.map((p) => ({ loc: `/blog/${p.slug}`, lastmod: new Date(p.date).toISOString().slice(0, 10) })),

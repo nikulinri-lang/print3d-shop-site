@@ -328,13 +328,114 @@ function checkoutPage() {
   });
 }
 
+function offerPage() {
+  const body = `<section class="page-hero">
+  <div class="container">
+    <span class="kicker">Документы</span>
+    <h1>Публичная оферта</h1>
+    <p class="lede">Условия оформления и исполнения заказов на сайте PRINTLAB.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container container--article">
+    <div class="article-body">
+      <p><!-- TODO: заменить реальными реквизитами после оформления ИП/самозанятости —
+        полное наименование, ИНН, ОГРНИП/номер как самозанятого, юридический адрес --></p>
+
+      <h2>1. Общие положения</h2>
+      <p>Настоящий документ является публичной офертой PRINTLAB (далее — «Исполнитель») и определяет условия изготовления и продажи 3D-печатных изделий через сайт 3-d-shop.ru. Оформляя заказ на сайте, покупатель («Заказчик») принимает условия настоящей оферты.</p>
+
+      <h2>2. Предмет</h2>
+      <p>Исполнитель обязуется изготовить и передать Заказчику изделия из каталога сайта либо изготовленные по индивидуальному заказу (по файлу, эскизу, фотографии или размерам), а Заказчик — принять и оплатить изделие.</p>
+
+      <h2>3. Оформление заказа</h2>
+      <p>Заказ оформляется через корзину на сайте или форму кастомного заказа. После оформления с Заказчиком связывается менеджер в Telegram (${TELEGRAM_HANDLE}) для подтверждения деталей, сроков и стоимости.</p>
+
+      <h2>4. Цена и оплата</h2>
+      <p>Стоимость изделия указывается на сайте либо согласуется индивидуально для кастомных заказов. Оплата производится после подтверждения заказа менеджером — при самовывозе в ${CITY_PREP} или по согласованному способу при доставке. Онлайн-оплата на сайте не предусмотрена.</p>
+
+      <h2>5. Получение</h2>
+      <p>Самовывоз — в ${CITY_PREP}, точка и время согласовываются в Telegram. Доставка по России — способом, согласованным с Заказчиком при оформлении.</p>
+
+      <h2>6. Срок изготовления</h2>
+      <p>Изготовление занимает ${LEAD_TIME} с момента подтверждения заказа, если иной срок не согласован отдельно для кастомного заказа.</p>
+
+      <h2>7. Контакты</h2>
+      <p>По всем вопросам — Telegram <a href="${TELEGRAM_BOT_URL}" target="_blank" rel="noopener">${TELEGRAM_HANDLE}</a>.</p>
+
+      <p><!-- TODO: добавить дату публикации/редакции документа после оформления ИП --></p>
+    </div>
+  </div>
+</section>`;
+
+  return renderLayout({
+    title: "Публичная оферта — PRINTLAB",
+    description: "Условия оформления и исполнения заказов на сайте PRINTLAB.",
+    canonical: "/offer",
+    activeNav: "/offer",
+    bodyContent: body,
+    extraScripts: crumbScript([["Главная", "/"], ["Публичная оферта", "/offer"]]),
+  });
+}
+
+function privacyPage() {
+  const body = `<section class="page-hero">
+  <div class="container">
+    <span class="kicker">Документы</span>
+    <h1>Политика конфиденциальности</h1>
+    <p class="lede">Как обрабатываются персональные данные посетителей сайта PRINTLAB.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container container--article">
+    <div class="article-body">
+      <p><!-- TODO: заменить реальными реквизитами оператора персональных данных
+        после оформления ИП/самозанятости --></p>
+
+      <h2>1. Общие положения</h2>
+      <p>Настоящая политика определяет порядок обработки персональных данных пользователей сайта 3-d-shop.ru (далее — «Сайт») студией PRINTLAB (далее — «Оператор»).</p>
+
+      <h2>2. Какие данные собираются</h2>
+      <p>При оформлении заказа или кастомной заявки Оператор получает: имя, контактные данные (телефон или Telegram), содержание заказа (товар, вариант, количество), адрес — при доставке. Сайт также использует Яндекс.Метрику для анализа посещаемости (обезличенная статистика).</p>
+
+      <h2>3. Цели обработки</h2>
+      <p>Данные используются исключительно для оформления, изготовления и передачи заказа, связи с Заказчиком по вопросам заказа и улучшения работы сайта.</p>
+
+      <h2>4. Передача данных</h2>
+      <p>Данные заказа передаются Оператору через Telegram (мессенджер, выбранный Заказчиком как канал связи) и не передаются третьим лицам, кроме случаев, необходимых для доставки (транспортные компании, Авито Доставка — при выборе такого способа получения).</p>
+
+      <h2>5. Хранение</h2>
+      <p>Данные хранятся в переписке в Telegram и удаляются по запросу Заказчика.</p>
+
+      <h2>6. Права пользователя</h2>
+      <p>Заказчик вправе запросить удаление своих данных, написав в Telegram <a href="${TELEGRAM_BOT_URL}" target="_blank" rel="noopener">${TELEGRAM_HANDLE}</a>.</p>
+
+      <p><!-- TODO: добавить дату публикации/редакции документа после оформления ИП --></p>
+    </div>
+  </div>
+</section>`;
+
+  return renderLayout({
+    title: "Политика конфиденциальности — PRINTLAB",
+    description: "Как PRINTLAB обрабатывает персональные данные посетителей сайта.",
+    canonical: "/privacy",
+    activeNav: "/privacy",
+    bodyContent: body,
+    extraScripts: crumbScript([["Главная", "/"], ["Политика конфиденциальности", "/privacy"]]),
+  });
+}
+
 function render(distDir) {
   fs.writeFileSync(path.join(distDir, "about.html"), aboutPage());
   fs.writeFileSync(path.join(distDir, "delivery.html"), deliveryPage());
   fs.writeFileSync(path.join(distDir, "custom-order.html"), customOrderPage());
   fs.writeFileSync(path.join(distDir, "cart.html"), cartPage());
   fs.writeFileSync(path.join(distDir, "checkout.html"), checkoutPage());
-  console.log("  ✓ about.html, delivery.html, custom-order.html, cart.html, checkout.html");
+  fs.writeFileSync(path.join(distDir, "offer.html"), offerPage());
+  fs.writeFileSync(path.join(distDir, "privacy.html"), privacyPage());
+  console.log("  ✓ about.html, delivery.html, custom-order.html, cart.html, checkout.html, offer.html, privacy.html");
 }
 
 module.exports = { render };
