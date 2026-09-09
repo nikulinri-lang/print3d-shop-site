@@ -9,6 +9,11 @@ DirectorySlash Off
 
 RewriteEngine On
 
+# ВРЕМЕННО: диагностика — узнать, что реально приходит в X-Forwarded-Proto
+# (удалить после проверки). /__debug_xfp -> редирект, в Location виден
+# заголовок, увиденный Apache, без риска для остального сайта.
+RewriteRule ^__debug_xfp$ /?xfp=%{HTTP:X-Forwarded-Proto}&https=%{HTTPS} [R=302,L]
+
 # Принудительный HTTPS. %{HTTPS} тут всегда off (SSL терминируется до
 # Apache) — проверка X-Forwarded-Proto вместо него, иначе зацикливание
 # редиректа (см. историю laserlove32-site).
