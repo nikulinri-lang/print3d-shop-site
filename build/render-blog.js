@@ -85,9 +85,14 @@ function loadPosts() {
 // градиент-плейсхолдер с подписью "[ обложка ]", один источник разметки
 // карточки переиспользуется и на /blog, и в блоке блога на главной
 // (render-home.js), чтобы они не разъезжались друг с другом.
+const BLOG_PLACEHOLDER_ICON = '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/>';
+
 function blogCardMedia(p) {
   if (!p.cover) {
-    return `<div class="blog-card-media"><div class="blog-card-photo"></div><span class="placeholder-label mono">[ обложка ]</span></div>`;
+    return `<div class="blog-card-media">
+        <div class="blog-card-photo"></div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="blog-card-placeholder-icon">${BLOG_PLACEHOLDER_ICON}</svg>
+      </div>`;
   }
   return `<div class="blog-card-media blog-card-media--photo">
         <picture>

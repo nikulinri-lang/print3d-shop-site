@@ -31,7 +31,12 @@ function initHero() {
   const scene = new THREE.Scene();
   const { w, h } = size();
   const camera = new THREE.PerspectiveCamera(42, w / h, 0.1, 100);
-  camera.position.z = 7;
+  // На узком портретном экране тот же радиус геометрии занимает намного
+  // больше ширины кадра (горизонтальный угол обзора = вертикальный * aspect,
+  // а aspect < 1 на мобильном) — из-за этого wireframe перекрывал текст
+  // заголовка. Отодвигаем камеру дальше на мобильном, чтобы фигура
+  // визуально уменьшилась.
+  camera.position.z = isMobile ? 20 : 7;
 
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, simplified ? 1.5 : 2));
@@ -41,7 +46,7 @@ function initHero() {
   scene.add(group);
 
   const geo = new THREE.IcosahedronGeometry(2.1, simplified ? 1 : 2);
-  const wireMat = new THREE.LineBasicMaterial({ color: 0xff6b00, transparent: true, opacity: 0.85 });
+  const wireMat = new THREE.LineBasicMaterial({ color: 0xff6b00, transparent: true, opacity: isMobile ? 0.22 : 0.85 });
   const wireMesh = new THREE.LineSegments(new THREE.WireframeGeometry(geo), wireMat);
   group.add(wireMesh);
 
