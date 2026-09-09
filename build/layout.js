@@ -118,7 +118,9 @@ ${extraHead}
   </div>
 </header>
 
+<main>
 ${bodyContent}
+</main>
 
 <footer class="site-footer">
   <div class="container footer-grid">
