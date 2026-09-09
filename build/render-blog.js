@@ -2,10 +2,11 @@ const fs = require("fs");
 const path = require("path");
 const matter = require("gray-matter");
 const { marked } = require("marked");
-const { renderLayout } = require("./layout");
+const { renderLayout, TELEGRAM_BOT_URL } = require("./layout");
 
 const ROOT = path.resolve(__dirname, "..");
 const BLOG_DIR = path.join(ROOT, "content", "blog");
+const WORDS_PER_MINUTE = 200;
 
 function slugFromFilename(filename) {
   return filename.replace(/\.md$/, "");
@@ -16,6 +17,45 @@ function fmtDate(d) {
   return date.toLocaleDateString("ru-RU", { day: "2-digit", month: "2-digit", year: "numeric" });
 }
 
+function readingTime(markdownContent) {
+  const words = markdownContent.trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words / WORDS_PER_MINUTE));
+}
+
+// Оборачивает абзацы вида "**Берите PLA, если:** ..." в callout-блок —
+// матчим по markdown-соглашению (жирный лид-ин с двоеточием в начале
+// абзаца), а не по тексту конкретной статьи, чтобы работало на любой
+// новой статье без ручной разметки.
+function wrapCallouts(html) {
+  return html.replace(/<p><strong>([^<]*:)<\/strong>([\s\S]*?)<\/p>/g, (_m, lead, rest) => `<div class="callout"><p><strong>${lead}</strong>${rest}</p></div>`);
+}
+
+function wrapTables(html) {
+  return html.replace(/<table>([\s\S]*?)<\/table>/g, (_m, inner) => `<div class="table-scroll"><table>${inner}</table></div>`);
+}
+
+function slugifyHeading(text, used) {
+  const base = text.replace(/[^\p{L}\p{N}\s-]/gu, "").trim().toLowerCase().replace(/\s+/g, "-") || "section";
+  const n = used.get(base) || 0;
+  used.set(base, n + 1);
+  return n ? `${base}-${n}` : base;
+}
+
+// Проставляет id заголовкам прямо в собранном HTML (без клиентского JS —
+// содержимое и оглавление должны отдаваться в исходном HTML) и заодно
+// строит список пунктов оглавления.
+function injectHeadingIdsAndToc(html) {
+  const used = new Map();
+  const toc = [];
+  const withIds = html.replace(/<h([23])>([\s\S]*?)<\/h\1>/g, (_m, level, inner) => {
+    const text = inner.replace(/<[^>]+>/g, "");
+    const id = slugifyHeading(text, used);
+    toc.push({ level: Number(level), text, id });
+    return `<h${level} id="${id}">${inner}</h${level}>`;
+  });
+  return { html: withIds, toc };
+}
+
 function loadPosts() {
   if (!fs.existsSync(BLOG_DIR)) return [];
   return fs
@@ -24,13 +64,18 @@ function loadPosts() {
     .map((f) => {
       const raw = fs.readFileSync(path.join(BLOG_DIR, f), "utf8");
       const { data, content } = matter(raw);
+      const rawHtml = marked.parse(content);
+      const { html: htmlWithIds, toc } = injectHeadingIdsAndToc(rawHtml);
       return {
         slug: slugFromFilename(f),
         title: data.title,
         date: data.date,
+        category: data.category || "Блог",
         excerpt: data.excerpt,
         cover: data.cover || null,
-        html: marked.parse(content),
+        readMinutes: readingTime(content),
+        toc,
+        html: wrapTables(wrapCallouts(htmlWithIds)),
       };
     })
     .sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -55,7 +100,11 @@ function blogCardMedia(p) {
 function blogCardHTML(p) {
   return `<a href="/blog/${p.slug}" class="blog-card">
         ${blogCardMedia(p)}
-        <div class="blog-card-date mono">${fmtDate(p.date)}</div>
+        <span class="blog-card-tag">${p.category}</span>
+        <div class="blog-card-meta">
+          <span class="blog-card-date mono">${fmtDate(p.date)}</span>
+          <span class="blog-card-read-time mono">${p.readMinutes} мин чтения</span>
+        </div>
         <h3>${p.title}</h3>
         <p>${p.excerpt}</p>
       </a>`;
@@ -89,22 +138,51 @@ function blogIndexPage(posts) {
   });
 }
 
+function tocHTML(toc) {
+  if (toc.length < 2) return "";
+  const links = toc
+    .map((item) => `<a href="#${item.id}" class="article-toc-link${item.level === 3 ? " article-toc-link--sub" : ""}">${item.text}</a>`)
+    .join("\n            ");
+  return `<aside class="article-toc">
+        <div class="article-toc-inner">
+          <span class="article-toc-label">На этой странице</span>
+          <nav class="article-toc-nav">
+            ${links}
+          </nav>
+        </div>
+      </aside>`;
+}
+
+function articleCta() {
+  return `<div class="article-cta">
+        <h2>Готовы заказать изделие?</h2>
+        <div class="article-cta-actions">
+          <a href="/catalog" class="btn btn-primary">Смотреть каталог</a>
+          <a href="${TELEGRAM_BOT_URL}" class="btn btn-ghost" target="_blank" rel="noopener">Написать в Telegram</a>
+        </div>
+      </div>`;
+}
+
 function blogPostPage(post) {
   const body = `<div class="reading-progress" id="readingProgress"></div>
 
 <section class="page-hero page-hero--article">
   <div class="container">
     <span class="kicker">Блог</span>
-    <div class="blog-card-date mono">${fmtDate(post.date)}</div>
+    <div class="blog-card-date mono">${fmtDate(post.date)} · ${post.readMinutes} мин чтения</div>
     <h1>${post.title}</h1>
   </div>
 </section>
 
 <section class="section">
-  <div class="container container--article">
-    <article class="article-body">
-      ${post.html}
-    </article>
+  <div class="container container--article-wide">
+    <div class="article-layout">
+      <article class="article-content">
+        ${post.html}
+        ${articleCta()}
+      </article>
+      ${tocHTML(post.toc)}
+    </div>
     <a href="/blog" class="btn btn-ghost article-back">← Ко всем статьям</a>
   </div>
 </section>`;
@@ -123,7 +201,7 @@ function blogPostPage(post) {
   document.addEventListener('scroll', update, { passive: true });
   update();
 })();
-</script>`;
+</script>${post.toc.length >= 2 ? '\n<script defer src="/js/article-toc.js?v=1"></script>' : ""}`;
 
   return renderLayout({
     title: `${post.title} — Блог PRINTLAB`,
