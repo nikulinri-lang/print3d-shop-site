@@ -4,6 +4,7 @@
  */
 const fs = require("fs");
 const path = require("path");
+const { execFileSync } = require("child_process");
 const renderProducts = require("./render-products");
 const renderBlog = require("./render-blog");
 const renderPrinter = require("./render-printer");
@@ -26,6 +27,92 @@ function copyPublicAssets() {
   for (const entry of fs.readdirSync(PUBLIC)) {
     fs.cpSync(path.join(PUBLIC, entry), path.join(DIST, entry), { recursive: true });
   }
+}
+
+// Сжатие тяжёлых PNG/JPEG в WebP выполняется только при сборке.
+// Исходники в репозитории не меняются, но браузер получает лёгкую версию.
+function optimizeImages() {
+  const generated = new Map();
+  const imagesDir = path.join(DIST, "images");
+
+  function convertImage(src, out) {
+    fs.mkdirSync(path.dirname(out), { recursive: true });
+    execFileSync("convert", [src, "-strip", "-quality", "86", out], { stdio: "ignore" });
+    return fs.existsSync(out) && fs.statSync(out).size > 0;
+  }
+
+  function walk(dir) {
+    if (!fs.existsSync(dir)) return;
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) walk(full);
+      else if (/\.(png|jpe?g)$/i.test(entry.name)) {
+        const size = fs.statSync(full).size;
+        if (size < 100 * 1024) continue;
+        const out = full.replace(/\.(png|jpe?g)$/i, ".webp");
+        try {
+          if (convertImage(full, out)) {
+            const publicPath = "/images/" + path.relative(imagesDir, full).split(path.sep).join("/");
+            generated.set(publicPath, publicPath.replace(/\.(png|jpe?g)$/i, ".webp"));
+          }
+        } catch (err) {
+          console.warn(`  ⚠ Не удалось сжать ${path.relative(ROOT, full)}: ${err.message}`);
+        }
+      }
+    }
+  }
+
+  walk(imagesDir);
+
+  // Новое фото, добавленное в корень репозитория: на главной отдаём только
+  // адаптивные WebP-версии, а оригинал 1.8 МБ в public не копируем.
+  const homePhoto = path.join(ROOT, "IMG_7738.png");
+  if (fs.existsSync(homePhoto)) {
+    const targets = [
+      [480, "printlab-equipment-480.webp"],
+      [800, "printlab-equipment-800.webp"],
+      [1200, "printlab-equipment-1200.webp"],
+    ];
+    for (const [width, name] of targets) {
+      try {
+        const out = path.join(imagesDir, name);
+        execFileSync("convert", [homePhoto, "-resize", `${width}x`, "-strip", "-quality", "86", out], { stdio: "ignore" });
+      } catch (err) {
+        console.warn(`  ⚠ Не удалось подготовить ${name}: ${err.message}`);
+      }
+    }
+  }
+
+  return generated;
+}
+
+function replaceOptimizedImageUrls(dir, generated) {
+  function walk(current) {
+    for (const entry of fs.readdirSync(current, { withFileTypes: true })) {
+      const full = path.join(current, entry.name);
+      if (entry.isDirectory()) walk(full);
+      else if (entry.name.endsWith(".html")) {
+        let html = fs.readFileSync(full, "utf8");
+        for (const [from, to] of generated) html = html.split(from).join(to);
+        fs.writeFileSync(full, html);
+      }
+    }
+  }
+  walk(dir);
+}
+
+function replaceBrandInGeneratedHtml(dir) {
+  function walk(current) {
+    for (const entry of fs.readdirSync(current, { withFileTypes: true })) {
+      const full = path.join(current, entry.name);
+      if (entry.isDirectory()) walk(full);
+      else if (entry.name.endsWith(".html")) {
+        const html = fs.readFileSync(full, "utf8").replace(/PRINTLAB/gi, "ПринтЛаб");
+        fs.writeFileSync(full, html);
+      }
+    }
+  }
+  walk(dir);
 }
 
 // Полное дерево examples/jsm/ — 430+ файлов, из которых реально
@@ -95,6 +182,7 @@ function build() {
   console.log("Сборка сайта в dist/...");
   clean();
   copyPublicAssets();
+  const optimizedImages = optimizeImages();
   copyVendorLibs();
   const { products } = renderProducts.render(DIST);
   const blogPosts = renderBlog.render(DIST);
@@ -102,6 +190,8 @@ function build() {
   renderStaticPages.render(DIST);
   renderHome.render(DIST);
   renderSitemap.render(DIST, { products, blogPosts });
+  replaceOptimizedImageUrls(DIST, optimizedImages);
+  replaceBrandInGeneratedHtml(DIST);
   console.log("Готово.");
 }
 
