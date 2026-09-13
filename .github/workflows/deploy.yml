@@ -25,6 +25,21 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Ensure equipment image is visible and cache-busted
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('dist/index.html')
+          html = p.read_text(encoding='utf-8')
+          for name in ['480', '800', '1200']:
+              html = html.replace(f'printlab-equipment-{name}.webp', f'printlab-equipment-{name}.webp?v=20260913')
+          html = html.replace(
+              'alt="Наше оборудование для 3D-печати" class="printer-teaser-photo" loading="lazy"',
+              'alt="Наше оборудование для 3D-печати" class="printer-teaser-photo" loading="lazy" onerror="this.onerror=null;this.removeAttribute(\'srcset\');this.src=\'/images/IMG_7738.png?v=20260913\'"'
+          )
+          p.write_text(html, encoding='utf-8')
+          PY
+
       - name: FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
