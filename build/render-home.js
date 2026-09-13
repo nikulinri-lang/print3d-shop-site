@@ -133,10 +133,13 @@ function blogPreviewSection(posts) {
 function printerTeaserSection() {
   return `<section class="section">
   <div class="container printer-teaser-grid">
-    <img src="/images/printer/p2s-angle.webp" srcset="/images/printer/p2s-angle-480.webp 480w, /images/printer/p2s-angle-800.webp 800w, /images/printer/p2s-angle.webp 1600w" sizes="(max-width: 767px) 90vw, 600px" alt="Bambu Lab P2S Combo — принтер, на котором печатается каждый заказ" class="printer-teaser-photo" loading="lazy">
+    <img src="/images/printlab-equipment-800.webp"
+      srcset="/images/printlab-equipment-480.webp 480w, /images/printlab-equipment-800.webp 800w, /images/printlab-equipment-1200.webp 1200w"
+      sizes="(max-width: 767px) 90vw, 600px"
+      alt="Наше оборудование для 3D-печати" class="printer-teaser-photo" loading="lazy">
     <div class="printer-teaser-content">
       <span class="kicker">Наше оборудование</span>
-      <h2>Печатаем на Bambu Lab P2S Combo</h2>
+      <h2>Печатаем на современном 3D-принтере</h2>
       <p class="lede" style="margin-bottom: 0;">Быстро, точно и с многоцветной печатью за один проход — значит выше качество и короче срок изготовления вашего заказа.</p>
       <div class="printer-teaser-specs">
         <div class="printer-teaser-spec">
