@@ -47,19 +47,14 @@ function productArt(product, size = "card") {
 
   if (images.length) {
     if (size === "gallery" && images.length > 1) {
-      return `<div class="${cls}" style="display:grid;grid-template-columns:repeat(${Math.min(images.length, 2)},minmax(0,1fr));gap:10px;overflow:hidden;">
-        ${images.slice(0, 2).map((src, i) => `<img src="${escAttr(src)}" alt="${escAttr(product.title)} — фото ${i + 1}" loading="${i === 0 ? "eager" : "lazy"}" style="width:100%;height:100%;min-height:260px;object-fit:contain;display:block;border-radius:inherit;" />`).join("")}
+      return `<div class="${cls}" style="width:min(100%,760px);margin:0 auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;overflow:hidden;">
+        ${images.slice(0, 2).map((src, i) => `<img src="${escAttr(src)}" alt="${escAttr(product.title)} — фото ${i + 1}" loading="${i === 0 ? "eager" : "lazy"}" style="width:100%;height:auto;max-height:520px;object-fit:contain;display:block;border-radius:inherit;" />`).join("")}
       </div>`;
     }
 
-    const cardImageStyle = size === "card"
-      ? "width:100%;height:100%;object-fit:cover;object-position:center;display:block;border-radius:inherit;"
-      : "width:100%;height:100%;object-fit:contain;display:block;border-radius:inherit;";
-    const cardContainerStyle = size === "card"
-      ? "aspect-ratio:4/3;overflow:hidden;"
-      : "";
+    const cardImageStyle = "width:100%;height:auto;object-fit:contain;object-position:center;display:block;border-radius:inherit;";
 
-    return `<div class="${cls}"${cardContainerStyle ? ` style="${cardContainerStyle}"` : ""}>
+    return `<div class="${cls}">
       <img src="${escAttr(images[0])}" alt="${escAttr(product.title)}" loading="${size === "gallery" ? "eager" : "lazy"}" style="${cardImageStyle}" />
     </div>`;
   }
