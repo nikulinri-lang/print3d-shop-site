@@ -52,8 +52,15 @@ function productArt(product, size = "card") {
       </div>`;
     }
 
-    return `<div class="${cls}">
-      <img src="${escAttr(images[0])}" alt="${escAttr(product.title)}" loading="${size === "gallery" ? "eager" : "lazy"}" style="width:100%;height:100%;object-fit:contain;display:block;border-radius:inherit;" />
+    const cardImageStyle = size === "card"
+      ? "width:100%;height:100%;object-fit:cover;object-position:center;display:block;border-radius:inherit;"
+      : "width:100%;height:100%;object-fit:contain;display:block;border-radius:inherit;";
+    const cardContainerStyle = size === "card"
+      ? "aspect-ratio:4/3;overflow:hidden;"
+      : "";
+
+    return `<div class="${cls}"${cardContainerStyle ? ` style="${cardContainerStyle}"` : ""}>
+      <img src="${escAttr(images[0])}" alt="${escAttr(product.title)}" loading="${size === "gallery" ? "eager" : "lazy"}" style="${cardImageStyle}" />
     </div>`;
   }
 
