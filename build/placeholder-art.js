@@ -1,13 +1,6 @@
-/* Нейтральные сгенерированные превью товаров (вместо белых квадратов и
- * текста-плейсхолдера "[ рендер / .glb ]", и вместо хотлинка чужих фото
- * с MakerWorld/Printables — см. решение в чате). Абстрактная
- * wireframe-карточка в палитре сайта с line-иконкой категории — честно
- * выглядит как стилизованная заглушка, а не как фото конкретного
- * изделия. Собственные простые SVG-иконки вместо эмодзи: у эмодзи
- * непредсказуемый рендер шрифтом ОС/браузера и они не вписываются в
- * визуальный стиль сайта (это отдельная проблема от primaryIcon() ниже,
- * который остаётся эмодзи для мелкой иконки строки корзины — там это
- * уместно). */
+/* Нейтральные сгенерированные превью товаров. Для товаров с полем images
+ * показываем реальные фотографии из public/images; для остальных остаётся
+ * честная SVG-заглушка категории. */
 
 const CATEGORY_ICON = {
   "Антистресс": "🧩",
@@ -43,10 +36,28 @@ function primaryIconSvg(product) {
   return CATEGORY_ICON_SVG[cat] || DEFAULT_ICON_SVG;
 }
 
+function escAttr(s) {
+  return String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+}
+
 // size: "card" (каталог/похожее) | "gallery" (страница товара, крупнее)
 function productArt(product, size = "card") {
-  const inner = primaryIconSvg(product);
+  const images = Array.isArray(product.images) ? product.images.filter(Boolean) : [];
   const cls = size === "gallery" ? "product-art product-art--lg" : "product-art";
+
+  if (images.length) {
+    if (size === "gallery" && images.length > 1) {
+      return `<div class="${cls}" style="display:grid;grid-template-columns:repeat(${Math.min(images.length, 2)},minmax(0,1fr));gap:10px;overflow:hidden;">
+        ${images.slice(0, 2).map((src, i) => `<img src="${escAttr(src)}" alt="${escAttr(product.title)} — фото ${i + 1}" loading="${i === 0 ? "eager" : "lazy"}" style="width:100%;height:100%;min-height:260px;object-fit:contain;display:block;border-radius:inherit;" />`).join("")}
+      </div>`;
+    }
+
+    return `<div class="${cls}">
+      <img src="${escAttr(images[0])}" alt="${escAttr(product.title)}" loading="${size === "gallery" ? "eager" : "lazy"}" style="width:100%;height:100%;object-fit:contain;display:block;border-radius:inherit;" />
+    </div>`;
+  }
+
+  const inner = primaryIconSvg(product);
   return `<div class="${cls}" aria-hidden="true">
     <svg viewBox="0 0 100 100" class="product-art-grid" preserveAspectRatio="none">
       <line x1="0" y1="25" x2="100" y2="25" />
