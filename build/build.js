@@ -16,6 +16,8 @@ const ROOT = path.resolve(__dirname, "..");
 const DIST = path.join(ROOT, "dist");
 const PUBLIC = path.join(ROOT, "public");
 const NODE_MODULES = path.join(ROOT, "node_modules");
+const PRODUCTS_JSON = path.join(ROOT, "content", "products.json");
+const EXTRA_PRODUCTS_JSON = path.join(ROOT, "content", "products-autumn.json");
 
 function clean() {
   fs.rmSync(DIST, { recursive: true, force: true });
@@ -178,21 +180,40 @@ function copyVendorLibs() {
   console.log(`  ✓ vendor: three.module.js, three-jsm/ (${THREE_JSM_FILES.length} файлов), gsap.min.js, ScrollTrigger.min.js`);
 }
 
+function mergeExtraProductsForBuild() {
+  if (!fs.existsSync(EXTRA_PRODUCTS_JSON)) return null;
+  const original = fs.readFileSync(PRODUCTS_JSON, "utf8");
+  const base = JSON.parse(original);
+  const extra = JSON.parse(fs.readFileSync(EXTRA_PRODUCTS_JSON, "utf8"));
+  if (Array.isArray(extra) && extra.length) {
+    fs.writeFileSync(PRODUCTS_JSON, JSON.stringify([...base, ...extra], null, 2) + "\n");
+  }
+  return original;
+}
+
 function build() {
   console.log("Сборка сайта в dist/...");
   clean();
   copyPublicAssets();
   const optimizedImages = optimizeImages();
   copyVendorLibs();
-  const { products } = renderProducts.render(DIST);
-  const blogPosts = renderBlog.render(DIST);
-  renderPrinter.render(DIST);
-  renderStaticPages.render(DIST);
-  renderHome.render(DIST);
-  renderSitemap.render(DIST, { products, blogPosts });
-  replaceOptimizedImageUrls(DIST, optimizedImages);
-  replaceBrandInGeneratedHtml(DIST);
-  console.log("Готово.");
+
+  // Дополнительные товары храним отдельным файлом, чтобы не переписывать
+  // большой основной каталог при каждом новом сезонном товаре.
+  const originalProductsJson = mergeExtraProductsForBuild();
+  try {
+    const { products } = renderProducts.render(DIST);
+    const blogPosts = renderBlog.render(DIST);
+    renderPrinter.render(DIST);
+    renderStaticPages.render(DIST);
+    renderHome.render(DIST);
+    renderSitemap.render(DIST, { products, blogPosts });
+    replaceOptimizedImageUrls(DIST, optimizedImages);
+    replaceBrandInGeneratedHtml(DIST);
+    console.log("Готово.");
+  } finally {
+    if (originalProductsJson !== null) fs.writeFileSync(PRODUCTS_JSON, originalProductsJson);
+  }
 }
 
 build();
