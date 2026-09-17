@@ -7,7 +7,7 @@
  */
 
 const ALLOWED_ORIGIN = "https://3-d-shop.ru";
-const CATALOG_URL = "https://raw.githubusercontent.com/nikulinri-lang/print3d-shop-site/main/content/products-autumn.json";
+const CATALOG_URL = "https://api.github.com/repos/nikulinri-lang/print3d-shop-site/contents/content/products-autumn.json?ref=main";
 
 function corsHeaders() {
   return {
@@ -54,11 +54,21 @@ function normalizeProduct(p) {
 
 async function getProducts() {
   const resp = await fetch(CATALOG_URL, {
-    headers: { "Accept": "application/json" },
+    headers: {
+      "Accept": "application/vnd.github+json",
+      "User-Agent": "PRINTLAB-Catalog-Worker",
+    },
     cf: { cacheTtl: 60, cacheEverything: true },
   });
   if (!resp.ok) throw new Error(`catalog fetch failed: ${resp.status}`);
-  const data = await resp.json();
+
+  const payload = await resp.json();
+  if (!payload || payload.encoding !== "base64" || typeof payload.content !== "string") {
+    throw new Error("GitHub catalog response is not base64 content");
+  }
+
+  const decoded = atob(payload.content.replace(/\n/g, ""));
+  const data = JSON.parse(decoded);
   if (!Array.isArray(data)) throw new Error("catalog must be an array");
   return data.map(normalizeProduct);
 }
