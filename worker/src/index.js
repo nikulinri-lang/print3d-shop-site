@@ -1,29 +1,27 @@
-/* Cloudflare Worker: принимает заказ/кастомную заявку с 3-d-shop.ru и
- * пересылает её владельцу магазина личным сообщением в Telegram через
- * Bot API. Существует ОТДЕЛЬНО от статического сайта именно потому, что
- * токен бота — секрет: его нельзя положить в клиентский JS (любой
- * посетитель откроет исходный код страницы и сможет писать от имени
- * бота). Секреты (BOT_TOKEN, OWNER_CHAT_ID) задаются через
- * `wrangler secret put`, не хранятся в этом файле и не попадают в git.
+/* Cloudflare Worker: каталог + приём заказов с 3-d-shop.ru.
+ * Каталог берётся из GitHub — тот же products-autumn.json, из которого
+ * собирается сайт. Telegram-бот может использовать GET /products как
+ * единый источник каталога.
  *
- * POST /  — { kind: "order" | "custom", ...поля из checkout.js/custom-order.js }
- * Ответ: { ok: true } или { ok: false, error }
+ * Секреты BOT_TOKEN и OWNER_CHAT_ID задаются через wrangler secret put.
  */
 
 const ALLOWED_ORIGIN = "https://3-d-shop.ru";
+const CATALOG_URL = "https://raw.githubusercontent.com/nikulinri-lang/print3d-shop-site/main/content/products-autumn.json";
 
 function corsHeaders() {
   return {
     "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
+    "Cache-Control": "no-store",
   };
 }
 
-function json(data, status = 200) {
+function json(data, status = 200, extraHeaders = {}) {
   return new Response(JSON.stringify(data), {
     status,
-    headers: { "Content-Type": "application/json", ...corsHeaders() },
+    headers: { "Content-Type": "application/json; charset=utf-8", ...corsHeaders(), ...extraHeaders },
   });
 }
 
@@ -31,18 +29,53 @@ function esc(v) {
   return String(v == null ? "" : v).slice(0, 2000);
 }
 
+function normalizeProduct(p) {
+  return {
+    id: String(p.id || p.slug || ""),
+    slug: String(p.slug || p.id || ""),
+    title: String(p.title || "Без названия"),
+    category: String(p.category || "Другое"),
+    categories: Array.isArray(p.categories) ? p.categories.map(String) : [],
+    price: Number(p.price || 0),
+    variants: Array.isArray(p.variants)
+      ? p.variants.map((v) => ({ name: String(v.name || ""), extra: Number(v.extra || 0) }))
+      : [],
+    stock: Number.isFinite(Number(p.stock)) ? Number(p.stock) : 0,
+    featured: Boolean(p.featured),
+    description: String(p.description || ""),
+    shortDesc: String(p.shortDesc || ""),
+    specs: p.specs && typeof p.specs === "object" ? p.specs : {},
+    colors: p.colors ?? null,
+    images: Array.isArray(p.images)
+      ? p.images.map((src) => new URL(String(src), "https://3-d-shop.ru/").href)
+      : [],
+  };
+}
+
+async function getProducts() {
+  const resp = await fetch(CATALOG_URL, {
+    headers: { "Accept": "application/json" },
+    cf: { cacheTtl: 60, cacheEverything: true },
+  });
+  if (!resp.ok) throw new Error(`catalog fetch failed: ${resp.status}`);
+  const data = await resp.json();
+  if (!Array.isArray(data)) throw new Error("catalog must be an array");
+  return data.map(normalizeProduct);
+}
+
 function formatOrderMessage(d) {
   const lines = [
-    "🛒 Новый заказ с сайта",
+    "🛒 Новый заказ",
     "",
     `👤 Имя: ${esc(d.name)}`,
     `📞 Контакт: ${esc(d.contact)}`,
-    "📦 Товар:",
+    "📦 Товары:",
     ...(Array.isArray(d.items) ? d.items : []).map(
-      (i) => `  — ${esc(i.title)}${i.variant ? ` (${esc(i.variant)})` : ""} × ${esc(i.qty)}`
+      (i) => `  — ${esc(i.title || i.slug)}${i.variant ? ` (${esc(i.variant)})` : ""} × ${esc(i.qty)}`
     ),
     `🚚 Получение: ${esc(d.method)}`,
   ];
+  if (d.total != null) lines.push(`💰 Сумма: ${esc(d.total)} ₽`);
   if (d.address) lines.push(`📍 Адрес: ${esc(d.address)}`);
   if (d.comment) lines.push(`💬 Комментарий: ${esc(d.comment)}`);
   lines.push(`🕐 Время: ${new Date().toISOString()}`);
@@ -60,7 +93,7 @@ function formatCustomMessage(d) {
   ];
   if (d.size) lines.push(`📏 Размер: ${esc(d.size)}`);
   if (d.color) lines.push(`🎨 Цвет: ${esc(d.color)}`);
-  if (d.fileName) lines.push(`📎 Файл (у клиента, пришлёт в чат): ${esc(d.fileName)}`);
+  if (d.fileName) lines.push(`📎 Файл: ${esc(d.fileName)}`);
   lines.push(`🕐 Время: ${new Date().toISOString()}`);
   return lines.join("\n");
 }
@@ -83,6 +116,18 @@ export default {
     if (request.method === "OPTIONS") {
       return new Response(null, { headers: corsHeaders() });
     }
+
+    const url = new URL(request.url);
+
+    if (request.method === "GET" && url.pathname === "/products") {
+      try {
+        const products = await getProducts();
+        return json({ ok: true, products, source: CATALOG_URL });
+      } catch (err) {
+        return json({ ok: false, error: String(err) }, 502);
+      }
+    }
+
     if (request.method !== "POST") {
       return json({ ok: false, error: "method not allowed" }, 405);
     }
