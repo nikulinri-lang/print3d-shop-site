@@ -80,6 +80,24 @@ function initScrollAnimations() {
     });
   });
 
+  // ---------- Разделы описания товара: стаггер fade+slide-up ----------
+  const descSections = gsap.utils.toArray('[data-anim-section]');
+  if (descSections.length) {
+    if (prefersReducedMotion) {
+      gsap.set(descSections, { opacity: 1, y: 0 });
+    } else {
+      gsap.set(descSections, { opacity: 0, y: 20 });
+      ScrollTrigger.create({
+        trigger: descSections[0].closest('[data-anim-sections]') || descSections[0],
+        start: 'top 85%',
+        once: true,
+        onEnter: () => {
+          gsap.to(descSections, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', stagger: 0.12 });
+        },
+      });
+    }
+  }
+
   // ---------- Товары: горизонтальный pinned-скролл (только десктоп) ----------
   const track = document.querySelector('.products-track');
   const pinWrap = document.querySelector('.products-pin-wrap');
