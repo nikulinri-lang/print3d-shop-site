@@ -13,3 +13,46 @@ img { max-width: 100%; display: block; }
 .kicker::before { content: ''; width: 16px; height: 1px; background: var(--color-accent-2); }
 .print-layers { position: relative; }
 .print-layers::before { content: ''; position: absolute; inset: 0; pointer-events: none; background-image: repeating-linear-gradient(to bottom, var(--color-border) 0, var(--color-border) 1px, transparent 1px, transparent 6px); opacity: 0.5; mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent); }
+
+/* Product pages — premium presentation. Source photos are never rotated or cropped. */
+.product-detail { padding-top: clamp(18px, 4vw, 44px); }
+.product-detail-grid { align-items: start; }
+.product-gallery { position: relative; isolation: isolate; }
+.product-gallery::before { content: ''; position: absolute; inset: 8% 10%; z-index: -1; border: 1px solid var(--color-border); border-radius: 28px; opacity: .45; transform: rotate(-2deg); transition: transform .7s ease, opacity .7s ease; }
+.product-gallery:hover::before { transform: rotate(1deg) scale(1.015); opacity: .75; }
+.product-gallery .product-art { background: linear-gradient(145deg, rgba(255,255,255,.025), rgba(255,255,255,.01)); border-radius: 24px; padding: clamp(8px, 1.4vw, 18px); overflow: visible !important; }
+.product-gallery .product-art img { width: 100% !important; height: auto !important; max-height: min(68vh, 720px); object-fit: contain !important; object-position: center !important; transform: none !important; border-radius: 18px; transition: transform .65s cubic-bezier(.2,.75,.25,1), filter .5s ease; }
+.product-gallery:hover .product-art img { transform: translateY(-5px) scale(1.012) !important; }
+.product-info h1 { font-size: clamp(2.15rem, 5vw, 4.6rem); margin: 8px 0 14px; }
+.product-shortdesc { max-width: 620px; font-size: clamp(1.05rem, 1.7vw, 1.3rem); color: var(--color-muted); line-height: 1.65; }
+.product-price { display: inline-block; margin: 24px 0 12px; font-size: clamp(1.7rem, 3vw, 2.4rem); font-weight: 600; }
+.product-description { margin: 22px 0; padding: 22px 24px; border: 1px solid var(--color-border); border-radius: 20px; background: rgba(255,255,255,.018); color: var(--color-text); font-size: 1rem; line-height: 1.8; box-shadow: 0 18px 50px rgba(0,0,0,.08); }
+.description-block { display: block; padding: 0 0 12px; }
+.description-block:last-child { padding-bottom: 0; }
+.description-block::first-letter { font-size: 1.18em; }
+.product-trust-row { display: grid; gap: 8px; margin: 18px 0; padding: 16px 18px; border-left: 2px solid var(--color-accent-2); background: rgba(255,255,255,.015); border-radius: 0 14px 14px 0; color: var(--color-muted); font-size: .9rem; }
+.product-specs { margin-top: 18px; border-top: 1px solid var(--color-border); }
+.product-specs .spec-row { display: flex; justify-content: space-between; gap: 20px; padding: 13px 0; border-bottom: 1px solid var(--color-border); }
+.product-specs .spec-label { color: var(--color-muted); }
+.product-specs .spec-value { text-align: right; }
+.product-reveal { opacity: 0; transform: translateY(18px); transition: opacity .65s ease var(--reveal-delay), transform .65s cubic-bezier(.2,.7,.2,1) var(--reveal-delay); }
+.product-reveal.is-visible { opacity: 1; transform: translateY(0); }
+.product-actions .btn { transition: transform .25s ease, box-shadow .25s ease, opacity .25s ease; }
+.product-actions .btn:hover { transform: translateY(-2px); }
+.product-actions .btn-primary:hover { box-shadow: 0 12px 30px rgba(0,0,0,.16); }
+.product-actions .is-added { transform: scale(.98); }
+.breadcrumbs { margin-bottom: 22px; opacity: .7; font-size: .85rem; }
+.breadcrumbs a:hover { opacity: 1; text-decoration: underline; }
+
+@media (max-width: 760px) {
+  .product-info h1 { font-size: clamp(2rem, 11vw, 3.2rem); }
+  .product-gallery .product-art { padding: 4px; }
+  .product-description { padding: 18px; }
+  .product-specs .spec-row { display: grid; gap: 4px; }
+  .product-specs .spec-value { text-align: left; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  .product-reveal { opacity: 1; transform: none; }
+}
