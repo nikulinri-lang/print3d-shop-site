@@ -1,13 +1,13 @@
 /* Cloudflare Worker: каталог + приём заказов с 3-d-shop.ru.
- * Каталог берётся из GitHub — тот же products-autumn.json, из которого
- * собирается сайт. Telegram-бот может использовать GET /products как
- * единый источник каталога.
+ * Каталог берётся из публичного JSON, который публикуется вместе с сайтом
+ * из content/products-autumn.json. Telegram-бот может использовать GET
+ * /products как единый источник каталога.
  *
  * Секреты BOT_TOKEN и OWNER_CHAT_ID задаются через wrangler secret put.
  */
 
 const ALLOWED_ORIGIN = "https://3-d-shop.ru";
-const CATALOG_URL = "https://api.github.com/repos/nikulinri-lang/print3d-shop-site/contents/content/products-autumn.json?ref=main";
+const CATALOG_URL = "https://3-d-shop.ru/products-autumn.json";
 
 function corsHeaders() {
   return {
@@ -55,20 +55,14 @@ function normalizeProduct(p) {
 async function getProducts() {
   const resp = await fetch(CATALOG_URL, {
     headers: {
-      "Accept": "application/vnd.github+json",
+      "Accept": "application/json",
       "User-Agent": "PRINTLAB-Catalog-Worker",
     },
     cf: { cacheTtl: 60, cacheEverything: true },
   });
   if (!resp.ok) throw new Error(`catalog fetch failed: ${resp.status}`);
 
-  const payload = await resp.json();
-  if (!payload || payload.encoding !== "base64" || typeof payload.content !== "string") {
-    throw new Error("GitHub catalog response is not base64 content");
-  }
-
-  const decoded = atob(payload.content.replace(/\n/g, ""));
-  const data = JSON.parse(decoded);
+  const data = await resp.json();
   if (!Array.isArray(data)) throw new Error("catalog must be an array");
   return data.map(normalizeProduct);
 }
@@ -165,4 +159,4 @@ export default {
   },
 };
 
-// Trigger deployment after switching catalog source from raw.githubusercontent.com to GitHub Contents API.
+// Trigger deployment after switching catalog source from GitHub API to the public site JSON.
