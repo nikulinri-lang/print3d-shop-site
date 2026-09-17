@@ -164,3 +164,5 @@ export default {
     return json({ ok: true });
   },
 };
+
+// Trigger deployment after switching catalog source from raw.githubusercontent.com to GitHub Contents API.
