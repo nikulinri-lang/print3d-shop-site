@@ -43,7 +43,7 @@ jobs:
           # on every generated HTML page after changing shared styles.
           for page in Path('dist').rglob('*.html'):
               text = page.read_text(encoding='utf-8')
-              text = text.replace('?v=9', '?v=10')
+              text = text.replace('?v=10', '?v=11')
               page.write_text(text, encoding='utf-8')
           PY
 
