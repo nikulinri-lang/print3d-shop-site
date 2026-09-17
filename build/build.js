@@ -31,6 +31,13 @@ function copyPublicAssets() {
   }
 }
 
+function publishCatalogJson() {
+  // Публикуем сезонный каталог рядом с сайтом. Worker и Telegram-бот
+  // читают этот публичный JSON, поэтому GitHub не требуется делать публичным.
+  fs.copyFileSync(EXTRA_PRODUCTS_JSON, path.join(DIST, "products-autumn.json"));
+  console.log("  ✓ products-autumn.json опубликован в корне dist/");
+}
+
 // Сжатие тяжёлых PNG/JPEG в WebP выполняется только при сборке.
 // Исходники в репозитории не меняются, но браузер получает лёгкую версию.
 function optimizeImages() {
@@ -195,6 +202,7 @@ function build() {
   console.log("Сборка сайта в dist/...");
   clean();
   copyPublicAssets();
+  publishCatalogJson();
   const optimizedImages = optimizeImages();
   copyVendorLibs();
 
