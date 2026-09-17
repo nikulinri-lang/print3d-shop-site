@@ -76,6 +76,40 @@ function specLabel(key) {
   return labels[key] || key;
 }
 
+// 4 раздела описания товара: короткий хук, материал/качество печати,
+// маркированный список применений, что нужно знать перед покупкой.
+// Если у товара нет descriptionSections (пока только у части каталога) —
+// откатываемся к старому плоскому <p>, ничего не ломаем.
+const SECTION_META = [
+  { key: "whatIsIt", icon: "✨", title: "Что это" },
+  { key: "material", icon: "🧵", title: "Материал и качество печати" },
+  { key: "whoFor", icon: "🎯", title: "Кому подойдёт" },
+  { key: "beforeBuying", icon: "📋", title: "Что нужно знать перед покупкой" },
+];
+
+function descriptionSectionsHTML(p) {
+  if (!p.descriptionSections) {
+    return `<p class="product-description">${p.description}</p>`;
+  }
+  const blocks = SECTION_META.map(({ key, icon, title }) => {
+    const value = p.descriptionSections[key];
+    if (!value) return "";
+    const content = Array.isArray(value)
+      ? `<ul class="product-desc-list">${value.map((li) => `<li>${li}</li>`).join("")}</ul>`
+      : `<p>${value}</p>`;
+    return `<div class="product-desc-section" data-anim-section>
+        <div class="product-desc-section-head">
+          <span class="product-desc-icon" aria-hidden="true">${icon}</span>
+          <h3>${title}</h3>
+        </div>
+        <div class="product-desc-section-body">${content}</div>
+      </div>`;
+  }).join("\n      ");
+  return `<div class="product-description-sections" data-anim-sections>
+      ${blocks}
+    </div>`;
+}
+
 function customOrderTeaser() {
   return `<div class="custom-order-teaser">
     <div>
@@ -270,7 +304,7 @@ function productPage(p, allProducts) {
       <p class="product-shortdesc">${p.shortDesc}</p>
       <div class="product-price mono" id="productPrice">${p.price.toLocaleString("ru-RU")} ₽</div>
       ${availability}
-      <p class="product-description">${p.description}</p>
+      ${descriptionSectionsHTML(p)}
       ${colorSwatches(p)}
       ${variantsBlock}
       <div class="qty-stepper" aria-label="Количество">

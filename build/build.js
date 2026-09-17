@@ -44,9 +44,20 @@ function optimizeImages() {
   const generated = new Map();
   const imagesDir = path.join(DIST, "images");
 
+  // -auto-orient ДО -strip: разворачивает пиксели по EXIF-тегу камеры,
+  // затем стирает метаданные. Раньше -strip шёл первым и без
+  // -auto-orient — поворот из EXIF терялся, и вертикальные фото с
+  // телефона (пиксели физически горизонтальные + EXIF "поверни на 90°")
+  // показывались на сайте боком (см. autumn-pumpkin, mushroom-skirt-organizer).
+  // -resize 1600x1600> — "только уменьшать", уже маленькие/квадратные
+  // иконки категорий не трогает и не увеличивает.
   function convertImage(src, out) {
     fs.mkdirSync(path.dirname(out), { recursive: true });
-    execFileSync("convert", [src, "-strip", "-quality", "86", out], { stdio: "ignore" });
+    execFileSync(
+      "convert",
+      [src, "-auto-orient", "-resize", "1600x1600>", "-strip", "-quality", "82", out],
+      { stdio: "ignore" }
+    );
     return fs.existsSync(out) && fs.statSync(out).size > 0;
   }
 
@@ -56,8 +67,10 @@ function optimizeImages() {
       const full = path.join(dir, entry.name);
       if (entry.isDirectory()) walk(full);
       else if (/\.(png|jpe?g)$/i.test(entry.name)) {
-        const size = fs.statSync(full).size;
-        if (size < 100 * 1024) continue;
+        // Порог убран: раньше маленькие файлы (<100 КБ) пропускались
+        // «как уже лёгкие», но именно поэтому у них тоже не применялся
+        // -auto-orient — часть фото могла остаться повёрнутой. Конвертируем
+        // всё; -resize с ">" безопасен для уже маленьких файлов.
         const out = full.replace(/\.(png|jpe?g)$/i, ".webp");
         try {
           if (convertImage(full, out)) {
