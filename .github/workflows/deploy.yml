@@ -38,6 +38,13 @@ jobs:
               'alt="Наше оборудование для 3D-печати" class="printer-teaser-photo" loading="lazy" onerror="this.onerror=null;this.removeAttribute(\'srcset\');this.src=\'/images/IMG_7738.png?v=20260913\'"'
           )
           p.write_text(html, encoding='utf-8')
+
+          # CSS/JS assets are cached for up to a year. Bump the query version
+          # on every generated HTML page after changing shared styles.
+          for page in Path('dist').rglob('*.html'):
+              text = page.read_text(encoding='utf-8')
+              text = text.replace('?v=9', '?v=10')
+              page.write_text(text, encoding='utf-8')
           PY
 
       - name: FTP Deploy
