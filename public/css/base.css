@@ -2,73 +2,18 @@
 
 html { scroll-behavior: smooth; }
 
-body {
-  background: var(--color-bg);
-  color: var(--color-text);
-  font-family: var(--font-body);
-  font-size: var(--text-base);
-  line-height: var(--leading-normal);
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
+body { background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); font-size: var(--text-base); line-height: var(--leading-normal); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 
-h1, h2, h3, h4 {
-  font-family: var(--font-heading);
-  line-height: var(--leading-tight);
-  letter-spacing: var(--tracking-tight);
-  font-weight: 500;
-}
-
+h1, h2, h3, h4 { font-family: var(--font-heading); line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); font-weight: 500; }
 a { color: inherit; text-decoration: none; }
-
 img { max-width: 100%; display: block; }
+.mono { font-family: var(--font-mono); letter-spacing: var(--tracking-normal); }
+.container { max-width: var(--container-max); margin: 0 auto; padding: 0 var(--container-padding); }
+.kicker { display: inline-flex; align-items: center; gap: var(--space-2xs); font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: var(--tracking-wide); color: var(--color-accent-2); text-transform: uppercase; }
+.kicker::before { content: ''; width: 16px; height: 1px; background: var(--color-accent-2); }
+.print-layers { position: relative; }
+.print-layers::before { content: ''; position: absolute; inset: 0; pointer-events: none; background-image: repeating-linear-gradient(to bottom, var(--color-border) 0, var(--color-border) 1px, transparent 1px, transparent 6px); opacity: 0.5; mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent); }
 
-.mono {
-  font-family: var(--font-mono);
-  letter-spacing: var(--tracking-normal);
-}
-
-.container {
-  max-width: var(--container-max);
-  margin: 0 auto;
-  padding: 0 var(--container-padding);
-}
-
-.kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2xs);
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-wide);
-  color: var(--color-accent-2);
-  text-transform: uppercase;
-}
-
-.kicker::before {
-  content: '';
-  width: 16px;
-  height: 1px;
-  background: var(--color-accent-2);
-}
-
-/* Декоративные "слои печати" — тонкие горизонтальные линии, намёк на FDM */
-.print-layers {
-  position: relative;
-}
-
-.print-layers::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image: repeating-linear-gradient(
-    to bottom,
-    var(--color-border) 0,
-    var(--color-border) 1px,
-    transparent 1px,
-    transparent 6px
-  );
-  opacity: 0.5;
-  mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
-}
+/* Product photos: portrait display only. Source images are untouched. */
+.product-art { aspect-ratio: 3 / 4 !important; }
+.product-art img { width: 100% !important; height: 100% !important; object-fit: contain !important; object-position: center !important; transform: none !important; }
