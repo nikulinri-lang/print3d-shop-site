@@ -1,7 +1,5 @@
 /* Страница товара: степпер количества, выбор цвета/варианта, кнопки
- * "В корзину" / "Купить сейчас". Данные о самом товаре приходят через
- * window.__PRODUCT__ (см. render-products.js), детали (вариант/цвет/
- * количество) читаются из уже отрендеренных элементов на странице. */
+ * "В корзину" / "Купить сейчас" + аккуратная анимация и форматирование описания. */
 (function () {
   var product = window.__PRODUCT__;
   if (!product) return;
@@ -35,9 +33,6 @@
   function selectedVariant() {
     var checked = document.querySelector('input[name="variant"]:checked');
     if (checked) return { name: checked.value, extra: Number(checked.dataset.extra) || 0 };
-    // Нет отдельного блока вариантов — значит цвет и есть вариант
-    // (см. variantsAreColors в build/render-products.js), берём extra
-    // из выбранного свотча.
     var swatch = document.querySelector(".color-swatch.selected");
     if (swatch && swatch.dataset.extra !== undefined) {
       return { name: swatch.dataset.colorName, extra: Number(swatch.dataset.extra) || 0 };
@@ -50,10 +45,7 @@
     priceEl.textContent = (product.price + extra).toLocaleString("ru-RU") + " ₽";
   }
 
-  document.querySelectorAll('input[name="variant"]').forEach(function (r) {
-    r.addEventListener("change", updatePrice);
-  });
-
+  document.querySelectorAll('input[name="variant"]').forEach(function (r) { r.addEventListener("change", updatePrice); });
   swatches.forEach(function (sw) {
     sw.addEventListener("click", function () {
       swatches.forEach(function (s) { s.classList.remove("selected"); s.setAttribute("aria-checked", "false"); });
@@ -74,9 +66,6 @@
       title: product.title,
       price: product.price,
       icon: product.icon,
-      // Если отдельных радио-вариантов нет, "вариант" — это и есть
-      // выбранный цвет (см. selectedVariant) — не дублируем его же в
-      // colorName, иначе в корзине появится "Красный · цвет: Красный".
       variantName: hasVariantRadios ? variant.name : "",
       variantExtra: variant.extra,
       colorName: colorName,
@@ -93,7 +82,8 @@
       track();
       var prev = addBtn.textContent;
       addBtn.textContent = "Добавлено ✓";
-      setTimeout(function () { addBtn.textContent = prev; }, 1200);
+      addBtn.classList.add("is-added");
+      setTimeout(function () { addBtn.textContent = prev; addBtn.classList.remove("is-added"); }, 1200);
     });
   }
   if (buyBtn) {
@@ -102,5 +92,40 @@
       track();
       location.href = "/cart";
     });
+  }
+
+  /* Красивое описание: превращаем длинный текст в читаемые смысловые блоки. */
+  var desc = document.querySelector(".product-description");
+  if (desc) {
+    var raw = desc.textContent.trim();
+    var sentences = raw.split(/(?<=[.!?])\s+/).filter(Boolean);
+    if (sentences.length > 4) {
+      var groups = [];
+      for (var i = 0; i < sentences.length; i += 2) groups.push(sentences.slice(i, i + 2).join(" "));
+      desc.innerHTML = groups.map(function (text, index) {
+        return '<span class="description-block" style="--delay:' + (index * 70) + 'ms">' + text + '</span>';
+      }).join("");
+    }
+  }
+
+  /* Плавное появление блоков при прокрутке без зависимости от сторонних библиотек. */
+  var revealItems = document.querySelectorAll(".product-info > *, .product-gallery, .product-specs, .product-trust-row");
+  revealItems.forEach(function (el, index) {
+    el.classList.add("product-reveal");
+    el.style.setProperty("--reveal-delay", Math.min(index * 45, 420) + "ms");
+  });
+
+  if ("IntersectionObserver" in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    revealItems.forEach(function (el) { observer.observe(el); });
+  } else {
+    revealItems.forEach(function (el) { el.classList.add("is-visible"); });
   }
 })();
