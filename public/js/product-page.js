@@ -14,6 +14,9 @@
   var selectedColorEl = document.getElementById("selectedColorName");
   var addBtn = document.getElementById("addToCartBtn");
   var buyBtn = document.getElementById("buyNowBtn");
+  var stickyBar = document.getElementById("stickyBuyBar");
+  var stickyPriceEl = document.getElementById("stickyPrice");
+  var stickyAddBtn = document.getElementById("stickyAddToCartBtn");
 
   function getQty() {
     var n = parseInt(qtyInput.value, 10);
@@ -42,7 +45,9 @@
 
   function updatePrice() {
     var extra = selectedVariant().extra;
-    priceEl.textContent = (product.price + extra).toLocaleString("ru-RU") + " ₽";
+    var text = (product.price + extra).toLocaleString("ru-RU") + " ₽";
+    priceEl.textContent = text;
+    if (stickyPriceEl) stickyPriceEl.textContent = text;
   }
 
   document.querySelectorAll('input[name="variant"]').forEach(function (r) { r.addEventListener("change", updatePrice); });
@@ -76,22 +81,38 @@
     if (window.PrintlabAnalytics) window.PrintlabAnalytics.trackGoal("add_to_cart", { slug: product.slug });
   }
 
-  if (addBtn) {
-    addBtn.addEventListener("click", function () {
-      window.PrintlabCart.add(buildCartItem(), getQty());
-      track();
-      var prev = addBtn.textContent;
-      addBtn.textContent = "Добавлено ✓";
-      addBtn.classList.add("is-added");
-      setTimeout(function () { addBtn.textContent = prev; addBtn.classList.remove("is-added"); }, 1200);
-    });
+  function handleAdd(btn) {
+    window.PrintlabCart.add(buildCartItem(), getQty());
+    track();
+    var prev = btn.textContent;
+    btn.textContent = "Добавлено ✓";
+    btn.classList.add("is-added");
+    setTimeout(function () { btn.textContent = prev; btn.classList.remove("is-added"); }, 1200);
   }
+
+  if (addBtn) addBtn.addEventListener("click", function () { handleAdd(addBtn); });
+  if (stickyAddBtn) stickyAddBtn.addEventListener("click", function () { handleAdd(stickyAddBtn); });
   if (buyBtn) {
     buyBtn.addEventListener("click", function () {
       window.PrintlabCart.add(buildCartItem(), getQty());
       track();
       location.href = "/cart";
     });
+  }
+
+  /* Sticky-панель "В корзину" на мобильном: показываем, как только
+   * основной блок кнопок уходит вверх за пределы экрана (пользователь
+   * пролистал вниз), прячем обратно, когда он снова виден. */
+  var actionsBlock = document.querySelector(".product-actions");
+  if (stickyBar && actionsBlock && "IntersectionObserver" in window) {
+    var stickyObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var scrolledPast = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+        stickyBar.classList.toggle("is-visible", scrolledPast);
+        stickyBar.setAttribute("aria-hidden", scrolledPast ? "false" : "true");
+      });
+    }, { threshold: 0 });
+    stickyObserver.observe(actionsBlock);
   }
 
   /* Красивое описание: превращаем длинный текст в читаемые смысловые блоки. */

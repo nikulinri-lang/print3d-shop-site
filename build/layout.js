@@ -137,6 +137,7 @@ ${bodyContent}
       <li><a href="/printer">Производство</a></li>
       <li><a href="/about">О нас</a></li>
       <li><a href="/delivery">Доставка</a></li>
+      <li><a href="/delivery#vozvrat">Возврат и обмен</a></li>
       <li><a href="/custom-order">Кастомный заказ</a></li>
       <li><a href="/offer">Оферта</a></li>
       <li><a href="/privacy">Конфиденциальность</a></li>

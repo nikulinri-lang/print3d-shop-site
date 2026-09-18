@@ -311,12 +311,20 @@ function productPage(p, allProducts) {
         <span>📦 Доставка по России</span>
         ${p.colors && p.colors.length ? "<span>🎨 Можно выбрать цвет</span>" : ""}
         <span>💳 Оплата после подтверждения заказа менеджером</span>
+        <span>↩ <a href="/delivery#vozvrat">Возврат и обмен</a></span>
       </div>
       <a href="${TELEGRAM_BOT_URL}" class="product-telegram-link" target="_blank" rel="noopener">Есть вопрос? Написать в Telegram →</a>
     </div>
   </div>
   </div>
 </section>
+<div class="sticky-buy-bar" id="stickyBuyBar" aria-hidden="true">
+  <div class="sticky-buy-bar-info">
+    <span class="sticky-buy-bar-title">${p.title}</span>
+    <span class="sticky-buy-bar-price mono" id="stickyPrice">${p.price.toLocaleString("ru-RU")} ₽</span>
+  </div>
+  <button type="button" class="btn btn-primary" id="stickyAddToCartBtn">В корзину</button>
+</div>
 ${similarBlock}
 <section class="section">
   <div class="container">

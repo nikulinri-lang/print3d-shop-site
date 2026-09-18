@@ -81,6 +81,30 @@ function deliveryPage() {
   </div>
 </section>
 
+<section class="section" id="vozvrat">
+  <div class="container">
+    <div class="section-head"><span class="kicker">Условия</span><h2>Возврат и обмен</h2></div>
+    <div class="delivery-grid">
+      <div class="delivery-card">
+        <div class="delivery-card-icon">✅</div>
+        <h3>Готовые изделия из каталога</h3>
+        <p>Если изделие не подошло и сохранило товарный вид (не использовалось, упаковка и бирки на месте) — можно вернуть или обменять в течение 7 дней с момента получения. Стоимость обратной пересылки в этом случае — за счёт покупателя.</p>
+      </div>
+      <div class="delivery-card">
+        <div class="delivery-card-icon">🛠</div>
+        <h3>Изделия на заказ (по фото, эскизу, размерам)</h3>
+        <p>Такие изделия изготавливаются под конкретные параметры, которые указал заказчик, поэтому по общему правилу для товаров с индивидуально согласованными свойствами возврат надлежащего качества не предусмотрен. Перед печатью мы всегда согласовываем макет/размеры — уточняйте детали в Telegram до подтверждения заказа.</p>
+      </div>
+      <div class="delivery-card">
+        <div class="delivery-card-icon">⚠️</div>
+        <h3>Если пришёл брак или не тот товар</h3>
+        <p>Это не ваши расходы. Если изделие повреждено при доставке, напечатано с явным дефектом или прислано не то, что заказывали — сообщите в Telegram с фото, обменяем или вернём деньги.</p>
+      </div>
+    </div>
+    <p style="color: var(--color-text-muted); font-size: var(--text-sm); margin-top: var(--space-md);">Договорённость о возврате в каждом случае финально согласуется в Telegram с менеджером — этот раздел описывает общий порядок.</p>
+  </div>
+</section>
+
 <section class="section">
   <div class="container">
     <div class="cta-banner">
@@ -92,8 +116,8 @@ function deliveryPage() {
 </section>`;
 
   return renderLayout({
-    title: "Доставка и получение — PRINTLAB",
-    description: `Самовывоз в ${CITY_PREP} или доставка по России. Условия получения и оплаты 3D-печатных изделий PRINTLAB.`,
+    title: "Доставка, получение и возврат — PRINTLAB",
+    description: `Самовывоз в ${CITY_PREP} или доставка по России. Условия получения, оплаты и возврата 3D-печатных изделий PRINTLAB.`,
     canonical: "/delivery",
     activeNav: "/delivery",
     bodyContent: body,
