@@ -98,6 +98,33 @@ function initScrollAnimations() {
     }
   }
 
+  // ---------- Цифры доверия на главной: счётчик 0 → значение ----------
+  const counters = gsap.utils.toArray('[data-count-to]');
+  if (counters.length) {
+    counters.forEach((el) => {
+      const target = Number(el.dataset.countTo) || 0;
+      const suffix = el.dataset.countSuffix || '';
+      if (prefersReducedMotion) {
+        el.textContent = target.toLocaleString('ru-RU') + suffix;
+        return;
+      }
+      const proxy = { n: 0 };
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 90%',
+        once: true,
+        onEnter: () => {
+          gsap.to(proxy, {
+            n: target,
+            duration: 1.4,
+            ease: 'power1.out',
+            onUpdate: () => { el.textContent = Math.round(proxy.n).toLocaleString('ru-RU') + suffix; },
+          });
+        },
+      });
+    });
+  }
+
   // ---------- Сетка каталога: стаггер fade+slide-up при появлении карточек ----------
   const catalogCards = gsap.utils.toArray('.catalog-grid .product-card, .product-grid .product-card');
   if (catalogCards.length) {

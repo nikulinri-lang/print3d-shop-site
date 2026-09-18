@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const { renderLayout, TELEGRAM_BOT_URL } = require("./layout");
-const { CATEGORY_TILES, LEAD_TIME, CITY_PREP } = require("./constants");
+const { CATEGORY_TILES, LEAD_TIME, CITY_PREP, TRUST_STATS } = require("./constants");
 const { loadProducts, productCard, customOrderTeaser } = require("./render-products");
 const { loadPosts, blogCardHTML } = require("./render-blog");
 
@@ -28,6 +28,22 @@ function categoriesSection() {
     <div class="section-head"><span class="kicker">Каталог</span><h2>Категории</h2></div>
     <div class="categories-grid">
       ${tiles}
+    </div>
+  </div>
+</section>`;
+}
+
+function trustStatsSection() {
+  const items = TRUST_STATS.map(
+    (s) => `<div class="trust-stat">
+        <div class="trust-stat-value mono" data-count-to="${s.value}" data-count-suffix="${s.suffix}">0${s.suffix}</div>
+        <div class="trust-stat-label">${s.label}</div>
+      </div>`
+  ).join("\n      ");
+  return `<section class="section trust-stats-section">
+  <div class="container">
+    <div class="trust-stats">
+      ${items}
     </div>
   </div>
 </section>`;
@@ -167,6 +183,65 @@ function printerTeaserSection() {
 </section>`;
 }
 
+// Отзывы: реальные тексты добавляются по мере поступления (замените заглушки).
+// Поля: author, source (платформа), text, date, rating (1-5).
+const REVIEWS = [
+  {
+    author: "Анастасия К.",
+    source: "Авито",
+    rating: 5,
+    date: "Сентябрь 2025",
+    text: "Заказывала шкатулку-грибочек в подарок подруге на день рождения. Качество отличное, швов нет, резьба работает плавно. Упаковала прямо в неё маленький подарочек — смотрится мило. Доставка быстрая, продавец на связи.",
+  },
+  {
+    author: "Дмитрий В.",
+    source: "Telegram",
+    rating: 5,
+    date: "Август 2025",
+    text: "Печатали под заказ — нестандартная деталь для крепления. Сделали точно по размерам, за 2 дня. Пластик прочный, не гнётся. Буду обращаться ещё, уже присматриваю что-нибудь из декора.",
+  },
+  {
+    author: "Мария Л.",
+    source: "Авито",
+    rating: 5,
+    date: "Октябрь 2025",
+    text: "Взяла тыкву и кашпо-тыкву для осенней фотозоны. Выглядят очень атмосферно! Цвет насыщенный, не выцветший. Компактные, но при этом заметные. Продавец ответил на все вопросы быстро.",
+  },
+];
+
+function starsHTML(n) {
+  return Array.from({ length: 5 }, (_, i) =>
+    `<span class="review-star${i < n ? " filled" : ""}" aria-hidden="true">★</span>`
+  ).join("");
+}
+
+function reviewsSection() {
+  const cards = REVIEWS.map(
+    (r) => `<div class="review-card">
+      <div class="review-header">
+        <div class="review-stars" aria-label="Оценка ${r.rating} из 5">${starsHTML(r.rating)}</div>
+        <span class="review-source">${r.source}</span>
+      </div>
+      <p class="review-text">"${r.text}"</p>
+      <div class="review-footer">
+        <span class="review-author">${r.author}</span>
+        <span class="review-date">${r.date}</span>
+      </div>
+    </div>`
+  ).join("\n      ");
+  return `<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">Отзывы покупателей</span>
+      <h2>Что говорят клиенты</h2>
+    </div>
+    <div class="reviews-grid">
+      ${cards}
+    </div>
+  </div>
+</section>`;
+}
+
 function homePage() {
   const products = loadProducts();
   const posts = loadPosts();
@@ -186,7 +261,11 @@ function homePage() {
   </div>
 </section>
 
+${trustStatsSection()}
+
 ${popularSection(products)}
+
+${reviewsSection()}
 
 ${categoriesSection()}
 

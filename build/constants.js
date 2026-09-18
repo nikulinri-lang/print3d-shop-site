@@ -36,6 +36,15 @@ const YANDEX_METRIKA_ID = "112399054";
 const YANDEX_VERIFICATION = "";
 const GOOGLE_VERIFICATION = "G_Qt8RV3r5sIUm7vLWDagkfA51Vx1qoxjynC9tehG-o";
 
+// Цифры доверия для блока статистики на главной — реальные бизнес-факты,
+// обновляются вручную по мере роста магазина. Пока это заглушки — см.
+// финальный отчёт в чате, куда нужно вписать реальные значения.
+const TRUST_STATS = [
+  { value: 1636, suffix: "", label: "товаров продано" },
+  { value: 178, suffix: "", label: "заказов выполнено под запрос" },
+  { value: 1247, suffix: "", label: "изделий напечатано на заказ" },
+];
+
 module.exports = {
   TELEGRAM_BOT_URL,
   TELEGRAM_HANDLE,
@@ -44,6 +53,7 @@ module.exports = {
   LEAD_TIME,
   LEAD_TIME_LONG,
   CATEGORY_TILES,
+  TRUST_STATS,
   YANDEX_METRIKA_ID,
   YANDEX_VERIFICATION,
   GOOGLE_VERIFICATION,

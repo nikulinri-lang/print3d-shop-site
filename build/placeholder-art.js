@@ -43,19 +43,19 @@ function escAttr(s) {
 // size: "card" (каталог/похожее) | "gallery" (страница товара, крупнее)
 function productArt(product, size = "card") {
   const images = Array.isArray(product.images) ? product.images.filter(Boolean) : [];
-  const cls = size === "gallery" ? "product-art product-art--lg" : "product-art";
+  const isGallery = size === "gallery";
+  const cls = isGallery ? "product-art product-art--lg" : "product-art";
+  const photoCls = isGallery ? "product-art product-art--lg product-art--photo" : "product-art product-art--photo";
 
   if (images.length) {
-    if (size === "gallery" && images.length > 1) {
+    if (isGallery && images.length > 1) {
       return `<div class="${cls}" style="width:min(100%,760px);margin:0 auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;overflow:hidden;">
         ${images.slice(0, 2).map((src, i) => `<img src="${escAttr(src)}" alt="${escAttr(product.title)} — фото ${i + 1}" loading="${i === 0 ? "eager" : "lazy"}" style="width:100%;height:auto;max-height:520px;object-fit:contain;display:block;border-radius:inherit;" />`).join("")}
       </div>`;
     }
 
-    const cardImageStyle = "width:100%;height:auto;object-fit:contain;object-position:center;display:block;border-radius:inherit;";
-
-    return `<div class="${cls}">
-      <img src="${escAttr(images[0])}" alt="${escAttr(product.title)}" loading="${size === "gallery" ? "eager" : "lazy"}" style="${cardImageStyle}" />
+    return `<div class="${photoCls}">
+      <img src="${escAttr(images[0])}" alt="${escAttr(product.title)}" loading="${isGallery ? "eager" : "lazy"}" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" />
     </div>`;
   }
 
