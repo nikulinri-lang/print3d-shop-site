@@ -43,7 +43,7 @@ function trustStatsSection() {
   ).join("\n      ");
   return `<section class="section trust-stats-section">
   <div class="container">
-    <div class="section-head"><span class="kicker">Наш опыт</span><h2>Цифры говорят сами</h2></div>
+    <div class="section-head trust-section-head"><span class="kicker">Наш опыт</span><h2>Цифры говорят<br><span>сами</span></h2><p class="trust-section-lede">Опыт PRINTLAB — в количестве выполненных заказов и внимании к каждой детали.</p></div>
     <div class="trust-stats">
       ${items}
     </div>
