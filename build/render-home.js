@@ -79,15 +79,20 @@ const WHY_US = [
 
 function whyUsSection() {
   const cards = WHY_US.map(
-    (w) => `<div class="why-us-card">
-        <h3>${w.title}</h3>
-        <p>${w.text}</p>
-      </div>`
+    (w) => `<div class="review-card why-us-card">
+      <div class="review-header">
+        <span class="review-source">PRINTLAB</span>
+      </div>
+      <p class="review-text">${w.title}</p>
+      <div class="review-footer">
+        <span class="review-author">${w.text}</span>
+      </div>
+    </div>`
   ).join("\n      ");
   return `<section class="section print-layers">
   <div class="container">
     <div class="section-head"><span class="kicker">Почему мы</span><h2>Почему PRINTLAB?</h2></div>
-    <div class="why-us-grid">
+    <div class="reviews-grid why-us-grid">
       ${cards}
     </div>
   </div>
