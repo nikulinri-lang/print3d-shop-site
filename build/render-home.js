@@ -34,17 +34,19 @@ function categoriesSection() {
 }
 
 function popularSection(products) {
-  const featured = products.filter((p) => p.featured);
-  const cards = featured.map((p) => productCard(p)).join("\n      ");
+  // Показываем ровно 2 последних добавленных в каталог товара (последние
+  // элементы объединённого списка products.json + products-autumn.json).
+  // Список сам обновится при следующей сборке, как только появится новый
+  // товар — вручную помечать "featured" для этого больше не нужно.
+  const popular = products.slice(-2);
+  const cards = popular.map((p) => productCard(p)).join("\n      ");
   return `<section class="section products-section">
   <div class="container">
     <div class="section-head">
       <span class="kicker">Каталог</span>
       <h2>Популярное</h2>
     </div>
-  </div>
-  <div class="products-pin-wrap">
-    <div class="products-track">
+    <div class="product-grid popular-grid">
       ${cards}
     </div>
   </div>

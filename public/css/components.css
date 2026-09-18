@@ -602,6 +602,20 @@
  * колонку трека, иначе появляется неровный зазор справа от карточки. */
 .product-grid .product-card { width: 100%; }
 
+/* "Популярное" на главной: ровно 2 карточки в ряд всегда — и на десктопе,
+ * и на мобильном — а не auto-fill, который на узких экранах схлопывается
+ * в один столбец. Сетка всегда рассчитана на 2 товара (см. popularSection
+ * в build/render-home.js — берёт последние 2 добавленных в каталог). */
+.popular-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 480px) {
+  .popular-grid { gap: var(--space-xs); }
+  .popular-grid .product-card-title { font-size: 14px; }
+  .popular-grid .product-card-desc { display: none; }
+}
+
 /* ===== Заголовок внутренней страницы (каталог/блог) ===== */
 .page-hero {
   padding: calc(72px + var(--space-xl)) 0 var(--space-lg);
