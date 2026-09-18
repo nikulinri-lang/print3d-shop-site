@@ -80,7 +80,6 @@ const WHY_US = [
 function whyUsSection() {
   const cards = WHY_US.map(
     (w) => `<div class="why-us-card">
-        <div class="why-us-icon">${w.icon}</div>
         <h3>${w.title}</h3>
         <p>${w.text}</p>
       </div>`
