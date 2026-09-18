@@ -41,9 +41,10 @@ const GOOGLE_VERIFICATION = "G_Qt8RV3r5sIUm7vLWDagkfA51Vx1qoxjynC9tehG-o";
 // финальный отчёт в чате, куда нужно вписать реальные значения.
 // Цифры обновлять здесь при изменении бизнес-данных
 const TRUST_STATS = [
-  { value: 1636, suffix: "", label: "товаров продано", icon: "🛒", accent: "#FF6B00" },
-  { value: 178,  suffix: "", label: "заказов под запрос", icon: "🛠", accent: "#00D4FF" },
-  { value: 1247, suffix: "", label: "изделий напечатано на заказ", icon: "🖨", accent: "#FF6B00" },
+  { value: 1636, suffix: "", label: "продано изделий" },
+  { value: 178,  suffix: "", label: "заказов под индивидуальные запросы" },
+  { value: 1247, suffix: "", label: "изделий изготовлено под Ваши запросы" },
+  { value: 48,   suffix: "", label: "регионов отправлены заказы" },
 ];
 
 module.exports = {
