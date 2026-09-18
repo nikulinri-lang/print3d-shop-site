@@ -36,11 +36,9 @@ function categoriesSection() {
 function trustStatsSection() {
   const items = TRUST_STATS.map(
     (s) => `<div class="trust-stat">
-        <div class="trust-stat-icon">${s.icon}</div>
         <div class="trust-stat-value mono" data-count-to="${s.value}" data-count-suffix="${s.suffix || ""}">${s.value.toLocaleString("ru-RU")}${s.suffix || ""}</div>
         <div class="trust-stat-label">${s.label}</div>
-      </div>`
-  ).join("\n      ");
+      </div>`  ).join("\n      ");
   return `<section class="section trust-stats-section">
   <div class="container">
     <div class="section-head trust-section-head"><span class="kicker">Наш опыт</span><h2>Цифры говорят<br><span>сами</span></h2><p class="trust-section-lede">Опыт PRINTLAB — в количестве выполненных заказов и внимании к каждой детали.</p></div>
