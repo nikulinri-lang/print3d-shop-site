@@ -67,14 +67,13 @@ function productCard(p, opts = {}) {
 
 
 // 4 раздела описания товара: короткий хук, материал/качество печати,
-// маркированный список применений, что нужно знать перед покупкой.
-// Если у товара нет descriptionSections (пока только у части каталога) —
-// откатываемся к старому плоскому <p>, ничего не ломаем.
+// Секции описания товара: иконка, заголовок, ключ в descriptionSections.
+// Разделы выглядят как карточки с иконкой и заголовком — без синей полосы.
 const SECTION_META = [
-  { key: "whatIsIt", icon: "✨", title: "Что это" },
-  { key: "material", icon: "🧵", title: "Материал и качество печати" },
-  { key: "whoFor", icon: "🎯", title: "Кому подойдёт" },
-  { key: "beforeBuying", icon: "📋", title: "Что нужно знать перед покупкой" },
+  { key: "whatIsIt",    icon: "✦", title: "Что это такое" },
+  { key: "material",   icon: "◈", title: "Материал и печать" },
+  { key: "whoFor",     icon: "◎", title: "Кому подойдёт" },
+  { key: "beforeBuying", icon: "◻", title: "Перед покупкой" },
 ];
 
 function descriptionSectionsHTML(p) {
@@ -90,11 +89,11 @@ function descriptionSectionsHTML(p) {
     return `<div class="product-desc-section" data-anim-section>
         <div class="product-desc-section-head">
           <span class="product-desc-icon" aria-hidden="true">${icon}</span>
-          <h3>${title}</h3>
+          <span class="product-desc-title">${title}</span>
         </div>
         <div class="product-desc-section-body">${content}</div>
       </div>`;
-  }).join("\n      ");
+  }).filter(Boolean).join("\n      ");
   return `<div class="product-description-sections" data-anim-sections>
       ${blocks}
     </div>`;
