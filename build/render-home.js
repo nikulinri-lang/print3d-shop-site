@@ -233,9 +233,10 @@ function reviewsSection() {
   ).join("\n      ");
   return `<section class="section">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reviews-section-head">
       <span class="kicker">Отзывы покупателей</span>
-      <h2>Что говорят клиенты</h2>
+      <h2>Что говорят<br><span>клиенты</span></h2>
+      <p class="reviews-section-lede">Реальные впечатления о готовых изделиях и печати на заказ.</p>
     </div>
     <div class="reviews-grid">
       ${cards}
