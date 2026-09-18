@@ -51,11 +51,20 @@ function optimizeImages() {
   // показывались на сайте боком (см. autumn-pumpkin, mushroom-skirt-organizer).
   // -resize 1600x1600> — "только уменьшать", уже маленькие/квадратные
   // иконки категорий не трогает и не увеличивает.
+  // Эти четыре фото для двух осенних товаров были сняты боком.
+  // Поворачиваем только веб-версию при сборке; оригиналы в public/images
+  // остаются полностью без изменений.
+  const rotatePortrait = new Set([
+    "IMG_9883.jpeg", "IMG_9884.jpeg",
+    "IMG_9885.jpeg", "IMG_9886.jpeg",
+  ]);
+
   function convertImage(src, out) {
     fs.mkdirSync(path.dirname(out), { recursive: true });
+    const rotate = rotatePortrait.has(path.basename(src)) ? ["-rotate", "90"] : [];
     execFileSync(
       "convert",
-      [src, "-auto-orient", "-resize", "1600x1600>", "-strip", "-quality", "82", out],
+      [src, "-auto-orient", ...rotate, "-resize", "1600x1600>", "-strip", "-quality", "82", out],
       { stdio: "ignore" }
     );
     return fs.existsSync(out) && fs.statSync(out).size > 0;
