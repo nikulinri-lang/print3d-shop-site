@@ -109,10 +109,11 @@
   }
 
   /* Плавное появление блоков при прокрутке без зависимости от сторонних библиотек. */
-  var revealItems = document.querySelectorAll(".product-info > *, .product-gallery, .product-specs, .product-trust-row");
+  var revealItems = document.querySelectorAll(".product-info > *, .product-gallery, .product-specs, .product-trust-row, .product-desc-section");
   revealItems.forEach(function (el, index) {
     el.classList.add("product-reveal");
     el.style.setProperty("--reveal-delay", Math.min(index * 45, 420) + "ms");
+    if (el.hasAttribute("data-anim-section")) el.style.transitionDelay = Math.min(index * 70, 420) + "ms";
   });
 
   if ("IntersectionObserver" in window) {
