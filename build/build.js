@@ -44,11 +44,10 @@ function optimizeImages() {
   const generated = new Map();
   const imagesDir = path.join(DIST, "images");
 
-  // -auto-orient ДО -strip: разворачивает пиксели по EXIF-тегу камеры,
-  // затем стирает метаданные. Раньше -strip шёл первым и без
-  // -auto-orient — поворот из EXIF терялся, и вертикальные фото с
-  // телефона (пиксели физически горизонтальные + EXIF "поверни на 90°")
-  // показывались на сайте боком (см. autumn-pumpkin, mushroom-skirt-organizer).
+  // Для обычных фото сначала применяем EXIF-ориентацию.
+  // Для четырёх осенних фото принудительно поворачиваем исходные пиксели
+  // на 90° БЕЗ -auto-orient: иначе двойная обработка EXIF могла вернуть
+  // фотографию в горизонтальное положение.
   // -resize 1600x1600> — "только уменьшать", уже маленькие/квадратные
   // иконки категорий не трогает и не увеличивает.
   // Эти четыре фото для двух осенних товаров были сняты боком.
@@ -61,10 +60,13 @@ function optimizeImages() {
 
   function convertImage(src, out) {
     fs.mkdirSync(path.dirname(out), { recursive: true });
-    const rotate = rotatePortrait.has(path.basename(src)) ? ["-rotate", "90"] : [];
+    const isForcedRotate = rotatePortrait.has(path.basename(src));
+    const imageArgs = isForcedRotate
+      ? [src, "-rotate", "90", "-resize", "1600x1600>", "-strip", "-quality", "82", out]
+      : [src, "-auto-orient", "-resize", "1600x1600>", "-strip", "-quality", "82", out];
     execFileSync(
       "convert",
-      [src, "-auto-orient", ...rotate, "-resize", "1600x1600>", "-strip", "-quality", "82", out],
+      imageArgs,
       { stdio: "ignore" }
     );
     return fs.existsSync(out) && fs.statSync(out).size > 0;
