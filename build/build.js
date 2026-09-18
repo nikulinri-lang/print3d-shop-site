@@ -61,14 +61,29 @@ function optimizeImages() {
   function convertImage(src, out) {
     fs.mkdirSync(path.dirname(out), { recursive: true });
     const isForcedRotate = rotatePortrait.has(path.basename(src));
-    const imageArgs = isForcedRotate
-      ? [src, "-rotate", "90", "-resize", "1600x1600>", "-strip", "-quality", "82", out]
-      : [src, "-auto-orient", "-resize", "1600x1600>", "-strip", "-quality", "82", out];
-    execFileSync(
-      "convert",
-      imageArgs,
-      { stdio: "ignore" }
-    );
+    let imageArgs;
+    if (isForcedRotate) {
+      // Сначала учитываем EXIF. Затем проверяем уже ориентированные
+      // пиксели: если кадр всё ещё горизонтальный, поворачиваем на 90°.
+      // Так все четыре фото гарантированно становятся вертикальными,
+      // независимо от того, какой EXIF был записан камерой.
+      const orientedSize = execFileSync(
+        "convert",
+        [src, "-auto-orient", "-format", "%w %h", "info:"],
+        { encoding: "utf8" }
+      ).trim().split(/\\s+/).map(Number);
+      const needsRotate = orientedSize[0] > orientedSize[1];
+      imageArgs = [
+        src,
+        "-auto-orient",
+        ...(needsRotate ? ["-rotate", "90"] : []),
+        "-resize", "1600x1600>",
+        "-strip", "-quality", "82", out,
+      ];
+    } else {
+      imageArgs = [src, "-auto-orient", "-resize", "1600x1600>", "-strip", "-quality", "82", out];
+    }
+    execFileSync("convert", imageArgs, { stdio: "ignore" });
     return fs.existsSync(out) && fs.statSync(out).size > 0;
   }
 
