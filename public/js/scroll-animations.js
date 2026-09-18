@@ -98,6 +98,31 @@ function initScrollAnimations() {
     }
   }
 
+  // ---------- Сетка каталога: стаггер fade+slide-up при появлении карточек ----------
+  const catalogCards = gsap.utils.toArray('.catalog-grid .product-card, .product-grid .product-card');
+  if (catalogCards.length) {
+    if (prefersReducedMotion) {
+      gsap.set(catalogCards, { opacity: 1, y: 0 });
+    } else {
+      gsap.set(catalogCards, { opacity: 0, y: 24 });
+      // Группируем по секции-предку, чтобы у каждой сетки (каталог,
+      // «похожее» на странице товара) был свой триггер и свой стаггер,
+      // а не один общий на все карточки страницы.
+      const grids = new Set(catalogCards.map((card) => card.parentElement));
+      grids.forEach((grid) => {
+        const cardsInGrid = catalogCards.filter((c) => c.parentElement === grid);
+        ScrollTrigger.create({
+          trigger: grid,
+          start: 'top 88%',
+          once: true,
+          onEnter: () => {
+            gsap.to(cardsInGrid, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', stagger: 0.08 });
+          },
+        });
+      });
+    }
+  }
+
   // ---------- Товары: горизонтальный pinned-скролл (только десктоп) ----------
   const track = document.querySelector('.products-track');
   const pinWrap = document.querySelector('.products-pin-wrap');
