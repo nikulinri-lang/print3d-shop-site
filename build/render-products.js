@@ -65,15 +65,6 @@ function productCard(p, opts = {}) {
       </a>`;
 }
 
-function productSpecsRows(specs) {
-  if (!specs || !specs.material) return "";
-  return `<div class="spec-row"><span class="spec-label">Материал</span><span class="spec-value mono">${specs.material}</span></div>`;
-}
-
-function specLabel(key) {
-  const labels = { material: "Материал", size: "Размер", weight: "Вес" };
-  return labels[key] || key;
-}
 
 // 4 раздела описания товара: короткий хук, материал/качество печати,
 // маркированный список применений, что нужно знать перед покупкой.
@@ -320,9 +311,6 @@ function productPage(p, allProducts) {
         <span>📦 Доставка по России</span>
         ${p.colors && p.colors.length ? "<span>🎨 Можно выбрать цвет</span>" : ""}
         <span>💳 Оплата после подтверждения заказа менеджером</span>
-      </div>
-      <div class="product-specs">
-        ${productSpecsRows(p.specs)}
       </div>
       <a href="${TELEGRAM_BOT_URL}" class="product-telegram-link" target="_blank" rel="noopener">Есть вопрос? Написать в Telegram →</a>
     </div>
