@@ -43,9 +43,9 @@ jobs:
           # after product-page presentation changes.
           for page in Path('dist').rglob('*.html'):
               text = page.read_text(encoding='utf-8')
-              text = text.replace('?v=9', '?v=11')
-              text = text.replace('?v=10', '?v=11')
-              text = text.replace('/js/product-page.js?v=4', '/js/product-page.js?v=5')
+              text = text.replace('?v=9', '?v=12')
+              text = text.replace('?v=10', '?v=12')
+              text = text.replace('/js/product-page.js?v=4', '/js/product-page.js?v=6')
               page.write_text(text, encoding='utf-8')
           PY
 
