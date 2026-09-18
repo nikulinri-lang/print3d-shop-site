@@ -66,9 +66,8 @@ function productCard(p, opts = {}) {
 }
 
 function productSpecsRows(specs) {
-  return Object.entries(specs)
-    .map(([k, v]) => `<div class="spec-row"><span class="spec-label">${specLabel(k)}</span><span class="spec-value mono">${v}</span></div>`)
-    .join("\n");
+  if (!specs || !specs.material) return "";
+  return `<div class="spec-row"><span class="spec-label">Материал</span><span class="spec-value mono">${specs.material}</span></div>`;
 }
 
 function specLabel(key) {
@@ -260,7 +259,7 @@ function colorSwatches(p) {
 }
 
 function productPage(p, allProducts) {
-  const variantsBlock = p.variants && p.variants.length && !variantsAreColors(p)
+  const variantsBlock = false
     ? `<div class="product-variants" id="productVariants">
         <div class="product-variants-label">Вариант:</div>
         ${p.variants.map((v, i) => `<label class="variant-row"><input type="radio" name="variant" value="${escAttr(v.name)}" data-extra="${v.extra}"${i === 0 ? " checked" : ""}><span>${v.name}</span><span class="mono">${v.extra > 0 ? "+" + v.extra + " ₽" : "включено"}</span></label>`).join("\n        ")}
@@ -344,7 +343,7 @@ ${similarBlock}
 <script>
 window.__PRODUCT__ = ${JSON.stringify(productData)};
 </script>
-<script defer src="/js/product-page.js?v=4"></script>`;
+<script defer src="/js/product-page.js?v=6"></script>`;
 
   return renderLayout({
     title: `${p.title} — купить за ${p.price.toLocaleString("ru-RU")} ₽ | PRINTLAB`,
