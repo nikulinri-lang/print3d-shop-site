@@ -1981,6 +1981,35 @@ fieldset.form-field {
   line-height: 1.65;
 }
 
+@media (max-width: 1100px) {
+  .why-us-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .why-us-card { min-height: 0; }
+}
+
+@media (max-width: 767px) {
+  .why-us-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .why-us-card {
+    min-height: 170px;
+    padding: 14px 12px 12px;
+    border-radius: 8px;
+    gap: 9px;
+  }
+
+  .why-us-card h3 {
+    font-size: 14px;
+    line-height: 1.25;
+  }
+
+  .why-us-card p {
+    font-size: 11px;
+    line-height: 1.5;
+  }
+}
+
 /* ===== Блок отзывов ===== */
 .reviews-section-head {
   max-width: 760px;
