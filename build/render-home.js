@@ -166,8 +166,8 @@ function faqSection() {
   <div class="container faq-layout">
     <div class="faq-intro">
       <span class="kicker">Вопросы и ответы</span>
-      <h2>Есть вопросы?<br><span>Разберёмся.</span></h2>
-      <p>Собрали самое важное о печати, сроках, заказах по фото и доставке.</p>
+      <h2>Перед заказом<br><span>важно знать.</span></h2>
+      <p>Ответы на главные вопросы о сроках, цветах, индивидуальной печати и доставке.</p>
       <a href="${TELEGRAM_BOT_URL}" class="faq-contact">
         <span class="faq-contact-icon">↗</span>
         <span><strong>Написать в Telegram</strong><small>Ответим и поможем с заказом</small></span>
