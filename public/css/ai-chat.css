@@ -14,3 +14,21 @@
 .printlab-chat-form input{min-width:0;flex:1;border:1px solid rgba(232,232,240,.13);border-radius:11px;background:rgba(255,255,255,.045);color:#fff;padding:11px 12px;outline:none}
 .printlab-chat-form input:focus{border-color:rgba(255,107,0,.5)}.printlab-chat-form button{width:44px;border:0;border-radius:11px;background:#ff6b00;color:#fff;cursor:pointer;font-size:17px}
 @media(max-width:767px){#printlab-ai-chat{right:12px;bottom:12px}.printlab-chat-fab{width:56px;height:56px}.printlab-chat-panel{height:calc(100vh - 80px);width:calc(100vw - 24px);border-radius:16px}}
+
+
+/* Consultant redesign */
+#printlab-ai-chat{position:fixed;right:22px;bottom:22px;z-index:9999}
+.printlab-chat-promo{position:absolute;right:0;bottom:76px;white-space:nowrap;padding:9px 13px;border:1px solid rgba(255,107,0,.25);border-radius:12px;background:rgba(17,18,21,.97);color:#fff;font-size:12px;box-shadow:0 12px 30px rgba(0,0,0,.28);animation:printlabFloat 3s ease-in-out infinite}
+.printlab-chat-promo:after{content:"";position:absolute;right:20px;bottom:-6px;width:10px;height:10px;background:rgba(17,18,21,.97);border-right:1px solid rgba(255,107,0,.25);border-bottom:1px solid rgba(255,107,0,.25);transform:rotate(45deg)}
+.printlab-chat-fab{width:64px;height:64px;border-radius:50%;background:linear-gradient(145deg,#ff7a18,#df4d00);color:#fff;box-shadow:0 14px 38px rgba(0,0,0,.38),0 0 30px rgba(255,107,0,.22);cursor:pointer;display:flex;align-items:center;justify-content:center}
+.printlab-chat-icon{font-size:30px;line-height:1}
+@keyframes printlabFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.printlab-chat-panel{width:min(400px,calc(100vw - 24px));height:min(680px,calc(100vh - 90px));border-radius:20px;background:rgba(17,18,21,.985);box-shadow:0 25px 75px rgba(0,0,0,.55);backdrop-filter:blur(18px)}
+.printlab-chat-head{display:flex;align-items:center;gap:10px}.printlab-avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#ff7a18,#df4d00);font-weight:700;color:#fff}
+.printlab-chat-panel header small i{display:inline-block;width:6px;height:6px;border-radius:50%;background:#48d597;margin-right:5px;vertical-align:1px}
+.printlab-chat-quick{display:flex;flex-wrap:wrap;gap:7px;padding:0 12px 10px}
+.printlab-chat-quick button{border:1px solid rgba(255,107,0,.28);border-radius:999px;background:rgba(255,107,0,.08);color:#f4f4f4;padding:8px 10px;font-size:11px;cursor:pointer}
+.printlab-chat-consent{margin:0 12px 10px;padding:12px;border:1px solid rgba(255,107,0,.28);border-radius:13px;background:rgba(255,107,0,.07);color:#d9d9dd;font-size:11px;line-height:1.45}
+.printlab-chat-consent a{color:#ff9a58}.printlab-chat-consent button{margin-top:9px;border:0;border-radius:9px;background:#ff6b00;color:#fff;padding:9px 12px;font-weight:600;cursor:pointer}
+.printlab-chat-form input:disabled{opacity:.5}.printlab-chat-form button:disabled{opacity:.4;cursor:not-allowed}
+@media(max-width:767px){#printlab-ai-chat{right:12px;bottom:12px}.printlab-chat-fab{width:58px;height:58px}.printlab-chat-panel{height:calc(100vh - 76px);width:calc(100vw - 24px);border-radius:17px}.printlab-chat-promo{bottom:70px}}
