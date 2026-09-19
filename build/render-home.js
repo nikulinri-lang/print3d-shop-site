@@ -11,17 +11,28 @@ function categoryHref(tile) {
   return `/catalog?category=${encodeURIComponent(tile.key)}`;
 }
 
-function categoriesSection() {
-  // Иконка+подпись уже нарисованы на самом фото (см. public/images/categories/),
-  // поэтому поверх ничего не дублируем — только доступный alt для скринридеров.
-  const tiles = CATEGORY_TILES.map(
-    (t) => `<a href="${categoryHref(t)}" class="category-tile category-tile--photo">
+function categoriesSection(products) {
+  // Собираем категории с товарами
+  const usedCategories = new Set();
+  products.forEach((p) => {
+    (p.categories || [p.category]).forEach((c) => usedCategories.add(c));
+    if (p.featured) usedCategories.add("__featured__");
+  });
+
+  const tiles = CATEGORY_TILES
+    .filter((t) => {
+      if (t.kind === "custom") return true; // «На заказ» — всегда показываем
+      if (t.kind === "featured") return usedCategories.has("__featured__");
+      return usedCategories.has(t.key);
+    })
+    .map(
+      (t) => `<a href="${categoryHref(t)}" class="category-tile category-tile--photo">
         <picture>
           <source srcset="/images/categories/${t.img}.webp" type="image/webp">
           <img src="/images/categories/${t.img}.jpg" alt="${t.label}" loading="lazy">
         </picture>
       </a>`
-  ).join("\n      ");
+    ).join("\n      ");
 
   return `<section class="section">
   <div class="container">
@@ -279,7 +290,7 @@ ${popularSection(products)}
 
 ${reviewsSection()}
 
-${categoriesSection()}
+${categoriesSection(products)}
 
 <section class="section print-layers">
   <div class="container">
