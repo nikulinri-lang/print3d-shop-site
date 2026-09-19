@@ -253,9 +253,9 @@
   }
 
   #printlab-ai-chat .printlab-chat-fab{
-    position:absolute!important;
-    right:0!important;
-    bottom:0!important;
+    position:fixed!important;
+    right:12px!important;
+    bottom:12px!important;
     display:flex!important;
     visibility:visible!important;
     opacity:1!important;
@@ -264,6 +264,9 @@
   }
 
   #printlab-ai-chat .printlab-chat-promo{
+    position:fixed!important;
+    right:12px!important;
+    bottom:80px!important;
     display:block!important;
     visibility:visible!important;
     opacity:1!important;
