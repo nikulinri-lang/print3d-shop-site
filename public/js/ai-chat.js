@@ -57,6 +57,15 @@
     root.querySelector(".printlab-chat-form").onsubmit=e=>{e.preventDefault();const text=input.value.trim();if(text){input.value="";sendText(text)}};
     quick.innerHTML=quickHtml;quick.querySelectorAll("button").forEach(b=>b.onclick=()=>sendText(b.dataset.q));
     if(!state.started){input.disabled=false;send.disabled=false;consentBox.hidden=true;quick.hidden=false}else setReady();draw();
+
+    // Автооткрытие через 15 сек — один раз за сессию
+    if(!sessionStorage.getItem(POPUP_KEY)){
+      setTimeout(()=>{
+        if(!panel.hidden)return; // уже открыт вручную
+        open();
+        sessionStorage.setItem(POPUP_KEY,"auto");
+      },15000);
+    }
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",render);else render();
 })();
