@@ -24,7 +24,7 @@ const ORGANIZATION_SCHEMA = {
 // собственного billing-хэша — единственный способ инвалидировать кэш
 // у уже заходивших посетителей — вручную бампать эту версию при правке
 // tokens/base/components.css или любого /js/*.js.
-const ASSET_V = 30;
+const ASSET_V = 31;
 
 function metrikaSnippet() {
   if (!YANDEX_METRIKA_ID) return "";
@@ -87,7 +87,8 @@ ${verificationTags()}
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/tokens.css?v=${ASSET_V}">
 <link rel="stylesheet" href="/css/base.css?v=${ASSET_V}">
-<link rel="stylesheet" href="/css/components.css?v=${ASSET_V}">\n<link rel="stylesheet" href="/css/ai-chat.css?v=${ASSET_V}">
+<link rel="stylesheet" href="/css/components.css?v=${ASSET_V}">
+<link rel="stylesheet" href="/css/ai-chat.css?v=${ASSET_V}">
 <script type="importmap">
 {
   "imports": {
