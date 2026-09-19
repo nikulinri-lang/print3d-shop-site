@@ -876,6 +876,52 @@
 
 .product-telegram-link:hover { text-decoration: underline; }
 
+/* ===== Инфоблок под кнопками товара ===== */
+.product-trust-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 4px 0 var(--space-sm);
+}
+.product-trust-row span {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  min-height: 48px;
+  padding: 12px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(255,107,0,.09), transparent 55%),
+    linear-gradient(145deg, rgba(255,255,255,.045), rgba(255,255,255,.012));
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  line-height: 1.45;
+  box-shadow: none;
+  transition: border-color var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out);
+}
+.product-trust-row span:hover {
+  border-color: var(--color-accent-1-25);
+  transform: translateY(-1px);
+}
+.product-trust-row a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.product-trust-row a:hover { color: var(--color-text); }
+
+@media (max-width: 767px) {
+  .product-trust-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .product-trust-row span {
+    min-height: 0;
+    padding: 11px 12px;
+  }
+}
+
 /* ===== Sticky-панель "В корзину" на странице товара (мобильный) ===== */
 .sticky-buy-bar {
   display: none;
