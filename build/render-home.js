@@ -145,7 +145,7 @@ function blogPreviewSection(posts) {
       <span class="kicker">Блог</span>
       <h2>Читаем перед печатью</h2>
     </div>
-    <div class="blog-grid">
+    <div class="blog-grid blog-review-grid">
       ${cards}
     </div>
   </div>
@@ -154,7 +154,7 @@ function blogPreviewSection(posts) {
 
 function printerTeaserSection() {
   return `<section class="section">
-  <div class="container printer-teaser-grid">
+  <div class="container printer-teaser-grid review-card printer-equipment-card">
     <img src="/images/printlab-equipment-800.webp"
       srcset="/images/printlab-equipment-480.webp 480w, /images/printlab-equipment-800.webp 800w, /images/printlab-equipment-1200.webp 1200w"
       sizes="(max-width: 767px) 90vw, 600px"
@@ -294,17 +294,17 @@ ${categoriesSection()}
         <circle cx="50" cy="50" r="2.6" />
         <circle cx="83.3" cy="50" r="2.6" />
       </svg>
-      <div class="step">
+      <div class="step review-card">
         <div class="step-num mono">01</div>
         <h3>Выбираешь модель</h3>
         <p>В каталоге — готовые изделия с ценой и характеристиками, или форма кастомного заказа под свою идею.</p>
       </div>
-      <div class="step">
+      <div class="step review-card">
         <div class="step-num mono">02</div>
         <h3>Оформляешь заказ</h3>
         <p>Кладёшь товар в корзину и подтверждаешь заказ в Telegram — так мы точно не потеряем детали.</p>
       </div>
-      <div class="step">
+      <div class="step review-card">
         <div class="step-num mono">03</div>
         <h3>Получаешь изделие</h3>
         <p>Печать занимает ${LEAD_TIME}. Готовое — забираешь сам в ${CITY_PREP} или получаешь посылкой.</p>
@@ -319,7 +319,7 @@ ${whyUsSection()}
 
 <section class="section">
   <div class="container">
-    ${customOrderTeaser()}
+    <div class="review-card custom-order-review-card">${customOrderTeaser()}</div>
   </div>
 </section>
 
