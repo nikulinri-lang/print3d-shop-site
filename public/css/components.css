@@ -2359,7 +2359,7 @@ fieldset.form-field {
 /* ===== Единый стиль блоков главной: как карточки отзывов ===== */
 .steps .review-card { min-height: 300px; justify-content: flex-start; }
 .steps .review-card .step-num { position: relative; z-index: 1; }
-.printer-equipment-card { padding: 26px; align-items: stretch; }
+.printer-equipment-card { padding: 26px; align-items: stretch; display: grid; }
 .printer-equipment-card .printer-teaser-photo { border-radius: 7px; }
 .custom-order-review-card { padding: 0; min-height: 0; }
 .custom-order-review-card .custom-order-teaser { border: 0; background: transparent; box-shadow: none; width: 100%; }
