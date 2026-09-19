@@ -35,6 +35,7 @@
 
 
 /* ===== Mobile chat: fixed bottom sheet, never covers the whole page ===== */
+@media (max-width: 767px) { html.printlab-chat-open { overflow: hidden; } }
 @media (max-width: 767px) {
   #printlab-ai-chat {
     right: 12px;
