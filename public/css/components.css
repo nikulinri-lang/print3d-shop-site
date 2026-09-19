@@ -1952,22 +1952,23 @@ fieldset.form-field {
 .category-tile-icon { font-size: var(--text-2xl); }
 .category-tile-label { font-size: var(--text-sm); color: var(--color-text); }
 
-/* Иконка+подпись уже нарисованы на самом фото — плитка становится
- * просто рамкой-обрезкой под картинку, без внутренних отступов. */
+/* Плитка категории с фото: одинаковый размер, не обрезается */
 .category-tile--photo {
   padding: 0;
   overflow: hidden;
   aspect-ratio: 1;
+  background: var(--color-surface);
 }
 
 .category-tile--photo img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
   transition: transform var(--duration-base) var(--ease-out);
 }
 
-.category-tile--photo:hover img { transform: scale(1.05); }
+.category-tile--photo:hover img { transform: scale(1.04); }
 
 /* ===== Главная: почему мы ===== */
 .why-us-grid {
