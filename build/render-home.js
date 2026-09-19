@@ -12,47 +12,79 @@ function categoryHref(tile) {
 }
 
 function categoriesSection(products) {
-  // Собираем категории с товарами
   const usedCategories = new Set();
   products.forEach((p) => {
     (p.categories || [p.category]).forEach((c) => usedCategories.add(c));
     if (p.featured) usedCategories.add("__featured__");
   });
-
-  const tiles = CATEGORY_TILES
-    .filter((t) => {
-      if (t.kind === "custom") return true; // «На заказ» — всегда показываем
-      if (t.kind === "featured") return usedCategories.has("__featured__");
-      return usedCategories.has(t.key);
-    })
-    .map(
-      (t) => `<a href="${categoryHref(t)}" class="category-tile category-tile--photo">
-        <picture>
-          <source srcset="/images/categories/${t.img}.webp" type="image/webp">
-          <img src="/images/categories/${t.img}.jpg" alt="${t.label}" loading="lazy">
-        </picture>
+  const visibleTiles = CATEGORY_TILES.filter((t) => {
+    if (t.kind === "custom") return true;
+    if (t.kind === "featured") return usedCategories.has("__featured__");
+    return usedCategories.has(t.key);
+  });
+  const slideHtml = visibleTiles.map((t, i) =>
+    `<a href="${categoryHref(t)}" class="cat-slide${i === 0 ? " active" : ""}" data-index="${i}">
+        <div class="cat-slide-img">
+          <picture>
+            <source srcset="/images/categories/${t.img}.webp" type="image/webp">
+            <img src="/images/categories/${t.img}.jpg" alt="${t.label}" loading="lazy">
+          </picture>
+        </div>
       </a>`
-    ).join("\n      ");
-
-  return `<section class="section">
+  ).join("\n      ");
+  const dotsHtml = visibleTiles.map((_, i) =>
+    `<button class="cat-dot${i === 0 ? " active" : ""}" data-index="${i}" aria-label="Категория ${i + 1}"></button>`
+  ).join("");
+  return `<section class="section cat-carousel-section">
   <div class="container">
     <div class="section-head"><span class="kicker">Каталог</span><h2>Категории</h2></div>
-    <div class="categories-grid">
-      ${tiles}
-    </div>
   </div>
+  <div class="cat-carousel-wrap">
+    <div class="cat-carousel" id="catCarousel">
+      ${slideHtml}
+    </div>
+    <button class="cat-arrow cat-arrow--prev" id="catPrev" aria-label="Назад">&#8249;</button>
+    <button class="cat-arrow cat-arrow--next" id="catNext" aria-label="Вперёд">&#8250;</button>
+  </div>
+  <div class="cat-dots" id="catDots">${dotsHtml}</div>
+  <script>(function(){
+    var el=document.getElementById('catCarousel'),sl=el?el.querySelectorAll('.cat-slide'):[],ds=document.querySelectorAll('#catDots .cat-dot'),cur=0;
+    if(!sl.length)return;
+    function go(n){
+      ['active','prev-slide','next-slide'].forEach(function(c){sl[cur].classList.remove(c);});
+      ds[cur]&&ds[cur].classList.remove('active');
+      sl[(cur-1+sl.length)%sl.length].classList.remove('prev-slide');
+      sl[(cur+1)%sl.length].classList.remove('next-slide');
+      cur=(n+sl.length)%sl.length;
+      sl[cur].classList.add('active');
+      sl[(cur-1+sl.length)%sl.length].classList.add('prev-slide');
+      sl[(cur+1)%sl.length].classList.add('next-slide');
+      ds[cur]&&ds[cur].classList.add('active');
+    }
+    sl[sl.length-1].classList.add('prev-slide');
+    if(sl.length>1)sl[1].classList.add('next-slide');
+    var pp=document.getElementById('catPrev'),np=document.getElementById('catNext');
+    pp&&pp.addEventListener('click',function(e){e.preventDefault();go(cur-1);});
+    np&&np.addEventListener('click',function(e){e.preventDefault();go(cur+1);});
+    ds.forEach(function(d){d.addEventListener('click',function(){go(+d.dataset.index);});});
+    var sx=0;
+    el.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;},{passive:true});
+    el.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>40)go(dx<0?cur+1:cur-1);});
+  })();<\/script>
 </section>`;
 }
 
 function trustStatsSection() {
   const items = TRUST_STATS.map(
     (s) => `<div class="trust-stat">
+        <div class="trust-stat-icon">${s.icon}</div>
         <div class="trust-stat-value mono" data-count-to="${s.value}" data-count-suffix="${s.suffix || ""}">${s.value.toLocaleString("ru-RU")}${s.suffix || ""}</div>
         <div class="trust-stat-label">${s.label}</div>
-      </div>`  ).join("\n      ");
+      </div>`
+  ).join("\n      ");
   return `<section class="section trust-stats-section">
   <div class="container">
-    <div class="section-head trust-section-head"><span class="kicker">Наш опыт</span><h2>Цифры говорят<br><span>сами</span></h2><p class="trust-section-lede">Опыт PRINTLAB — в количестве выполненных заказов и внимании к каждой детали.</p></div>
+    <div class="section-head"><span class="kicker">Наш опыт</span><h2>Цифры говорят сами</h2></div>
     <div class="trust-stats">
       ${items}
     </div>
