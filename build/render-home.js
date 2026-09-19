@@ -91,7 +91,7 @@ function whyUsSection() {
   ).join("\n      ");
   return `<section class="section print-layers">
   <div class="container">
-    <div class="section-head"><span class="kicker">Почему мы</span><h2>Почему PRINTLAB?</h2></div>
+    <div class="section-head"><span class="kicker">Почему мы</span><h2>Почему <span>PRINTLAB?</span></h2></div>
     <div class="reviews-grid why-us-grid">
       ${cards}
     </div>
@@ -117,7 +117,7 @@ function faqSection() {
   ).join("\n      ");
   return `<section class="section">
   <div class="container container--article">
-    <div class="section-head"><span class="kicker">Вопросы</span><h2>FAQ</h2></div>
+    <div class="section-head"><span class="kicker">Вопросы</span><h2><span>FAQ</span></h2></div>
     <div class="faq-list">
       ${items}
     </div>
@@ -143,7 +143,7 @@ function blogPreviewSection(posts) {
   <div class="container">
     <div class="section-head">
       <span class="kicker">Блог</span>
-      <h2>Читаем перед печатью</h2>
+      <h2>Читаем перед <span>печатью</span></h2>
     </div>
     <div class="blog-grid blog-review-grid">
       ${cards}
@@ -161,7 +161,7 @@ function printerTeaserSection() {
       alt="Наше оборудование для 3D-печати" class="printer-teaser-photo" loading="lazy">
     <div class="printer-teaser-content">
       <span class="kicker">Наше оборудование</span>
-      <h2>Печатаем на современном 3D-принтере</h2>
+      <h2>Печатаем на современном <span>3D-принтере</span></h2>
       <p class="lede" style="margin-bottom: 0;">Быстро, точно и с многоцветной печатью за один проход — значит выше качество и короче срок изготовления вашего заказа.</p>
       <div class="printer-teaser-specs">
         <div class="printer-teaser-spec">
@@ -285,7 +285,7 @@ ${categoriesSection()}
   <div class="container">
     <div class="section-head">
       <span class="kicker">Процесс</span>
-      <h2>Как это работает</h2>
+      <h2>Как это <span>работает</span></h2>
     </div>
     <div class="steps">
       <svg class="steps-connector" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
