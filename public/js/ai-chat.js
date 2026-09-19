@@ -58,5 +58,5 @@
     if(!state.started){input.disabled=false;send.disabled=false;consentBox.hidden=true;quick.hidden=false}else setReady();draw();
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",render);else render();
-  setTimeout(()=>{if(!localStorage.getItem(POPUP_KEY)){const fab=document.querySelector(".printlab-chat-fab");if(fab)fab.click()}},15000);
+  setTimeout(()=>{const fab=document.querySelector(".printlab-chat-fab");if(fab&&!localStorage.getItem(POPUP_KEY)&&!document.querySelector(".printlab-chat-panel")?.matches(":not([hidden])"))fab.click()},15000);
 })();
