@@ -25,13 +25,13 @@
         const page=location.pathname+(location.search||"");
         const product=document.querySelector("[data-product-title]")?.textContent?.trim()||"";
         const history=state.messages.slice(-18);
-        const r=await fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({kind:"chat",sessionId:state.sessionId,userMessage:text,history,page,product,customer:state.order,isNew:!state.started,consent:true})});
+        const controller=new AbortController(); const timer=setTimeout(()=>controller.abort(),20000); const r=await fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},signal:controller.signal,body:JSON.stringify({kind:"chat",sessionId:state.sessionId,userMessage:text,history,page,product,customer:state.order,isNew:!state.started,consent:true})}); clearTimeout(timer);
         const d=await r.json();
         if(!r.ok||!d.ok)throw new Error(d.error||"Ошибка соединения");
         state.started=true;state.messages.push({role:"assistant",content:d.reply||"Готов помочь с выбором."});
         if(d.order)state.order=d.order;save();draw();
       }catch(err){
-        state.messages.push({role:"assistant",content:"Не удалось отправить сообщение. Попробуйте ещё раз через минуту."});save();draw();
+        state.messages.push({role:"assistant",content:err?.name==="AbortError"?"Ответ занимает слишком много времени. Попробуйте ещё раз.":"Не удалось отправить сообщение. Попробуйте ещё раз через минуту."});save();draw();
       }finally{root.querySelector(".printlab-chat-typing").hidden=true}
     }
     const open=()=>{
