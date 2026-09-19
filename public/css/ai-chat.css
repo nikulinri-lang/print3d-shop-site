@@ -23,7 +23,7 @@
 .printlab-chat-fab{width:64px;height:64px;border-radius:50%;background:linear-gradient(145deg,#ff7a18,#df4d00);color:#fff;box-shadow:0 14px 38px rgba(0,0,0,.38),0 0 30px rgba(255,107,0,.22);cursor:pointer;display:flex;align-items:center;justify-content:center}
 .printlab-chat-icon{font-size:30px;line-height:1}
 @keyframes printlabFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
-.printlab-chat-panel{width:min(400px,calc(100vw - 24px));height:min(680px,calc(100vh - 90px));border-radius:20px;background:rgba(17,18,21,.985);box-shadow:0 25px 75px rgba(0,0,0,.55);backdrop-filter:blur(18px)}
+.printlab-chat-panel[hidden]{display:none!important}\n.printlab-chat-panel{width:min(400px,calc(100vw - 24px));height:min(680px,calc(100vh - 90px));border-radius:20px;background:rgba(17,18,21,.985);box-shadow:0 25px 75px rgba(0,0,0,.55);backdrop-filter:blur(18px)}
 .printlab-chat-head{display:flex;align-items:center;gap:10px}.printlab-avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#ff7a18,#df4d00);font-weight:700;color:#fff}
 .printlab-chat-panel header small i{display:inline-block;width:6px;height:6px;border-radius:50%;background:#48d597;margin-right:5px;vertical-align:1px}
 .printlab-chat-quick{display:flex;flex-wrap:wrap;gap:7px;padding:0 12px 10px}
