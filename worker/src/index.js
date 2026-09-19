@@ -1,13 +1,11 @@
-/* Cloudflare Worker: каталог + приём заказов с 3-d-shop.ru.
- * Каталог берётся из публичного JSON, который публикуется вместе с сайтом
- * из content/products-autumn.json. Telegram-бот может использовать GET
- * /products как единый источник каталога.
- *
- * Секреты BOT_TOKEN и OWNER_CHAT_ID задаются через wrangler secret put.
+/* PRINTLAB backend: каталог, заказы и AI-чат.
+ * Секреты задаются только через Wrangler:
+ *   BOT_TOKEN, OWNER_CHAT_ID, OPENAI_API_KEY
+ * Не хранить секреты в Git.
  */
-
 const ALLOWED_ORIGIN = "https://3-d-shop.ru";
 const CATALOG_URL = "https://3-d-shop.ru/products-autumn.json";
+const DEFAULT_MODEL = "gpt-5.6-luna";
 
 function corsHeaders() {
   return {
@@ -17,146 +15,85 @@ function corsHeaders() {
     "Cache-Control": "no-store",
   };
 }
-
-function json(data, status = 200, extraHeaders = {}) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json; charset=utf-8", ...corsHeaders(), ...extraHeaders },
-  });
+function json(data,status=200){return new Response(JSON.stringify(data),{status,headers:{"Content-Type":"application/json; charset=utf-8",...corsHeaders()}});}
+function esc(v){return String(v==null?"":v).slice(0,2000);}
+function normalizeProduct(p){
+  return {id:String(p.id||p.slug||""),slug:String(p.slug||p.id||""),title:String(p.title||"Без названия"),
+    category:String(p.category||"Другое"),price:Number(p.price||0),
+    variants:Array.isArray(p.variants)?p.variants.map(v=>({name:String(v.name||""),extra:Number(v.extra||0)})):[],
+    description:String(p.description||""),shortDesc:String(p.shortDesc||""),stock:Number(p.stock||0)};
 }
-
-function esc(v) {
-  return String(v == null ? "" : v).slice(0, 2000);
+async function getProducts(){
+  const r=await fetch(CATALOG_URL,{headers:{"Accept":"application/json","User-Agent":"PRINTLAB-Worker"},cf:{cacheTtl:60,cacheEverything:true}});
+  if(!r.ok) throw new Error("catalog fetch failed: "+r.status);
+  const d=await r.json(); if(!Array.isArray(d)) throw new Error("catalog must be an array"); return d.map(normalizeProduct);
 }
-
-function normalizeProduct(p) {
-  return {
-    id: String(p.id || p.slug || ""),
-    slug: String(p.slug || p.id || ""),
-    title: String(p.title || "Без названия"),
-    category: String(p.category || "Другое"),
-    categories: Array.isArray(p.categories) ? p.categories.map(String) : [],
-    price: Number(p.price || 0),
-    variants: Array.isArray(p.variants)
-      ? p.variants.map((v) => ({ name: String(v.name || ""), extra: Number(v.extra || 0) }))
-      : [],
-    stock: Number.isFinite(Number(p.stock)) ? Number(p.stock) : 0,
-    featured: Boolean(p.featured),
-    description: String(p.description || ""),
-    shortDesc: String(p.shortDesc || ""),
-    specs: p.specs && typeof p.specs === "object" ? p.specs : {},
-    colors: p.colors ?? null,
-    images: Array.isArray(p.images)
-      ? p.images.map((src) => new URL(String(src), "https://3-d-shop.ru/").href)
-      : [],
-  };
+function formatOrderMessage(d){
+  const lines=["🛒 Новый заказ","","👤 ФИО: "+esc(d.name),`📞 Телефон: ${esc(d.phone||d.contact)}`,`📍 Город: ${esc(d.city)}`,"📦 Товары:",
+    ...(Array.isArray(d.items)?d.items:[]).map(i=>`  — ${esc(i.title||i.slug)}${i.variant?` (${esc(i.variant)})`:""} × ${esc(i.qty||1)}`)];
+  if(d.comment) lines.push("💬 Комментарий: "+esc(d.comment));
+  lines.push("🕐 "+new Date().toISOString()); return lines.join("\n");
 }
-
-async function getProducts() {
-  const resp = await fetch(CATALOG_URL, {
-    headers: {
-      "Accept": "application/json",
-      "User-Agent": "PRINTLAB-Catalog-Worker",
-    },
-    cf: { cacheTtl: 60, cacheEverything: true },
-  });
-  if (!resp.ok) throw new Error(`catalog fetch failed: ${resp.status}`);
-
-  const data = await resp.json();
-  if (!Array.isArray(data)) throw new Error("catalog must be an array");
-  return data.map(normalizeProduct);
+function formatCustomMessage(d){
+  return ["🛠 Новая заявка на кастомный заказ","",`👤 Имя: ${esc(d.name)}`,`📞 Контакт: ${esc(d.contact)}`,
+    `📝 Описание: ${esc(d.description)}`,`🔢 Количество: ${esc(d.qty)}`,d.size?`📏 Размер: ${esc(d.size)}`:"",d.color?`🎨 Цвет: ${esc(d.color)}`:"",d.fileName?`📎 Файл: ${esc(d.fileName)}`:"",`🕐 ${new Date().toISOString()}`].filter(Boolean).join("\n");
 }
-
-function formatOrderMessage(d) {
-  const lines = [
-    "🛒 Новый заказ",
-    "",
-    `👤 Имя: ${esc(d.name)}`,
-    `📞 Контакт: ${esc(d.contact)}`,
-    "📦 Товары:",
-    ...(Array.isArray(d.items) ? d.items : []).map(
-      (i) => `  — ${esc(i.title || i.slug)}${i.variant ? ` (${esc(i.variant)})` : ""} × ${esc(i.qty)}`
-    ),
-    `🚚 Получение: ${esc(d.method)}`,
-  ];
-  if (d.total != null) lines.push(`💰 Сумма: ${esc(d.total)} ₽`);
-  if (d.address) lines.push(`📍 Адрес: ${esc(d.address)}`);
-  if (d.comment) lines.push(`💬 Комментарий: ${esc(d.comment)}`);
-  lines.push(`🕐 Время: ${new Date().toISOString()}`);
-  return lines.join("\n");
+async function sendTelegramMessage(env,text){
+  const r=await fetch(`https://api.telegram.org/bot${env.BOT_TOKEN}/sendMessage`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:env.OWNER_CHAT_ID,text})});
+  if(!r.ok) throw new Error("Telegram API "+r.status+": "+await r.text());
 }
-
-function formatCustomMessage(d) {
-  const lines = [
-    "🛠 Новая заявка на кастомный заказ",
-    "",
-    `👤 Имя: ${esc(d.name)}`,
-    `📞 Контакт: ${esc(d.contact)}`,
-    `📝 Описание: ${esc(d.description)}`,
-    `🔢 Количество: ${esc(d.qty)}`,
-  ];
-  if (d.size) lines.push(`📏 Размер: ${esc(d.size)}`);
-  if (d.color) lines.push(`🎨 Цвет: ${esc(d.color)}`);
-  if (d.fileName) lines.push(`📎 Файл: ${esc(d.fileName)}`);
-  lines.push(`🕐 Время: ${new Date().toISOString()}`);
-  return lines.join("\n");
+function chatLogMessage(d,role,text){
+  const prefix=role==="user"?"👤 Клиент":"🤖 PRINTLAB AI";
+  return [d.isNew&&role==="user"?"💬 Новый диалог с AI PRINTLAB":"",`🌐 ${d.page||"сайт"}`,d.product?`📦 ${esc(d.product)}`:"",prefix+": "+esc(text),`🆔 ${esc(d.sessionId)}`].filter(Boolean).join("\n");
 }
-
-async function sendTelegramMessage(env, text) {
-  const url = `https://api.telegram.org/bot${env.BOT_TOKEN}/sendMessage`;
-  const resp = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ chat_id: env.OWNER_CHAT_ID, text }),
-  });
-  if (!resp.ok) {
-    const body = await resp.text();
-    throw new Error(`Telegram API ${resp.status}: ${body}`);
-  }
+async function askOpenAI(env,{history,catalog,page,customer}){
+  const catalogText=catalog.slice(0,80).map(p=>`- ${p.title} | ${p.price} ₽ | ${p.category} | ${p.shortDesc||p.description}`).join("\n");
+  const system=`Ты — AI-консультант интернет-магазина PRINTLAB (3-d-shop.ru).
+Твоя главная задача — помогать и ненавязчиво доводить заинтересованного клиента до заказа.
+Отвечай естественно, коротко и по делу на любые вопросы по товарам, 3D-печати, материалам, доставке и индивидуальным заказам.
+Не дави, не повторяй призывы купить после каждого сообщения. Если клиент готов — помоги оформить заказ.
+Не выдумывай цены, наличие, сроки или свойства: используй каталог ниже. Если точного ответа нет — честно скажи и предложи уточнить.
+При заказе обязательно постепенно собери ФИО, город доставки и номер телефона. Не требуй их до того, как клиент действительно готов оформить заказ.
+Если данных не хватает — задай один самый уместный следующий вопрос.
+Когда все три поля получены, order_ready=true и заполни order. Товар/товары бери из контекста диалога или каталога. Если клиент хочет индивидуальную печать, опиши заказ в comment.
+Верни СТРОГО JSON без markdown:
+{"reply":"текст клиенту","order_ready":false,"order":{"name":"","city":"","phone":"","items":[],"comment":""}}
+Если заказ ещё не готов, order_ready=false. Если клиент исправляет данные, используй исправленные данные.
+Каталог:
+${catalogText}
+Страница: ${page||"сайт"}${customer?"\nДанные клиента, уже названные в диалоге: "+JSON.stringify(customer):""}`;
+  const input=[{role:"system",content:system},...history.slice(-14).map(m=>({role:m.role==="assistant"?"assistant":"user",content:String(m.content).slice(0,4000)}))];
+  const r=await fetch("https://api.openai.com/v1/responses",{method:"POST",headers:{"Content-Type":"application/json","Authorization":`Bearer ${env.OPENAI_API_KEY}`},body:JSON.stringify({model:env.OPENAI_MODEL||DEFAULT_MODEL,input,max_output_tokens:700})});
+  if(!r.ok) throw new Error("OpenAI API "+r.status+": "+await r.text());
+  const data=await r.json();
+  const text=data.output_text||data.output?.flatMap(x=>x.content||[]).map(x=>x.text||"").join("")||"";
+  try{return JSON.parse(text)}catch{return {reply:text||"Подскажите, что вас интересует — я помогу.",order_ready:false,order:{}}}
 }
-
 export default {
-  async fetch(request, env) {
-    if (request.method === "OPTIONS") {
-      return new Response(null, { headers: corsHeaders() });
-    }
-
-    const url = new URL(request.url);
-
-    if (request.method === "GET" && url.pathname === "/products") {
-      try {
-        const products = await getProducts();
-        return json({ ok: true, products, source: CATALOG_URL });
-      } catch (err) {
-        return json({ ok: false, error: String(err) }, 502);
+ async fetch(request,env){
+  if(request.method==="OPTIONS") return new Response(null,{headers:corsHeaders()});
+  const url=new URL(request.url);
+  if(request.method==="GET"&&url.pathname==="/products"){
+    try{return json({ok:true,products:await getProducts(),source:CATALOG_URL})}catch(e){return json({ok:false,error:String(e)},502)}
+  }
+  if(request.method!=="POST") return json({ok:false,error:"method not allowed"},405);
+  let d; try{d=await request.json()}catch{return json({ok:false,error:"invalid json"},400)}
+  if(!d) return json({ok:false,error:"empty body"},400);
+  try{
+    if(d.kind==="chat"){
+      if(!env.OPENAI_API_KEY||!env.BOT_TOKEN||!env.OWNER_CHAT_ID) return json({ok:false,error:"chat backend is not configured"},503);
+      const catalog=await getProducts();
+      if(d.userMessage) await sendTelegramMessage(env,chatLogMessage(d,"user",d.userMessage));
+      const result=await askOpenAI(env,{history:Array.isArray(d.history)?d.history:[],catalog,page:d.page,customer:d.customer});
+      if(result.reply) await sendTelegramMessage(env,chatLogMessage(d,"assistant",result.reply));
+      if(result.order_ready&&result.order?.name&&result.order?.city&&result.order?.phone){
+        await sendTelegramMessage(env,formatOrderMessage({...result.order,items:result.order.items||[]}));
       }
+      return json({ok:true,reply:result.reply||"Подскажите, что хотите напечатать?",order_ready:Boolean(result.order_ready),order:result.order||{}});
     }
-
-    if (request.method !== "POST") {
-      return json({ ok: false, error: "method not allowed" }, 405);
-    }
-
-    let data;
-    try {
-      data = await request.json();
-    } catch {
-      return json({ ok: false, error: "invalid json" }, 400);
-    }
-
-    if (!data || !data.name || !data.contact) {
-      return json({ ok: false, error: "missing name/contact" }, 400);
-    }
-
-    const text = data.kind === "custom" ? formatCustomMessage(data) : formatOrderMessage(data);
-
-    try {
-      await sendTelegramMessage(env, text);
-    } catch (err) {
-      return json({ ok: false, error: String(err) }, 502);
-    }
-
-    return json({ ok: true });
-  },
+    if(!d.name||!d.contact) return json({ok:false,error:"missing name/contact"},400);
+    const text=d.kind==="custom"?formatCustomMessage(d):formatOrderMessage(d);
+    await sendTelegramMessage(env,text); return json({ok:true});
+  }catch(e){return json({ok:false,error:String(e)},502)}
+ }
 };
-
-// Trigger deployment after switching catalog source from GitHub API to the public site JSON.
