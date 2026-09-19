@@ -1,34 +1,57 @@
 (function(){
   const ENDPOINT="https://printlab-order-notifier.printlab3d.workers.dev";
-  const KEY="printlab_ai_chat_v1";
-  let state=JSON.parse(localStorage.getItem(KEY)||"null")||{sessionId:(crypto.randomUUID?crypto.randomUUID():Date.now()+"-"+Math.random()),messages:[],order:{},started:false};
+  const KEY="printlab_consultant_chat_v2";
+  const POPUP_KEY="printlab_consultant_popup_v1";
+  let state=JSON.parse(localStorage.getItem(KEY)||"null")||{sessionId:(crypto.randomUUID?crypto.randomUUID():Date.now()+"-"+Math.random()),messages:[],order:{},started:false,consent:false};
   function save(){localStorage.setItem(KEY,JSON.stringify(state))}
   function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
   function render(){
     let root=document.getElementById("printlab-ai-chat"); if(!root){root=document.createElement("div");root.id="printlab-ai-chat";document.body.appendChild(root)}
-    root.innerHTML='<button class="printlab-chat-fab" aria-label="Открыть AI-чат"><span>✦</span><b>AI</b></button>'+
-      '<section class="printlab-chat-panel" aria-label="AI-консультант" hidden>'+
-      '<header><div><strong>PRINTLAB AI</strong><small>Помогу выбрать и оформить заказ</small></div><button class="printlab-chat-close" aria-label="Закрыть">×</button></header>'+
-      '<div class="printlab-chat-messages"></div><div class="printlab-chat-typing" hidden>AI печатает…</div>'+
-      '<form class="printlab-chat-form"><input maxlength="1000" autocomplete="off" placeholder="Напишите вопрос…"><button aria-label="Отправить">➤</button></form></section>';
-    const panel=root.querySelector(".printlab-chat-panel"), msgs=root.querySelector(".printlab-chat-messages");
+    root.innerHTML='<div class="printlab-chat-promo">Поможем выбрать подарок</div>'+
+      '<button class="printlab-chat-fab" aria-label="Открыть чат с консультантом"><span class="printlab-chat-icon">💬</span></button>'+
+      '<section class="printlab-chat-panel" aria-label="Консультант PRINTLAB" hidden>'+
+      '<header><div class="printlab-chat-head"><div class="printlab-avatar">P</div><div><strong>Консультант PRINTLAB</strong><small><i></i> На связи 24/7</small></div></div><button class="printlab-chat-close" aria-label="Закрыть">×</button></header>'+
+      '<div class="printlab-chat-messages"></div><div class="printlab-chat-typing" hidden>Консультант печатает…</div><div class="printlab-chat-quick"></div><div class="printlab-chat-consent" hidden><div>Перед продолжением подтвердите согласие на обработку данных. <a href="/privacy" target="_blank" rel="noopener">Подробнее</a>.</div><button type="button">Согласен(на)</button></div>'+
+      '<form class="printlab-chat-form"><input maxlength="1000" autocomplete="off" placeholder="Напишите вопрос…" disabled><button aria-label="Отправить" disabled>➤</button></form></section>';
+    const panel=root.querySelector(".printlab-chat-panel"),msgs=root.querySelector(".printlab-chat-messages"),input=root.querySelector("input"),send=root.querySelector(".printlab-chat-form button"),quick=root.querySelector(".printlab-chat-quick"),consentBox=root.querySelector(".printlab-chat-consent");
     const draw=()=>{msgs.innerHTML=state.messages.map(m=>'<div class="printlab-msg '+m.role+'">'+esc(m.content).replace(/\n/g,"<br>")+'</div>').join("");msgs.scrollTop=msgs.scrollHeight};
-    const open=()=>{panel.hidden=false;root.querySelector(".printlab-chat-fab").style.display="none";if(!state.messages.length){state.messages.push({role:"assistant",content:"Здравствуйте! Я AI-консультант PRINTLAB. Помогу подобрать готовую вещь или оформить печать под ваш запрос. Что ищете?"});save()}draw();root.querySelector("input").focus()};
-    root.querySelector(".printlab-chat-fab").onclick=open;root.querySelector(".printlab-chat-close").onclick=()=>{panel.hidden=true;root.querySelector(".printlab-chat-fab").style.display=""};
-    root.querySelector(".printlab-chat-form").onsubmit=async e=>{
-      e.preventDefault();const input=e.currentTarget.querySelector("input"), text=input.value.trim();if(!text)return;
-      input.value="";state.messages.push({role:"user",content:text});draw();root.querySelector(".printlab-chat-typing").hidden=false;
+    const setReady=()=>{input.disabled=!state.consent;send.disabled=!state.consent;consentBox.hidden=state.consent;quick.hidden=!state.consent};
+    const addWelcome=()=>{if(state.messages.length)return;state.messages.push({role:"assistant",content:"Здравствуйте! Я консультант PRINTLAB. Помогу подобрать подарок, выбрать готовую вещь или обсудить индивидуальную 3D-печать."});state.messages.push({role:"assistant",content:"С чего начнём? Можно выбрать вариант ниже или написать свой вопрос."});save()};
+    const quickHtml='<button type="button" data-q="🎁 Хочу выбрать подарок">🎁 Хочу выбрать подарок</button><button type="button" data-q="💰 Покажите варианты до 1000 ₽">💰 До 1000 ₽</button><button type="button" data-q="🖨 Хочу заказать печать">🖨 На заказ</button><button type="button" data-q="📦 Как работает доставка?">📦 Доставка</button>';
+    async function sendText(text){
+      if(!state.consent)return;
+      state.messages.push({role:"user",content:text});draw();root.querySelector(".printlab-chat-typing").hidden=false;
       try{
         const page=location.pathname+(location.search||"");
         const product=document.querySelector("[data-product-title]")?.textContent?.trim()||"";
-        const history=state.messages.slice(-15);
-        const r=await fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({kind:"chat",sessionId:state.sessionId,userMessage:text,history,page,product,customer:state.order,isNew:!state.started})});
-        const d=await r.json(); if(!r.ok||!d.ok) throw new Error(d.error||"Ошибка соединения");
-        state.started=true;state.messages.push({role:"assistant",content:d.reply||"Готов помочь с заказом."});
-        if(d.order) state.order=d.order;save();draw();
-      }catch(err){state.messages.push({role:"assistant",content:"Сейчас не получилось подключиться к AI. Напишите нам в Telegram — поможем там."});save();draw()}
-      finally{root.querySelector(".printlab-chat-typing").hidden=true}
+        const history=state.messages.slice(-18);
+        const r=await fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({kind:"chat",sessionId:state.sessionId,userMessage:text,history,page,product,customer:state.order,isNew:!state.started,consent:true})});
+        const d=await r.json();
+        if(!r.ok||!d.ok)throw new Error(d.error||"Ошибка соединения");
+        state.started=true;state.messages.push({role:"assistant",content:d.reply||"Готов помочь с выбором."});
+        if(d.order)state.order=d.order;save();draw();
+      }catch(err){
+        state.messages.push({role:"assistant",content:"Не удалось отправить сообщение. Попробуйте ещё раз через минуту."});save();draw();
+      }finally{root.querySelector(".printlab-chat-typing").hidden=true}
+    }
+    const open=()=>{
+      panel.hidden=false;root.querySelector(".printlab-chat-fab").style.display="none";root.querySelector(".printlab-chat-promo").style.display="none";
+      addWelcome();
+      if(!state.consent){consentBox.hidden=false;quick.hidden=true;input.disabled=true;send.disabled=true}
+      else{quick.innerHTML=quickHtml;quick.hidden=false;setReady();input.focus()}
+      quick.querySelectorAll("button").forEach(b=>b.onclick=()=>sendText(b.dataset.q));
+      draw();localStorage.setItem(POPUP_KEY,"opened");
     };
+    root.querySelector(".printlab-chat-fab").onclick=open;
+    root.querySelector(".printlab-chat-close").onclick=()=>{panel.hidden=true;root.querySelector(".printlab-chat-fab").style.display="";root.querySelector(".printlab-chat-promo").style.display=""};
+    consentBox.querySelector("button").onclick=async()=>{
+      state.consent=true;save();quick.innerHTML=quickHtml;setReady();quick.querySelectorAll("button").forEach(b=>b.onclick=()=>sendText(b.dataset.q));
+      await sendText("Согласие получено. Помогите мне выбрать.");
+    };
+    root.querySelector(".printlab-chat-form").onsubmit=e=>{e.preventDefault();const text=input.value.trim();if(text){input.value="";sendText(text)}};
+    quick.innerHTML=quickHtml;quick.querySelectorAll("button").forEach(b=>b.onclick=()=>sendText(b.dataset.q));
+    setReady();draw();
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",render);else render();
+  setTimeout(()=>{if(!localStorage.getItem(POPUP_KEY)){const fab=document.querySelector(".printlab-chat-fab");if(fab)fab.click()}},15000);
 })();
