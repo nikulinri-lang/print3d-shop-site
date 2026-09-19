@@ -1960,14 +1960,23 @@ fieldset.form-field {
 .category-tile-label { font-size: var(--text-sm); color: var(--color-text); }
 
 @media (max-width: 767px) {
+  .categories-grid {
+    gap: 12px;
+  }
   .category-tile {
-    gap: 10px;
-    padding: 18px 10px;
+    gap: 14px;
+    padding: 24px 10px 22px;
+    min-height: 138px;
   }
   .category-tile-icon {
-    font-size: 40px;
-    width: 52px;
-    height: 52px;
+    font-size: 64px;
+    line-height: 1;
+    width: 76px;
+    height: 76px;
+  }
+  .category-tile-label {
+    font-size: 15px;
+    line-height: 1.25;
   }
 }
 
