@@ -2846,3 +2846,142 @@ fieldset.form-field {
   .faq-answer p { font-size: 12px; line-height: 1.6; }
   .faq-plus { width: 26px; height: 26px; }
 }
+
+
+/* ===== FAQ 3.0 — крупная editorial-типографика ===== */
+.faq-section {
+  background: transparent;
+}
+.faq-section::before {
+  content: none !important;
+}
+.faq-layout {
+  grid-template-columns: minmax(330px, .82fr) minmax(0, 1.18fr);
+  gap: clamp(70px, 9vw, 150px);
+}
+.faq-intro {
+  top: 120px;
+}
+.faq-intro .kicker {
+  font-size: 12px;
+  letter-spacing: .16em;
+}
+.faq-intro h2 {
+  font-size: clamp(58px, 6.4vw, 94px);
+  line-height: .88;
+  letter-spacing: -.065em;
+  margin: 18px 0 24px;
+}
+.faq-intro > p {
+  max-width: 38ch;
+  font-size: 17px;
+  line-height: 1.65;
+}
+.faq-contact {
+  margin-top: 34px;
+  padding: 14px 20px 14px 14px;
+  border-radius: 12px;
+}
+.faq-contact strong {
+  font-size: 14px;
+}
+.faq-contact small {
+  font-size: 11px;
+}
+.faq-list {
+  border-top: 1px solid rgba(232,232,240,.18);
+}
+.faq-item {
+  border-bottom: 1px solid rgba(232,232,240,.18);
+}
+.faq-item summary {
+  min-height: 112px;
+  grid-template-columns: 44px minmax(0,1fr) 42px;
+  gap: 24px;
+  padding: 20px 0;
+}
+.faq-num {
+  width: auto;
+  height: auto;
+  justify-self: start;
+  color: rgba(255,107,0,.7);
+  font-size: 12px;
+  letter-spacing: .04em;
+}
+.faq-question {
+  font-size: clamp(21px, 2vw, 28px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -.025em;
+}
+.faq-plus {
+  width: 36px;
+  height: 36px;
+  justify-self: end;
+}
+.faq-plus::before,
+.faq-plus::after {
+  width: 13px;
+}
+.faq-answer {
+  padding: 0 60px 30px 68px;
+}
+.faq-answer p {
+  max-width: 60ch;
+  font-size: 16px;
+  line-height: 1.7;
+}
+.faq-item[open] .faq-question {
+  color: var(--color-text);
+}
+@media (max-width: 900px) {
+  .faq-layout {
+    grid-template-columns: 1fr;
+    gap: 44px;
+  }
+  .faq-intro {
+    position: static;
+  }
+  .faq-intro h2 {
+    font-size: clamp(56px, 10vw, 82px);
+  }
+}
+@media (max-width: 767px) {
+  .faq-layout {
+    gap: 30px;
+  }
+  .faq-intro h2 {
+    font-size: clamp(48px, 14vw, 68px);
+    line-height: .9;
+    margin: 14px 0 18px;
+  }
+  .faq-intro > p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .faq-item summary {
+    min-height: 82px;
+    grid-template-columns: 28px minmax(0,1fr) 30px;
+    gap: 12px;
+    padding: 16px 0;
+  }
+  .faq-num {
+    font-size: 9px;
+  }
+  .faq-question {
+    font-size: 18px;
+    line-height: 1.2;
+    letter-spacing: -.015em;
+  }
+  .faq-plus {
+    width: 28px;
+    height: 28px;
+  }
+  .faq-answer {
+    padding: 0 28px 20px 40px;
+  }
+  .faq-answer p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+}
