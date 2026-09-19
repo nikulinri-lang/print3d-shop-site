@@ -43,7 +43,7 @@
       draw();localStorage.setItem(POPUP_KEY,"opened");
     };
     root.querySelector(".printlab-chat-fab").onclick=open;
-    root.querySelector(".printlab-chat-close").onclick=()=>{panel.hidden=true;root.querySelector(".printlab-chat-fab").style.display="";root.querySelector(".printlab-chat-promo").style.display=""};
+    root.querySelector(".printlab-chat-close").onclick=()=>{panel.hidden=true;\n      document.documentElement.classList.remove("printlab-chat-open");root.querySelector(".printlab-chat-fab").style.display="";root.querySelector(".printlab-chat-promo").style.display=""};
     consentBox.querySelector("button").onclick=()=>{
       state.consent=true;save();consentBox.hidden=true;quick.innerHTML=quickHtml;quick.hidden=false;input.disabled=false;send.disabled=false;
       quick.querySelectorAll("button").forEach(b=>b.onclick=()=>sendText(b.dataset.q));
