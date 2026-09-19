@@ -61,3 +61,5 @@ jobs:
             **/.git*
             **/.git*/**
             **/.github/**
+          
+          # Trigger deployment for the latest homepage typography changes.
