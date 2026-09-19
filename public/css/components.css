@@ -2367,3 +2367,33 @@ fieldset.form-field {
 .faq-review-list .faq-item { margin: 0; min-height: 110px; background: radial-gradient(circle at 100% 0%, rgba(255,107,0,.11), transparent 42%), linear-gradient(145deg, rgba(255,255,255,.045), rgba(255,255,255,.012)); border: 1px solid rgba(232,232,240,.12); border-radius: 10px; padding: 20px 24px; }
 .blog-review-grid .blog-card { border-color: rgba(232,232,240,.12); border-radius: 10px; }
 @media (max-width: 767px) { .steps .review-card { min-height: 170px; padding: 14px 12px 12px; } .printer-equipment-card { padding: 14px 12px 12px; } .faq-review-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } .faq-review-list .faq-item { min-height: 120px; padding: 14px 12px; border-radius: 8px; } }
+
+/* ===== Унификация заголовков секций по стилю «Что говорят клиенты» ===== */
+.section-head:not(.reviews-section-head) {
+  max-width: 760px;
+  margin-bottom: 32px;
+}
+.section-head:not(.reviews-section-head) h2 {
+  font-size: clamp(44px, 6vw, 76px);
+  line-height: .94;
+  letter-spacing: -.045em;
+  max-width: none;
+  margin-top: 10px;
+}
+.section-head:not(.reviews-section-head) h2 span {
+  color: var(--color-accent-1);
+  text-shadow: 0 0 28px rgba(255,107,0,.22);
+}
+.section-head:not(.reviews-section-head) > .lede,
+.section-head:not(.reviews-section-head) > p {
+  margin-top: 16px;
+  max-width: 54ch;
+  color: var(--color-text-muted);
+  font-size: 16px;
+  line-height: 1.65;
+}
+@media (max-width: 767px) {
+  .section-head:not(.reviews-section-head) h2 { font-size: clamp(42px, 13vw, 64px); }
+  .section-head:not(.reviews-section-head) > .lede,
+  .section-head:not(.reviews-section-head) > p { font-size: 14px; }
+}
