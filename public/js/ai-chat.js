@@ -9,7 +9,7 @@
     let root=document.getElementById("printlab-ai-chat"); if(!root){root=document.createElement("div");root.id="printlab-ai-chat";document.body.appendChild(root)}
     root.innerHTML='<div class="printlab-chat-promo">Поможем выбрать подарок</div>'+
       '<button class="printlab-chat-fab" aria-label="Открыть чат с консультантом"><span class="printlab-chat-icon">💬</span></button>'+
-      '<section class="printlab-chat-panel" aria-label="Консультант PRINTLAB" hidden>'+
+      '<section class="printlab-chat-panel" aria-label="Консультант PRINTLAB" hidden style="display:none!important">'+
       '<header><div class="printlab-chat-head"><div class="printlab-avatar">P</div><div><strong>Консультант</strong><small><i></i> На связи 24/7</small></div></div><button class="printlab-chat-close" aria-label="Закрыть">×</button></header>'+
       '<div class="printlab-chat-messages"></div><div class="printlab-chat-typing" hidden>Консультант печатает…</div><div class="printlab-chat-quick"></div><div class="printlab-chat-consent" hidden><div>Перед продолжением подтвердите согласие на обработку данных. <a href="/privacy" target="_blank" rel="noopener">Подробнее</a>.</div><button type="button">Согласен(на)</button></div>'+
       '<form class="printlab-chat-form"><input maxlength="1000" autocomplete="off" placeholder="Напишите вопрос…" disabled><button aria-label="Отправить" disabled>➤</button></form></section>';
@@ -36,6 +36,7 @@
     }
     const open=()=>{
       panel.hidden=false;
+      panel.style.setProperty("display","flex","important");
       if(window.matchMedia("(max-width: 767px)").matches)document.documentElement.classList.add("printlab-chat-open");
       root.querySelector(".printlab-chat-fab").style.display="none";
       root.querySelector(".printlab-chat-promo").style.display="none";
@@ -47,7 +48,7 @@
     };
     root.querySelector(".printlab-chat-fab").onclick=open;
     root.querySelector(".printlab-chat-close").onclick=()=>{panel.hidden=true;
-      document.documentElement.classList.remove("printlab-chat-open");root.querySelector(".printlab-chat-fab").style.display="";root.querySelector(".printlab-chat-promo").style.display=""};
+      document.documentElement.classList.remove("printlab-chat-open");panel.style.setProperty("display","none","important");root.querySelector(".printlab-chat-fab").style.display="";root.querySelector(".printlab-chat-promo").style.display=""};
     consentBox.querySelector("button").onclick=()=>{
       state.consent=true;save();consentBox.hidden=true;quick.innerHTML=quickHtml;quick.hidden=false;input.disabled=false;send.disabled=false;
       quick.querySelectorAll("button").forEach(b=>b.onclick=()=>sendText(b.dataset.q));
