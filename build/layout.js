@@ -24,7 +24,7 @@ const ORGANIZATION_SCHEMA = {
 // собственного billing-хэша — единственный способ инвалидировать кэш
 // у уже заходивших посетителей — вручную бампать эту версию при правке
 // tokens/base/components.css или любого /js/*.js.
-const ASSET_V = 15;
+const ASSET_V = 16;
 
 function metrikaSnippet() {
   if (!YANDEX_METRIKA_ID) return "";
