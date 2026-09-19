@@ -15,11 +15,11 @@
       '<form class="printlab-chat-form"><input maxlength="1000" autocomplete="off" placeholder="Напишите вопрос…" disabled><button aria-label="Отправить" disabled>➤</button></form></section>';
     const panel=root.querySelector(".printlab-chat-panel"),msgs=root.querySelector(".printlab-chat-messages"),input=root.querySelector("input"),send=root.querySelector(".printlab-chat-form button"),quick=root.querySelector(".printlab-chat-quick"),consentBox=root.querySelector(".printlab-chat-consent");
     const draw=()=>{msgs.innerHTML=state.messages.map(m=>'<div class="printlab-msg '+m.role+'">'+esc(m.content).replace(/\n/g,"<br>")+'</div>').join("");msgs.scrollTop=msgs.scrollHeight};
-    const setReady=()=>{input.disabled=!state.consent;send.disabled=!state.consent;consentBox.hidden=state.consent;quick.hidden=!state.consent};
+    const setReady=()=>{input.disabled=false;send.disabled=false;consentBox.hidden=!state.started||state.consent;quick.hidden=false};
     const addWelcome=()=>{if(state.messages.length)return;state.messages.push({role:"assistant",content:"Здравствуйте! Я консультант PRINTLAB. Помогу подобрать подарок, выбрать готовую вещь или обсудить индивидуальную 3D-печать."});state.messages.push({role:"assistant",content:"С чего начнём? Можно выбрать вариант ниже или написать свой вопрос."});save()};
     const quickHtml='<button type="button" data-q="🎁 Хочу выбрать подарок">🎁 Хочу выбрать подарок</button><button type="button" data-q="💰 Покажите варианты до 1000 ₽">💰 До 1000 ₽</button><button type="button" data-q="🖨 Хочу заказать печать">🖨 На заказ</button><button type="button" data-q="📦 Как работает доставка?">📦 Доставка</button>';
     async function sendText(text){
-      if(!state.consent)return;
+      if(state.started&&!state.consent){consentBox.hidden=false;return;}
       state.messages.push({role:"user",content:text});draw();root.querySelector(".printlab-chat-typing").hidden=false;
       try{
         const page=location.pathname+(location.search||"");
