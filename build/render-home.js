@@ -153,16 +153,25 @@ const FAQ = [
 function faqSection() {
   const items = FAQ.map(
     (f, i) => `<details class="faq-item">
-        <summary><span class="faq-num mono">${String(i + 1).padStart(2, "0")}</span><span class="faq-question">${f.q}</span><span class="faq-plus" aria-hidden="true"></span></summary>
+        <summary>
+          <span class="faq-num mono">${String(i + 1).padStart(2, "0")}</span>
+          <span class="faq-question">${f.q}</span>
+          <span class="faq-plus" aria-hidden="true"></span>
+        </summary>
         <div class="faq-answer"><p>${f.a}</p></div>
       </details>`
   ).join("\n      ");
+
   return `<section class="section faq-section">
-  <div class="container container--article">
-    <div class="section-head faq-section-head">
+  <div class="container faq-layout">
+    <div class="faq-intro">
       <span class="kicker">Вопросы и ответы</span>
-      <h2>Всё, что важно знать<br><span>перед заказом</span></h2>
-      <p class="lede">Коротко отвечаем на вопросы о сроках, цветах, заказах по фото и доставке.</p>
+      <h2>Есть вопросы?<br><span>Разберёмся.</span></h2>
+      <p>Собрали самое важное о печати, сроках, заказах по фото и доставке.</p>
+      <a href="${TELEGRAM_BOT_URL}" class="faq-contact">
+        <span class="faq-contact-icon">↗</span>
+        <span><strong>Написать в Telegram</strong><small>Ответим и поможем с заказом</small></span>
+      </a>
     </div>
     <div class="faq-list">
       ${items}
