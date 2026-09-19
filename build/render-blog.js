@@ -9,7 +9,7 @@ const WORDS_PER_MINUTE = 200;
 const BLOG_COVERS = {
   "mnogocvetnaya-pechat": "/images/blog/mnogocvetnaya-pechat.svg",
   "zakaz-po-foto": "/images/blog/zakaz-po-foto.svg",
-  "top-10-podarkov": "/images/blog/top-10-podarkov.svg",
+  "top-10-podarkov": "/images/blog-top10-gifts.png",
   "kak-my-pechataem": "/images/blog/kak-my-pechataem.svg",
   "pla-vs-petg": "/images/blog/pla-vs-petg.jpg",
   "plastik-dlya-pechati": "/images/blog/plastik-dlya-pechati.svg",
