@@ -152,14 +152,18 @@ const FAQ = [
 
 function faqSection() {
   const items = FAQ.map(
-    (f) => `<details class="faq-item">
-        <summary>${f.q}</summary>
-        <p>${f.a}</p>
+    (f, i) => `<details class="faq-item">
+        <summary><span class="faq-num mono">${String(i + 1).padStart(2, "0")}</span><span class="faq-question">${f.q}</span><span class="faq-plus" aria-hidden="true"></span></summary>
+        <div class="faq-answer"><p>${f.a}</p></div>
       </details>`
   ).join("\n      ");
-  return `<section class="section">
+  return `<section class="section faq-section">
   <div class="container container--article">
-    <div class="section-head"><span class="kicker">Вопросы</span><h2><span>FAQ</span></h2></div>
+    <div class="section-head faq-section-head">
+      <span class="kicker">Вопросы и ответы</span>
+      <h2>Всё, что важно знать<br><span>перед заказом</span></h2>
+      <p class="lede">Коротко отвечаем на вопросы о сроках, цветах, заказах по фото и доставке.</p>
+    </div>
     <div class="faq-list">
       ${items}
     </div>
