@@ -290,6 +290,7 @@
     flex-direction:column!important;
     z-index:2147483001!important;
     transform:none!important;
+    pointer-events:auto!important;
   }
 
   #printlab-ai-chat .printlab-chat-panel header{
