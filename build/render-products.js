@@ -73,7 +73,6 @@ const SECTION_META = [
   { key: "whatIsIt",    icon: "✦", title: "Что это такое" },
   { key: "material",   icon: "◈", title: "Материал и печать" },
   { key: "whoFor",     icon: "◎", title: "Кому подойдёт" },
-  { key: "beforeBuying", icon: "◻", title: "Перед покупкой" },
 ];
 
 function descriptionSectionsHTML(p) {
