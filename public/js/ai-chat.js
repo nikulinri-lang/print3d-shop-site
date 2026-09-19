@@ -10,7 +10,7 @@
     root.innerHTML='<div class="printlab-chat-promo">Поможем выбрать подарок</div>'+
       '<button class="printlab-chat-fab" aria-label="Открыть чат с консультантом"><span class="printlab-chat-icon">💬</span></button>'+
       '<section class="printlab-chat-panel" aria-label="Консультант PRINTLAB" hidden>'+
-      '<header><div class="printlab-chat-head"><div class="printlab-avatar">P</div><div><strong>Консультант PRINTLAB</strong><small><i></i> На связи 24/7</small></div></div><button class="printlab-chat-close" aria-label="Закрыть">×</button></header>'+
+      '<header><div class="printlab-chat-head"><div class="printlab-avatar">P</div><div><strong>Консультант</strong><small><i></i> На связи 24/7</small></div></div><button class="printlab-chat-close" aria-label="Закрыть">×</button></header>'+
       '<div class="printlab-chat-messages"></div><div class="printlab-chat-typing" hidden>Консультант печатает…</div><div class="printlab-chat-quick"></div><div class="printlab-chat-consent" hidden><div>Перед продолжением подтвердите согласие на обработку данных. <a href="/privacy" target="_blank" rel="noopener">Подробнее</a>.</div><button type="button">Согласен(на)</button></div>'+
       '<form class="printlab-chat-form"><input maxlength="1000" autocomplete="off" placeholder="Напишите вопрос…" disabled><button aria-label="Отправить" disabled>➤</button></form></section>';
     const panel=root.querySelector(".printlab-chat-panel"),msgs=root.querySelector(".printlab-chat-messages"),input=root.querySelector("input"),send=root.querySelector(".printlab-chat-form button"),quick=root.querySelector(".printlab-chat-quick"),consentBox=root.querySelector(".printlab-chat-consent");
