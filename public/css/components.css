@@ -1964,15 +1964,15 @@ fieldset.form-field {
     gap: 12px;
   }
   .category-tile {
-    gap: 14px;
-    padding: 24px 10px 22px;
-    min-height: 138px;
+    gap: 16px;
+    padding: 26px 8px 24px;
+    min-height: 160px;
   }
   .category-tile-icon {
-    font-size: 64px;
+    font-size: 80px;
     line-height: 1;
-    width: 76px;
-    height: 76px;
+    width: 92px;
+    height: 92px;
   }
   .category-tile-label {
     font-size: 15px;
