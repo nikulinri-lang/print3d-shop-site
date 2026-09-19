@@ -32,3 +32,92 @@
 .printlab-chat-consent a{color:#ff9a58}.printlab-chat-consent button{margin-top:9px;border:0;border-radius:9px;background:#ff6b00;color:#fff;padding:9px 12px;font-weight:600;cursor:pointer}
 .printlab-chat-form input:disabled{opacity:.5}.printlab-chat-form button:disabled{opacity:.4;cursor:not-allowed}
 @media(max-width:767px){#printlab-ai-chat{right:12px;bottom:12px}.printlab-chat-fab{width:58px;height:58px}.printlab-chat-panel{height:calc(100vh - 76px);width:calc(100vw - 24px);border-radius:17px}.printlab-chat-promo{bottom:70px}}
+
+
+/* ===== Mobile chat: fixed bottom sheet, never covers the whole page ===== */
+@media (max-width: 767px) {
+  #printlab-ai-chat {
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+    width: auto;
+    height: 0;
+    z-index: 99999;
+    pointer-events: none;
+  }
+
+  #printlab-ai-chat .printlab-chat-fab,
+  #printlab-ai-chat .printlab-chat-promo {
+    pointer-events: auto;
+  }
+
+  #printlab-ai-chat .printlab-chat-panel {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    width: auto;
+    height: min(72dvh, 620px);
+    max-height: calc(100dvh - 110px);
+    min-height: 0;
+    margin: 0;
+    border-radius: 18px;
+    overflow: hidden;
+    z-index: 100000;
+    pointer-events: auto;
+    display: flex;
+  }
+
+  #printlab-ai-chat .printlab-chat-panel header {
+    flex: 0 0 auto;
+    min-height: 64px;
+    padding: 10px 12px 10px 14px;
+  }
+
+  #printlab-ai-chat .printlab-chat-close {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 12px;
+    background: rgba(255,255,255,.045);
+    color: #fff;
+    font-size: 30px;
+    line-height: 1;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  #printlab-ai-chat .printlab-chat-messages {
+    min-height: 0;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #printlab-ai-chat .printlab-chat-form {
+    flex: 0 0 auto;
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+  }
+
+  #printlab-ai-chat .printlab-chat-quick {
+    max-height: 88px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  #printlab-ai-chat .printlab-chat-promo {
+    bottom: 70px;
+  }
+}
+
+@media (max-width: 380px) {
+  #printlab-ai-chat .printlab-chat-panel {
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    height: min(70dvh, 580px);
+    max-height: calc(100dvh - 96px);
+  }
+}
