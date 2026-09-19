@@ -236,6 +236,10 @@
     overflow:hidden;
   }
 
+  #printlab-ai-chat .printlab-chat-form input{
+    font-size:16px!important;
+  }
+
   #printlab-ai-chat{
     position:fixed!important;
     left:12px!important;
@@ -279,9 +283,9 @@
     right:10px!important;
     bottom:10px!important;
     width:calc(100vw - 20px)!important;
-    height:min(58dvh,520px)!important;
-    max-height:min(58dvh,520px)!important;
-    min-height:390px!important;
+    height:min(72dvh,620px)!important;
+    max-height:calc(100dvh - 24px)!important;
+    min-height:0!important;
     margin:0!important;
     padding:0!important;
     border-radius:18px!important;
@@ -341,16 +345,16 @@
     right:8px!important;
     bottom:8px!important;
     width:calc(100vw - 16px)!important;
-    height:min(56dvh,500px)!important;
-    max-height:min(56dvh,500px)!important;
-    min-height:360px!important;
+    height:min(72dvh,620px)!important;
+    max-height:calc(100dvh - 16px)!important;
+    min-height:0!important;
   }
 }
 
 @media (max-width:360px){
   #printlab-ai-chat .printlab-chat-panel{
-    height:min(54dvh,470px)!important;
-    max-height:min(54dvh,470px)!important;
-    min-height:340px!important;
+    height:min(70dvh,580px)!important;
+    max-height:calc(100dvh - 16px)!important;
+    min-height:0!important;
   }
 }
