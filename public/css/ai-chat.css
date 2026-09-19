@@ -55,7 +55,7 @@
   right:22px;
   bottom:22px;
   width:400px;
-  height:min(680px,calc(100vh - 90px));
+  height:min(500px,calc(100vh - 120px));
   overflow:hidden;
   border:1px solid rgba(232,232,240,.14);
   border-radius:20px;
@@ -350,15 +350,15 @@
     right:8px!important;
     bottom:8px!important;
     width:calc(100vw - 16px)!important;
-    height:min(72dvh,620px)!important;
-    max-height:calc(100dvh - 16px)!important;
+    height:min(52dvh,480px)!important;
+    max-height:calc(100dvh - 80px)!important;
     min-height:0!important;
   }
 }
 
 @media (max-width:360px){
   #printlab-ai-chat .printlab-chat-panel{
-    height:min(70dvh,580px)!important;
+    height:min(50dvh,440px)!important;
     max-height:calc(100dvh - 16px)!important;
     min-height:0!important;
   }
