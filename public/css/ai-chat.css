@@ -1,4 +1,5 @@
 /* ===== PRINTLAB AI consultant — canonical styles ===== */
+/* Hidden state must win over mobile panel layout. */
 #printlab-ai-chat{
   position:fixed;
   right:22px;
@@ -64,7 +65,7 @@
   display:flex;
   flex-direction:column;
 }
-.printlab-chat-panel[hidden]{display:none!important}
+#printlab-ai-chat .printlab-chat-panel[hidden]{display:none!important;visibility:hidden!important;pointer-events:none!important}
 
 .printlab-chat-panel header{
   flex:0 0 auto;
@@ -265,7 +266,7 @@
     padding:0!important;
     border-radius:18px!important;
     overflow:hidden!important;
-    display:flex!important;
+    display:flex;
     flex-direction:column!important;
     z-index:2147483001!important;
     transform:none!important;
