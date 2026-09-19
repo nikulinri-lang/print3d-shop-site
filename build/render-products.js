@@ -110,7 +110,19 @@ function customOrderTeaser() {
 }
 
 function catalogPage(products, categories, colorNames) {
-  const tileButtons = CATEGORY_TILES.filter((t) => t.kind !== "custom")
+  // Собираем категории, в которых есть хотя бы один товар
+  const usedCategories = new Set();
+  products.forEach((p) => {
+    (p.categories || [p.category]).forEach((c) => usedCategories.add(c));
+    if (p.featured) usedCategories.add("__featured__");
+  });
+
+  const tileButtons = CATEGORY_TILES
+    .filter((t) => {
+      if (t.kind === "custom") return false; // «На заказ» — отдельная ссылка
+      if (t.kind === "featured") return usedCategories.has("__featured__");
+      return usedCategories.has(t.key);
+    })
     .map((t) => `<button class="filter-btn" data-filter-category="${t.kind === "featured" ? "__featured__" : t.key}">${t.icon} ${t.label}</button>`)
     .join("\n      ");
 
