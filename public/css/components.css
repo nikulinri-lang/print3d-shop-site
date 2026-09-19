@@ -1212,7 +1212,20 @@
   filter: drop-shadow(0 0 48px var(--color-accent-1-10));
 }
 
-.printer-teaser-content h2 { font-size: var(--text-2xl); margin: var(--space-2xs) 0 var(--space-sm); }
+.printer-teaser-content h2 {
+  font-size: clamp(44px, 6vw, 76px);
+  line-height: .94;
+  letter-spacing: -.045em;
+  max-width: none;
+  margin: 10px 0 16px;
+}
+.printer-teaser-content h2 span {
+  color: var(--color-accent-1);
+  text-shadow: 0 0 28px rgba(255,107,0,.22);
+}
+@media (max-width: 767px) {
+  .printer-teaser-content h2 { font-size: clamp(42px, 13vw, 64px); }
+}
 
 .printer-teaser-specs {
   display: grid;
