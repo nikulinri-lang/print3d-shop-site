@@ -19,7 +19,7 @@
     const addWelcome=()=>{if(state.messages.length)return;state.messages.push({role:"assistant",content:"Здравствуйте! Я консультант PRINTLAB. Помогу подобрать подарок, выбрать готовую вещь или обсудить индивидуальную 3D-печать."});state.messages.push({role:"assistant",content:"С чего начнём? Можно выбрать вариант ниже или написать свой вопрос."});save()};
     const quickHtml='<button type="button" data-q="🎁 Хочу выбрать подарок">🎁 Хочу выбрать подарок</button><button type="button" data-q="💰 Покажите варианты до 1000 ₽">💰 До 1000 ₽</button><button type="button" data-q="🖨 Хочу заказать печать">🖨 На заказ</button><button type="button" data-q="📦 Как работает доставка?">📦 Доставка</button>';
     async function sendText(text){
-      if(state.started&&!state.consent){consentBox.hidden=false;return;}
+      if(state.started&&!state.consent){consentBox.hidden=false;input.disabled=true;send.disabled=true;return;}
       state.messages.push({role:"user",content:text});draw();root.querySelector(".printlab-chat-typing").hidden=false;
       try{
         const page=location.pathname+(location.search||"");
@@ -37,20 +37,21 @@
     const open=()=>{
       panel.hidden=false;root.querySelector(".printlab-chat-fab").style.display="none";root.querySelector(".printlab-chat-promo").style.display="none";
       addWelcome();
-      if(!state.consent){consentBox.hidden=false;quick.hidden=true;input.disabled=true;send.disabled=true}
-      else{quick.innerHTML=quickHtml;quick.hidden=false;setReady();input.focus()}
+      if(state.started&&!state.consent){consentBox.hidden=false;quick.hidden=true;input.disabled=true;send.disabled=true}
+      else{consentBox.hidden=true;quick.innerHTML=quickHtml;quick.hidden=false;input.disabled=false;send.disabled=false;input.focus()}
       quick.querySelectorAll("button").forEach(b=>b.onclick=()=>sendText(b.dataset.q));
       draw();localStorage.setItem(POPUP_KEY,"opened");
     };
     root.querySelector(".printlab-chat-fab").onclick=open;
     root.querySelector(".printlab-chat-close").onclick=()=>{panel.hidden=true;root.querySelector(".printlab-chat-fab").style.display="";root.querySelector(".printlab-chat-promo").style.display=""};
-    consentBox.querySelector("button").onclick=async()=>{
-      state.consent=true;save();quick.innerHTML=quickHtml;setReady();quick.querySelectorAll("button").forEach(b=>b.onclick=()=>sendText(b.dataset.q));
-      await sendText("Согласие получено. Помогите мне выбрать.");
+    consentBox.querySelector("button").onclick=()=>{
+      state.consent=true;save();consentBox.hidden=true;quick.innerHTML=quickHtml;quick.hidden=false;input.disabled=false;send.disabled=false;
+      quick.querySelectorAll("button").forEach(b=>b.onclick=()=>sendText(b.dataset.q));
+      input.focus();
     };
     root.querySelector(".printlab-chat-form").onsubmit=e=>{e.preventDefault();const text=input.value.trim();if(text){input.value="";sendText(text)}};
     quick.innerHTML=quickHtml;quick.querySelectorAll("button").forEach(b=>b.onclick=()=>sendText(b.dataset.q));
-    setReady();draw();
+    if(!state.started){input.disabled=false;send.disabled=false;consentBox.hidden=true;quick.hidden=false}else setReady();draw();
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",render);else render();
   setTimeout(()=>{if(!localStorage.getItem(POPUP_KEY)){const fab=document.querySelector(".printlab-chat-fab");if(fab)fab.click()}},15000);
