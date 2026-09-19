@@ -36,7 +36,9 @@
     }
     const open=()=>{
       panel.hidden=false;
-      if(window.matchMedia("(max-width: 767px)").matches)document.documentElement.classList.add("printlab-chat-open");root.querySelector(".printlab-chat-fab").style.display="none";root.querySelector(".printlab-chat-promo").style.display="none";
+      if(window.matchMedia("(max-width: 767px)").matches)document.documentElement.classList.add("printlab-chat-open");
+      root.querySelector(".printlab-chat-fab").style.display="none";
+      root.querySelector(".printlab-chat-promo").style.display="none";
       addWelcome();
       if(state.started&&!state.consent){consentBox.hidden=false;quick.hidden=true;input.disabled=true;send.disabled=true}
       else{consentBox.hidden=true;quick.innerHTML=quickHtml;quick.hidden=false;input.disabled=false;send.disabled=false;input.focus()}
