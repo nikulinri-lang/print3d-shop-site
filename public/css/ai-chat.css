@@ -249,7 +249,24 @@
 
   #printlab-ai-chat .printlab-chat-fab,
   #printlab-ai-chat .printlab-chat-promo{
-    pointer-events:auto;
+    pointer-events:auto!important;
+  }
+
+  #printlab-ai-chat .printlab-chat-fab{
+    position:absolute!important;
+    right:0!important;
+    bottom:0!important;
+    display:flex!important;
+    visibility:visible!important;
+    opacity:1!important;
+    width:60px!important;
+    height:60px!important;
+  }
+
+  #printlab-ai-chat .printlab-chat-promo{
+    display:block!important;
+    visibility:visible!important;
+    opacity:1!important;
   }
 
   #printlab-ai-chat .printlab-chat-panel{
