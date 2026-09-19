@@ -1993,8 +1993,8 @@ fieldset.form-field {
 .cat-carousel {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 20px calc(50% - min(340px, 46vw));
+  gap: 14px;
+  padding: 16px calc(50% - 130px);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
@@ -2005,16 +2005,16 @@ fieldset.form-field {
 .cat-carousel::-webkit-scrollbar { display: none; }
 
 .cat-slide {
-  flex: 0 0 min(680px, 92vw);
-  width: min(680px, 92vw);
+  flex: 0 0 260px;
+  width: 260px;
   border-radius: 20px;
   overflow: hidden;
   scroll-snap-align: center;
   text-decoration: none;
   display: block;
   transition: transform 0.35s ease, box-shadow 0.35s ease, opacity 0.35s ease;
-  opacity: 0.55;
-  transform: scale(0.88);
+  opacity: 0.6;
+  transform: scale(0.9);
   box-shadow: none;
 }
 
@@ -2089,8 +2089,10 @@ fieldset.form-field {
 }
 
 @media (max-width: 480px) {
-  .cat-arrow--prev { left: 8px; }
-  .cat-arrow--next { right: 8px; }
+  .cat-carousel { padding: 12px calc(50% - 110px); gap: 10px; }
+  .cat-slide { flex: 0 0 220px; width: 220px; }
+  .cat-arrow--prev { left: 6px; }
+  .cat-arrow--next { right: 6px; }
 }
 
 

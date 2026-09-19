@@ -60,6 +60,7 @@ function categoriesSection(products) {
       sl[(cur-1+sl.length)%sl.length].classList.add('prev-slide');
       sl[(cur+1)%sl.length].classList.add('next-slide');
       ds[cur]&&ds[cur].classList.add('active');
+      sl[cur].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
     }
     sl[sl.length-1].classList.add('prev-slide');
     if(sl.length>1)sl[1].classList.add('next-slide');
