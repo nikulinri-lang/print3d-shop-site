@@ -2354,3 +2354,16 @@ fieldset.form-field {
   .catalog-toolbar { flex-direction: column; }
   .catalog-toolbar .catalog-search, .catalog-toolbar .catalog-select { width: 100%; flex-basis: auto; }
 }
+
+
+/* ===== Единый стиль блоков главной: как карточки отзывов ===== */
+.steps .review-card { min-height: 300px; justify-content: flex-start; }
+.steps .review-card .step-num { position: relative; z-index: 1; }
+.printer-equipment-card { padding: 26px; align-items: stretch; }
+.printer-equipment-card .printer-teaser-photo { border-radius: 7px; }
+.custom-order-review-card { padding: 0; min-height: 0; }
+.custom-order-review-card .custom-order-teaser { border: 0; background: transparent; box-shadow: none; width: 100%; }
+.faq-review-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.faq-review-list .faq-item { margin: 0; min-height: 110px; background: radial-gradient(circle at 100% 0%, rgba(255,107,0,.11), transparent 42%), linear-gradient(145deg, rgba(255,255,255,.045), rgba(255,255,255,.012)); border: 1px solid rgba(232,232,240,.12); border-radius: 10px; padding: 20px 24px; }
+.blog-review-grid .blog-card { border-color: rgba(232,232,240,.12); border-radius: 10px; }
+@media (max-width: 767px) { .steps .review-card { min-height: 170px; padding: 14px 12px 12px; } .printer-equipment-card { padding: 14px 12px 12px; } .faq-review-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } .faq-review-list .faq-item { min-height: 120px; padding: 14px 12px; border-radius: 8px; } }
