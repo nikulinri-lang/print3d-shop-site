@@ -155,7 +155,10 @@ function replaceBrandInGeneratedHtml(dir) {
       const full = path.join(current, entry.name);
       if (entry.isDirectory()) walk(full);
       else if (entry.name.endsWith(".html")) {
-        const html = fs.readFileSync(full, "utf8").replace(/PRINTLAB/gi, "ПринтЛаб");
+        // Заменяем PRINTLAB → ПринтЛаб только в тексте и alt-атрибутах,
+        // но НЕ в src/href/srcset чтобы не ломать пути к файлам.
+        const html = fs.readFileSync(full, "utf8")
+          .replace(/(?<!(src|href|srcset|url|content|name|id|class|data-[a-z-]+)=["'][^"']{0,200})PRINTLAB/gi, (m) => "ПринтЛаб");
         fs.writeFileSync(full, html);
       }
     }
