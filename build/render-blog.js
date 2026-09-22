@@ -15,6 +15,9 @@ const BLOG_COVERS = {
   "plastik-dlya-pechati": "/images/blog/plastik-dlya-pechati.svg",
   "skolko-stoit-pechat": "/images/blog/skolko-stoit-pechat.svg",
   "top-5-dlya-doma": "/images/blog/top-5-dlya-doma.svg",
+  "podarok-na-zakaz-3d-pechat": "/images/blog-podarok-na-zakaz.png",
+  "3d-printer-bryansk-kupit": "/images/blog-3d-printer-bryansk.png",
+  "3d-modeli-besplatno-gde-skachat": "/images/blog-3d-modeli-besplatno.png",
 };
 function slugFromFilename(filename){return filename.replace(/\.md$/,"");}
 function fmtDate(d){return new Date(d).toLocaleDateString("ru-RU",{day:"2-digit",month:"2-digit",year:"numeric"});}
@@ -28,7 +31,13 @@ function normalizeFrontmatter(raw){
 }
 function loadPosts(){if(!fs.existsSync(BLOG_DIR))return[];return fs.readdirSync(BLOG_DIR).filter(f=>f.endsWith(".md")).map(f=>{const raw=fs.readFileSync(path.join(BLOG_DIR,f),"utf8"),{data,content}=matter(normalizeFrontmatter(raw)),rawHtml=marked.parse(content),{html,toc}=injectHeadingIdsAndToc(rawHtml),slug=slugFromFilename(f);return{slug,title:data.title,date:data.date,category:data.category||"Блог",excerpt:data.excerpt,cover:data.cover||BLOG_COVERS[slug]||null,readMinutes:readingTime(content),toc,html:wrapTables(wrapCallouts(html))};}).sort((a,b)=>new Date(b.date)-new Date(a.date));}
 const BLOG_PLACEHOLDER_ICON='<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/>';
-function blogCardMedia(p){if(!p.cover)return`<div class="blog-card-media"><div class="blog-card-photo"></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="blog-card-placeholder-icon">${BLOG_PLACEHOLDER_ICON}</svg></div>`;return`<div class="blog-card-media blog-card-media--photo" style="aspect-ratio:16/9;overflow:hidden;display:flex;align-items:center;justify-content:center"><img src="${p.cover}" alt="${p.title}" loading="lazy" style="width:100%;height:100%;object-fit:contain;display:block"></div>`;}
+function blogCardMedia(p){
+  if(!p.cover) return `<div class="blog-card-media"><div class="blog-card-photo"></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="blog-card-placeholder-icon">${BLOG_PLACEHOLDER_ICON}</svg></div>`;
+  // SVG-заглушки маленькие — показываем с contain; реальные фото — cover
+  const isSvg = p.cover.endsWith(".svg");
+  const fit = isSvg ? "contain" : "cover";
+  return `<div class="blog-card-media blog-card-media--photo" style="aspect-ratio:16/9;overflow:hidden;display:flex;align-items:center;justify-content:center"><img src="${p.cover}" alt="${p.title}" loading="lazy" style="width:100%;height:100%;object-fit:${fit};display:block"></div>`;
+}
 function blogCardHTML(p){return`<a href="/blog/${p.slug}" class="blog-card">${blogCardMedia(p)}<span class="blog-card-tag">${p.category}</span><div class="blog-card-meta"><span class="blog-card-date mono">${fmtDate(p.date)}</span><span class="blog-card-read-time mono">${p.readMinutes} мин чтения</span></div><h3>${p.title}</h3><p>${p.excerpt}</p></a>`;}
 function blogIndexPage(posts){const cards=posts.map(blogCardHTML).join("\n      ");const body=`<section class="page-hero"><div class="container"><span class="kicker">Блог</span><h1>Читаем перед печатью</h1><p class="lede">Разбираем материалы, процесс печати и практические примеры — без воды, по делу.</p></div></section><section class="section"><div class="container"><div class="blog-grid">${cards}</div></div></section>`;return renderLayout({title:"Блог — PRINTLAB",description:"Статьи о материалах для 3D-печати, процессе изготовления и практических примерах применения.",canonical:"/blog",activeNav:"/blog",bodyContent:body});}
 function tocHTML(toc){if(toc.length<2)return"";const links=toc.map(i=>`<a href="#${i.id}" class="article-toc-link${i.level===3?" article-toc-link--sub":""}">${i.text}</a>`).join("\n            ");return`<aside class="article-toc"><div class="article-toc-inner"><span class="article-toc-label">На этой странице</span><nav class="article-toc-nav">${links}</nav></div></aside>`;}
