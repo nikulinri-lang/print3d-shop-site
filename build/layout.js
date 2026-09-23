@@ -14,7 +14,7 @@ const { TELEGRAM_BOT_URL, TELEGRAM_HANDLE, YANDEX_METRIKA_ID, YANDEX_VERIFICATIO
 const ORGANIZATION_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "PRINTLAB",
+  name: "3Д Вещь",
   url: "https://3-d-shop.ru",
   address: { "@type": "PostalAddress", addressLocality: CITY, addressCountry: "RU" },
   sameAs: [TELEGRAM_BOT_URL],
@@ -24,7 +24,7 @@ const ORGANIZATION_SCHEMA = {
 // собственного billing-хэша — единственный способ инвалидировать кэш
 // у уже заходивших посетителей — вручную бампать эту версию при правке
 // tokens/base/components.css или любого /js/*.js.
-const ASSET_V = 31;
+const ASSET_V = 32;
 
 function metrikaSnippet() {
   if (!YANDEX_METRIKA_ID) return "";
@@ -106,7 +106,7 @@ ${extraHead}
 
 <header class="site-header">
   <div class="container">
-    <a href="/" class="logo"><span class="logo-mark">◆</span> PRINTLAB</a>
+    <a href="/" class="logo"><span class="logo-mark">◆</span> 3Д Вещь</a>
     <ul class="nav-links">
       ${navLink("/catalog", "Каталог", activeNav)}
       ${navLink("/blog", "Блог", activeNav)}
@@ -127,8 +127,8 @@ ${bodyContent}
 <footer class="site-footer">
   <div class="container footer-grid">
     <div class="footer-brand">
-      <div class="logo"><span class="logo-mark">◆</span> PRINTLAB</div>
-      <div class="footer-meta">© 2026 PRINTLAB · Самовывоз: ${CITY}<!-- TODO: добавить точный адрес самовывоза после уточнения у владельца --></div>
+      <div class="logo"><span class="logo-mark">◆</span> 3Д Вещь</div>
+      <div class="footer-meta">© 2026 3Д Вещь · Самовывоз: ${CITY}<!-- TODO: добавить точный адрес самовывоза после уточнения у владельца --></div>
       <div class="footer-meta"><a href="${TELEGRAM_BOT_URL}" target="_blank" rel="noopener">${TELEGRAM_HANDLE}</a></div>
       <!-- TODO: добавить реквизиты (ИП/самозанятость) после оформления -->
     </div>
