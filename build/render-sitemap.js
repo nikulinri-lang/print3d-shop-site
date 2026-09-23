@@ -37,6 +37,8 @@ ${urls.map((u) => `  <url><loc>${SITE_URL}${u.loc}</loc><lastmod>${u.lastmod}</l
 Allow: /
 Disallow: /cart
 Disallow: /checkout
+Disallow: /catalog?
+Disallow: /catalog/?
 
 Sitemap: ${SITE_URL}/sitemap.xml
 `;
