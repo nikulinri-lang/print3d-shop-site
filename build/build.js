@@ -158,7 +158,7 @@ function replaceBrandInGeneratedHtml(dir) {
         // Заменяем PRINTLAB → ПринтЛаб только в тексте и alt-атрибутах,
         // но НЕ в src/href/srcset чтобы не ломать пути к файлам.
         const html = fs.readFileSync(full, "utf8")
-          .replace(/(?<!(src|href|srcset|url|content|name|id|class|data-[a-z-]+)=["'][^"']{0,200})PRINTLAB/gi, (m) => "ПринтЛаб");
+          .replace(/(?<!(src|href|srcset|url|content|name|id|class|data-[a-z-]+)=["'][^"']{0,200})PRINTLAB/gi, (m) => "3Д Вещь");
         fs.writeFileSync(full, html);
       }
     }

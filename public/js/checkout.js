@@ -65,7 +65,7 @@
       return "— " + item.title + (label ? " (" + label + ")" : "") + " × " + item.qty + " = " + (unit * item.qty).toLocaleString("ru-RU") + " ₽";
     });
     var out = [
-      "Новый заказ с сайта PRINTLAB",
+      "Новый заказ с сайта 3Д Вещь",
       "",
       "Товары:",
       lines.join("\n"),

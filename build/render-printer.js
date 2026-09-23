@@ -132,7 +132,7 @@ function printerPage() {
 </section>`;
 
   return renderLayout({
-    title: "Bambu Lab P2S Combo — наш принтер | PRINTLAB",
+    title: "Bambu Lab P2S Combo — наш принтер | 3Д Вещь",
     description: "Рассказываем, на чём мы печатаем: скорость до 500 мм/с, точность ±0.05 мм, до 16 цветов за один проход, закрытая камера для ABS и PA.",
     canonical: "/printer",
     ogImage: "/images/printer/p2s-front.webp",

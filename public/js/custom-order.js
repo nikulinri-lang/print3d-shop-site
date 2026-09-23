@@ -10,7 +10,7 @@
 
   function buildText(fd, file) {
     var lines = [
-      "Заявка на кастомный заказ — PRINTLAB",
+      "Заявка на кастомный заказ — 3Д Вещь",
       "",
       "Имя: " + fd.get("name"),
       "Контакт: " + fd.get("contact"),

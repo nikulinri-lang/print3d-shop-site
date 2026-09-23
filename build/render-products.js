@@ -178,7 +178,7 @@ function catalogPage(products, categories, colorNames) {
 </section>`;
 
   return renderLayout({
-    title: "Каталог 3D-печатных товаров — PRINTLAB",
+    title: "Каталог 3D-печатных товаров — 3Д Вещь",
     description: `Каталог готовых 3D-печатных изделий: ${categories.join(", ").toLowerCase()}. Поиск, фильтры по цене и цвету, изготовление ${LEAD_TIME}.`,
     canonical: "/catalog",
     activeNav: "/catalog",
