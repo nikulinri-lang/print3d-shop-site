@@ -124,7 +124,7 @@ function whyUsSection() {
   const cards = WHY_US.map(
     (w) => `<div class="review-card why-us-card">
       <div class="review-header">
-        <span class="review-source">PRINTLAB</span>
+        <span class="review-source">3Д Вещь</span>
       </div>
       <p class="review-text">${w.title}</p>
       <div class="review-footer">
@@ -134,7 +134,7 @@ function whyUsSection() {
   ).join("\n      ");
   return `<section class="section print-layers">
   <div class="container">
-    <div class="section-head"><span class="kicker">Почему мы</span><h2>Почему <span>PRINTLAB?</span></h2></div>
+    <div class="section-head"><span class="kicker">Почему мы</span><h2>Почему <span>3Д Вещь?</span></h2></div>
     <div class="reviews-grid why-us-grid">
       ${cards}
     </div>
@@ -389,8 +389,8 @@ ${faqSection()}`;
 <script defer src="/js/product-tilt.js?v=2"></script>`;
 
   return renderLayout({
-    title: "PRINTLAB — необычные вещи, созданные на 3D-принтере",
-    description: "Готовые 3D-печатные товары, подарки и полезные аксессуары. Изготовление на заказ по фото, эскизу или модели. Самовывоз в Брянске, доставка по России.",
+    title: "3Д Вещь — напечатаем что угодно",
+    description: "3Д Вещь — напечатаем что угодно. Готовые 3D-товары, подарки и изделия на заказ по фото, эскизу или модели. Самовывоз в Брянске, доставка по России.",
     canonical: "/",
     activeNav: "/",
     bodyContent: body,
