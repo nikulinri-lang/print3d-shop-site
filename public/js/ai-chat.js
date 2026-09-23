@@ -9,14 +9,14 @@
     let root=document.getElementById("printlab-ai-chat"); if(!root){root=document.createElement("div");root.id="printlab-ai-chat";document.body.appendChild(root)}
     root.innerHTML='<div class="printlab-chat-promo">Поможем выбрать подарок</div>'+
       '<button class="printlab-chat-fab" aria-label="Открыть чат с консультантом"><span class="printlab-chat-icon">💬</span></button>'+
-      '<section class="printlab-chat-panel" aria-label="Консультант PRINTLAB" hidden style="display:none!important">'+
+      '<section class="printlab-chat-panel" aria-label="Консультант 3Д Вещь" hidden style="display:none!important">'+
       '<header><div class="printlab-chat-head"><div class="printlab-avatar">P</div><div><strong>Консультант</strong><small><i></i> На связи 24/7</small></div></div><button class="printlab-chat-close" aria-label="Закрыть">×</button></header>'+
       '<div class="printlab-chat-messages"></div><div class="printlab-chat-typing" hidden>Консультант печатает…</div><div class="printlab-chat-quick"></div><div class="printlab-chat-consent" hidden><div>Перед продолжением подтвердите согласие на обработку данных. <a href="/privacy" target="_blank" rel="noopener">Подробнее</a>.</div><button type="button">Согласен(на)</button></div>'+
       '<form class="printlab-chat-form"><input maxlength="1000" autocomplete="off" placeholder="Напишите вопрос…" disabled><button aria-label="Отправить" disabled>➤</button></form></section>';
     const panel=root.querySelector(".printlab-chat-panel"),msgs=root.querySelector(".printlab-chat-messages"),input=root.querySelector("input"),send=root.querySelector(".printlab-chat-form button"),quick=root.querySelector(".printlab-chat-quick"),consentBox=root.querySelector(".printlab-chat-consent");
     const draw=()=>{msgs.innerHTML=state.messages.map(m=>'<div class="printlab-msg '+m.role+'">'+esc(m.content).replace(/\n/g,"<br>")+'</div>').join("");msgs.scrollTop=msgs.scrollHeight};
     const setReady=()=>{input.disabled=false;send.disabled=false;consentBox.hidden=!state.started||state.consent;quick.hidden=false};
-    const addWelcome=()=>{if(state.messages.length)return;state.messages.push({role:"assistant",content:"Здравствуйте! Я консультант PRINTLAB. Помогу подобрать подарок, выбрать готовую вещь или обсудить индивидуальную 3D-печать."});state.messages.push({role:"assistant",content:"С чего начнём? Можно выбрать вариант ниже или написать свой вопрос."});save()};
+    const addWelcome=()=>{if(state.messages.length)return;state.messages.push({role:"assistant",content:"Здравствуйте! Я консультант 3Д Вещь. Помогу подобрать подарок, выбрать готовую вещь или обсудить индивидуальную 3D-печать."});state.messages.push({role:"assistant",content:"С чего начнём? Можно выбрать вариант ниже или написать свой вопрос."});save()};
     const quickHtml='<button type="button" data-q="🎁 Хочу выбрать подарок">🎁 Хочу выбрать подарок</button><button type="button" data-q="💰 Покажите варианты до 1000 ₽">💰 До 1000 ₽</button><button type="button" data-q="🖨 Хочу заказать печать">🖨 На заказ</button><button type="button" data-q="📦 Как работает доставка?">📦 Доставка</button>';
     async function sendText(text){
       if(state.started&&!state.consent){consentBox.hidden=false;input.disabled=true;send.disabled=true;return;}
