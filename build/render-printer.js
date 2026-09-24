@@ -3,11 +3,11 @@ const path = require("path");
 const { renderLayout } = require("./layout");
 
 const SPECS = [
-  { icon: "⚡", label: "Скорость печати", value: "до 500 мм/с" },
-  { icon: "🎯", label: "Точность", value: "±0.05 мм" },
-  { icon: "📐", label: "Область печати", value: "256×256×256 мм" },
-  { icon: "🎨", label: "Мультиматериальность", value: "до 16 цветов (AMS 2 Pro)" },
-  { icon: "🧪", label: "Материалы", value: "PLA, PETG, ABS, TPU, PA и др." },
+  { icon: "01", label: "Скорость печати", value: "до 500 мм/с" },
+  { icon: "02", label: "Точность", value: "±0.05 мм" },
+  { icon: "03", label: "Область печати", value: "256×256×256 мм" },
+  { icon: "04", label: "Мультиматериальность", value: "до 16 цветов (AMS 2 Pro)" },
+  { icon: "05", label: "Материалы", value: "PLA, PETG, ABS, TPU, PA и др." },
 ];
 
 const MEANING = [
@@ -84,7 +84,7 @@ function printerPage() {
   <div class="container">
     <div class="section-head"><span class="kicker">Характеристики</span><h2>Что под капотом</h2></div>
     <div class="printer-specs-grid">
-      ${SPECS.map((s) => `<div class="printer-spec-card"><div class="printer-spec-icon">${s.icon}</div><div class="printer-spec-value mono">${s.value}</div><div class="printer-spec-label">${s.label}</div></div>`).join("\n      ")}
+      ${SPECS.map((s) => `<div class="printer-spec-card"><div class="printer-spec-icon" aria-hidden="true">${s.icon}</div><div class="printer-spec-value mono">${s.value}</div><div class="printer-spec-label">${s.label}</div></div>`).join("\n      ")}
     </div>
   </div>
 </section>
