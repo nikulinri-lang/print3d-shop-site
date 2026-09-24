@@ -339,7 +339,7 @@ function productPage(p, allProducts) {
       <div class="product-trust-row">
         <span><b class="trust-index mono">01</b> Изготовление: ${LEAD_TIME}</span>
         <span><b class="trust-index mono">02</b> Доставка по России</span>
-        ${p.colors && p.colors.length ? "<span><b class="trust-index mono">03</b> Можно выбрать цвет</span>" : ""}
+        ${p.colors && p.colors.length ? '<span><b class="trust-index mono">03</b> Можно выбрать цвет</span>' : ""}
         <span><b class="trust-index mono">04</b> Оплата после подтверждения заказа менеджером</span>
         <span><b class="trust-index mono">05</b> <a href="/delivery#vozvrat">Возврат и обмен</a></span>
       </div>
