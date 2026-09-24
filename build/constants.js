@@ -21,6 +21,7 @@ const CATEGORY_TILES = [
   { key: "Игры и хобби", label: "Игры и хобби", icon: "🎮", kind: "category", img: "hobby" },
   { key: "Антистресс", label: "Антистресс", icon: "🧩", kind: "category", img: "antistress" },
   { key: "Полезные детали", label: "Полезные детали", icon: "⚙️", kind: "category", img: "parts" },
+  { key: "Освещение", label: "Освещение", icon: "💡", kind: "category", img: "home" },
   { key: "custom", label: "На заказ", icon: "🛠", kind: "custom", img: "custom" },
 ];
 
