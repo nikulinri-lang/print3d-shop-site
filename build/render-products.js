@@ -317,11 +317,11 @@ function productPage(p, allProducts) {
         <button type="button" class="btn btn-ghost" id="buyNowBtn">Купить сейчас</button>
       </div>
       <div class="product-trust-row">
-        <span>⚡ Изготовление: ${LEAD_TIME}</span>
-        <span>📦 Доставка по России</span>
-        ${p.colors && p.colors.length ? "<span>🎨 Можно выбрать цвет</span>" : ""}
-        <span>💳 Оплата после подтверждения заказа менеджером</span>
-        <span>↩ <a href="/delivery#vozvrat">Возврат и обмен</a></span>
+        <span><b class="trust-index mono">01</b> Изготовление: ${LEAD_TIME}</span>
+        <span><b class="trust-index mono">02</b> Доставка по России</span>
+        ${p.colors && p.colors.length ? "<span><b class="trust-index mono">03</b> Можно выбрать цвет</span>" : ""}
+        <span><b class="trust-index mono">04</b> Оплата после подтверждения заказа менеджером</span>
+        <span><b class="trust-index mono">05</b> <a href="/delivery#vozvrat">Возврат и обмен</a></span>
       </div>
       <a href="${TELEGRAM_BOT_URL}" class="product-telegram-link" target="_blank" rel="noopener">Есть вопрос? Написать в Telegram →</a>
     </div>
