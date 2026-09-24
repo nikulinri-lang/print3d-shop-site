@@ -3003,3 +3003,196 @@ fieldset.form-field {
     line-height: 1.6;
   }
 }
+
+
+/* ===== Unified internal-page visual system v1 ===== */
+.page-hero {
+  padding: clamp(72px, 9vw, 112px) 0 clamp(28px, 4vw, 48px);
+  border-bottom: 0;
+}
+
+.page-hero::after {
+  content: "";
+  display: block;
+  width: min(180px, 32vw);
+  height: 1px;
+  margin-top: 30px;
+  background: linear-gradient(90deg, var(--color-accent-1), transparent);
+  opacity: .75;
+}
+
+.page-hero h1 {
+  max-width: 900px;
+  letter-spacing: -.04em;
+  line-height: 1.02;
+}
+
+.page-hero .lede { max-width: 680px; }
+
+.section--tight { padding-top: 0; }
+
+/* Единые «окошки» для внутренних страниц */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-md);
+}
+
+.info-card {
+  position: relative;
+  min-height: 230px;
+  padding: var(--space-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: linear-gradient(145deg, rgba(255,255,255,.035), rgba(255,255,255,.012));
+  overflow: hidden;
+  transition: transform var(--duration-base) var(--ease-out), border-color var(--duration-base) var(--ease-out), box-shadow var(--duration-base) var(--ease-out);
+}
+
+.info-card::after {
+  content: "";
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  right: -90px;
+  bottom: -100px;
+  border-radius: 50%;
+  background: var(--color-accent-1-10);
+  filter: blur(24px);
+  pointer-events: none;
+}
+
+.info-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-accent-1-25);
+  box-shadow: var(--glow-accent-1-sm);
+}
+
+.info-card-icon,
+.delivery-card-icon,
+.printer-spec-icon {
+  width: 46px;
+  height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-md);
+  border: 1px solid var(--color-accent-1-25);
+  border-radius: 13px;
+  background: var(--color-accent-1-10);
+  color: var(--color-accent-1);
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 700;
+  box-shadow: inset 0 0 24px rgba(255,107,0,.04);
+}
+
+.info-card h2 {
+  font-size: var(--text-xl);
+  margin: 0 0 var(--space-xs);
+  letter-spacing: -.025em;
+}
+
+.info-card p {
+  color: var(--color-text-muted);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--space-md);
+}
+
+.info-card-link {
+  position: relative;
+  z-index: 1;
+  color: var(--color-accent-2);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.info-card-link:hover { color: var(--color-text); }
+.info-card--accent { border-color: var(--color-accent-1-25); background: linear-gradient(145deg, var(--color-accent-1-10), var(--color-surface) 65%); }
+
+/* Доставка: карточки теперь выглядят как часть той же дизайн-системы */
+.delivery-grid { gap: var(--space-lg); }
+.delivery-card {
+  position: relative;
+  padding: var(--space-xl);
+  border-radius: var(--radius-md);
+  background: linear-gradient(145deg, rgba(255,255,255,.035), rgba(255,255,255,.012));
+  transition: transform var(--duration-base) var(--ease-out), border-color var(--duration-base) var(--ease-out), box-shadow var(--duration-base) var(--ease-out);
+}
+.delivery-card:hover { transform: translateY(-3px); border-color: var(--color-accent-1-25); box-shadow: var(--glow-accent-1-sm); }
+.delivery-card-icon { margin-bottom: var(--space-md); font-size: 15px; }
+.delivery-card h3 { font-size: var(--text-xl); letter-spacing: -.02em; }
+.delivery-card p { max-width: 62ch; }
+
+/* Страница принтера */
+.printer-specs-grid { gap: var(--space-md); }
+.printer-spec-card {
+  min-height: 178px;
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, rgba(255,255,255,.035), rgba(255,255,255,.012));
+  transition: transform var(--duration-base) var(--ease-out), border-color var(--duration-base) var(--ease-out), box-shadow var(--duration-base) var(--ease-out);
+}
+.printer-spec-card:hover { transform: translateY(-3px); border-color: var(--color-accent-1-25); box-shadow: var(--glow-accent-1-sm); }
+.printer-spec-icon { margin-bottom: var(--space-sm); }
+.printer-spec-value { font-size: var(--text-lg); }
+
+/* Кастомный заказ — форма и подсказки в тех же «окошках» */
+.custom-order-form,
+.custom-order-aside {
+  padding: var(--space-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: linear-gradient(145deg, rgba(255,255,255,.035), rgba(255,255,255,.012));
+}
+.custom-order-aside { position: sticky; top: 92px; }
+.custom-order-aside-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: rgba(255,255,255,.02);
+  padding: var(--space-md);
+  margin-bottom: var(--space-sm);
+}
+.custom-order-aside-card .printer-teaser-spec-icon {
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-accent-1-25);
+  border-radius: 11px;
+  color: var(--color-accent-1);
+  background: var(--color-accent-1-10);
+}
+
+/* Одинаковая визуальная «воздушность» для текстовых документов */
+.container--article .article-body {
+  padding: var(--space-xl);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: linear-gradient(145deg, rgba(255,255,255,.025), rgba(255,255,255,.008));
+}
+
+@media (max-width: 1024px) {
+  .info-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .printer-specs-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 767px) {
+  .page-hero { padding: 56px 0 28px; }
+  .page-hero h1 { font-size: clamp(34px, 10vw, 52px); }
+  .info-grid { grid-template-columns: 1fr; gap: 12px; }
+  .info-card { min-height: 0; padding: 18px; }
+  .delivery-grid { grid-template-columns: 1fr; }
+  .delivery-card { padding: 18px; }
+  .printer-specs-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .printer-spec-card { min-height: 155px; padding: 16px 12px; }
+  .printer-spec-value { font-size: 15px; }
+  .custom-order-layout { grid-template-columns: 1fr; gap: 14px; }
+  .custom-order-form, .custom-order-aside { padding: 16px; }
+  .custom-order-aside { position: static; }
+  .container--article .article-body { padding: 18px; }
+}
