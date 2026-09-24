@@ -24,7 +24,7 @@ const ORGANIZATION_SCHEMA = {
 // собственного billing-хэша — единственный способ инвалидировать кэш
 // у уже заходивших посетителей — вручную бампать эту версию при правке
 // tokens/base/components.css или любого /js/*.js.
-const ASSET_V = 33;
+const ASSET_V = 34;
 
 function metrikaSnippet() {
   if (!YANDEX_METRIKA_ID) return "";
@@ -100,7 +100,7 @@ ${metrikaSnippet()}
 <script type="application/ld+json">${JSON.stringify(ORGANIZATION_SCHEMA)}</script>
 ${extraHead}
 </head>
-<body>
+<body class="site-page page-${String(canonical || "/").replace(/^\/+|\/+$/g, "").replace(/[^a-z0-9_-]+/gi, "-") || "home"}">
 
 <canvas id="bg-canvas" aria-hidden="true"></canvas>
 
