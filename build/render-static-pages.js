@@ -85,88 +85,46 @@ function aboutPage() {
 }
 
 function deliveryPage() {
-  const body = `<section class="page-hero premium-page-hero premium-page-hero--delivery">
-  <div class="container">
-    <div class="premium-page-hero-grid">
-      <div class="premium-page-hero-copy">
-        <span class="kicker">Получение / Доставка</span>
-        <h1>От печати до <span>ваших рук.</span></h1>
-        <p class="lede">Самовывоз в ${CITY_PREP} или отправка по России. После изготовления согласуем способ получения и детали заказа.</p>
-        <div class="premium-page-hero-actions"><a href="${TELEGRAM_BOT_URL}" class="btn btn-primary" target="_blank" rel="noopener">Уточнить доставку →</a><a href="/catalog" class="btn btn-ghost">Вернуться в каталог</a></div>
-      </div>
-      <div class="premium-hero-panel premium-hero-panel--route">
-        <div class="premium-hero-panel-top"><span>ROUTE / ORDER</span><span>01 → 03</span></div>
-        <div class="route-line"><i></i><i></i><i></i></div>
-        <div class="route-stops"><div><b>01</b><span>ПЕЧАТЬ</span><small>готовим заказ</small></div><div><b>02</b><span>БРЯНСК</span><small>самовывоз</small></div><div><b>03</b><span>РОССИЯ</span><small>отправка</small></div></div>
-        <div class="premium-hero-note">Срок изготовления: <strong>${LEAD_TIME}</strong></div>
-      </div>
-    </div>
-  </div>
-</section>
+  const body = `<section class="custom-hero delivery-custom-hero"><div class="container"><div class="custom-hero-grid">
+    <div class="custom-hero-copy"><span class="kicker">02 / Доставка и оплата</span><h1>От печати —<br><span>до ваших рук.</span></h1>
+    <p class="lede">Сначала согласуем заказ, затем изготовим, после чего вы выбираете удобный способ получения. Никаких сложных схем — всё по шагам.</p>
+    <div class="custom-hero-actions"><a href="#delivery-process" class="btn btn-primary">Как это работает →</a><a href="${TELEGRAM_BOT_URL}" class="btn btn-ghost" target="_blank" rel="noopener">Уточнить условия</a></div>
+    <div class="custom-trust-row"><span><b>01</b> заказ</span><span><b>02</b> печать</span><span><b>03</b> получение</span></div></div>
+    <div class="custom-hero-visual delivery-hero-visual"><div class="custom-visual-orbit orbit-a"></div><div class="custom-visual-orbit orbit-b"></div><div class="custom-visual-core delivery-visual-core"><span>01 → 03</span><small>ORDER / DELIVERY</small></div><div class="custom-visual-label label-a">PAYMENT</div><div class="custom-visual-label label-b">PRINT</div><div class="custom-visual-label label-c">DELIVERY</div></div>
+  </div></div></section>
 
-<section class="section">
-  <div class="container">
-    <div class="delivery-grid">
-      <div class="delivery-card">
-        <div class="delivery-card-icon" aria-hidden="true">⌖</div>
-        <h3>${CITY}: самовывоз</h3>
-        <p>Забираете готовое изделие сами. Точку и время встречи согласовываем в Telegram после того, как заказ напечатан — обычно это ${LEAD_TIME} с момента оформления.</p>
-        <p>💳 Оплата после подтверждения заказа менеджером.</p>
-      </div>
-      <div class="delivery-card">
-        <div class="delivery-card-icon" aria-hidden="true">▣</div>
-        <h3>Россия: доставка</h3>
-        <p>Отправляем в другие города транспортными компаниями и через Авито Доставку — способ и стоимость зависят от размера и веса изделия, уточняем индивидуально при оформлении заказа в Telegram.</p>
-        <p>Если заказ оформлен через Авито — вся переписка и оплата по этому заказу идут через Авито, это не отменяет и не дублирует оформление на сайте.</p>
-      </div>
-    </div>
-  </div>
-</section>
+<section class="section custom-process-section" id="delivery-process"><div class="container"><div class="section-head"><span class="kicker">03 / Как это работает</span><h2>Просто и <span>по шагам</span></h2><p>Вы не оплачиваете заказ вслепую: сначала подтверждаем состав, стоимость и срок.</p></div>
+<div class="custom-process-grid delivery-process-grid">
+  <article class="custom-process-card"><span>01</span><h3>Оформляем заказ</h3><p>Вы выбираете товар или присылаете идею для изготовления. Уточняем количество, цвет и другие детали.</p></article>
+  <article class="custom-process-card"><span>02</span><h3>Подтверждаем оплату</h3><p>После согласования заказа менеджер сообщает итоговую стоимость и удобный способ оплаты.</p></article>
+  <article class="custom-process-card"><span>03</span><h3>Печатаем</h3><p>Изготавливаем заказ. Ориентировочный срок — ${LEAD_TIME}, если отдельно не согласован другой срок.</p></article>
+  <article class="custom-process-card custom-process-card--accent"><span>04</span><h3>Получаете</h3><p>Самовывоз в ${CITY_PREP} или отправка по России согласованным способом.</p></article>
+</div></div></section>
 
-<section class="section" id="vozvrat">
-  <div class="container">
-    <div class="section-head"><span class="kicker">Условия</span><h2>Возврат и обмен</h2></div>
-    <div class="delivery-grid">
-      <div class="delivery-card">
-        <div class="delivery-card-icon" aria-hidden="true">✓</div>
-        <h3>Готовые изделия из каталога</h3>
-        <p>Если изделие не подошло и сохранило товарный вид (не использовалось, упаковка и бирки на месте) — можно вернуть или обменять в течение 7 дней с момента получения. Стоимость обратной пересылки в этом случае — за счёт покупателя.</p>
-      </div>
-      <div class="delivery-card">
-        <div class="delivery-card-icon" aria-hidden="true">⌁</div>
-        <h3>Изделия на заказ (по фото, эскизу, размерам)</h3>
-        <p>Такие изделия изготавливаются под конкретные параметры, которые указал заказчик, поэтому по общему правилу для товаров с индивидуально согласованными свойствами возврат надлежащего качества не предусмотрен. Перед печатью мы всегда согласовываем макет/размеры — уточняйте детали в Telegram до подтверждения заказа.</p>
-      </div>
-      <div class="delivery-card">
-        <div class="delivery-card-icon" aria-hidden="true">!</div>
-        <h3>Если пришёл брак или не тот товар</h3>
-        <p>Это не ваши расходы. Если изделие повреждено при доставке, напечатано с явным дефектом или прислано не то, что заказывали — сообщите в Telegram с фото, обменяем или вернём деньги.</p>
-      </div>
-    </div>
-    <p style="color: var(--color-text-muted); font-size: var(--text-sm); margin-top: var(--space-md);">Договорённость о возврате в каждом случае финально согласуется в Telegram с менеджером — этот раздел описывает общий порядок.</p>
-  </div>
-</section>
+<section class="section"><div class="container"><div class="custom-order-heading"><span class="kicker">04 / Получение</span><h2>Два способа <span>забрать заказ</span></h2></div>
+<div class="delivery-premium-grid">
+  <article class="delivery-premium-card"><div class="delivery-premium-number">01</div><div><span class="kicker">БРЯНСК</span><h3>Самовывоз</h3><p>Готовый заказ можно забрать в ${CITY_PREP}. Точку и время встречи согласуем в Telegram после изготовления.</p></div><div class="delivery-premium-meta"><span>ПОЛУЧЕНИЕ</span><strong>ЛИЧНО</strong></div></article>
+  <article class="delivery-premium-card"><div class="delivery-premium-number">02</div><div><span class="kicker">РОССИЯ</span><h3>Доставка</h3><p>Отправляем транспортной компанией или через Авито Доставку. Стоимость зависит от размера, веса и города.</p></div><div class="delivery-premium-meta"><span>МАРШРУТ</span><strong>ПО РОССИИ</strong></div></article>
+</div></div></section>
 
-<section class="section">
-  <div class="container">
-    <div class="cta-banner">
-      <h2>Есть вопрос по доставке в ваш город?</h2>
-      <p style="color: var(--color-text-muted); margin-bottom: var(--space-lg);">Напишите в Telegram — посчитаем стоимость и сроки для конкретного изделия.</p>
-      <a href="${TELEGRAM_BOT_URL}" class="btn btn-primary" target="_blank" rel="noopener">Написать в Telegram</a>
-    </div>
-  </div>
-</section>`;
+<section class="section" id="vozvrat"><div class="container"><div class="custom-order-heading"><span class="kicker">05 / Условия</span><h2>Возврат и <span>обмен</span></h2></div>
+<div class="delivery-premium-grid">
+  <article class="delivery-premium-card"><div class="delivery-premium-number">01</div><div><h3>Готовые изделия</h3><p>Если изделие не подошло и сохранило товарный вид — возврат или обмен возможен в течение 7 дней с момента получения. Обратная пересылка в этом случае за счёт покупателя.</p></div></article>
+  <article class="delivery-premium-card"><div class="delivery-premium-number">02</div><div><h3>Изделия на заказ</h3><p>Изделия с индивидуально согласованными параметрами по общему правилу не подлежат возврату надлежащего качества. Все размеры и детали согласуем до печати.</p></div></article>
+  <article class="delivery-premium-card delivery-premium-card--accent"><div class="delivery-premium-number">03</div><div><h3>Брак или ошибка</h3><p>Если изделие повреждено, имеет явный дефект или прислан не тот товар — напишите нам с фото. Обмен или возврат решим за наш счёт.</p></div></article>
+</div></div></section>
+
+<section class="section custom-material-section"><div class="container"><div class="custom-material-strip"><div><span class="kicker">06 / Вопрос</span><h2>Нужен расчёт доставки?</h2><p>Напишите город и название изделия — подскажем стоимость и срок.</p></div><a href="${TELEGRAM_BOT_URL}" class="btn btn-primary" target="_blank" rel="noopener">Написать в Telegram →</a></div></div></section>`;
 
   return renderLayout({
-    title: "Доставка, получение и возврат — 3Д Вещь",
-    description: `Самовывоз в ${CITY_PREP} или доставка по России. Условия получения, оплаты и возврата 3D-печатных изделий 3Д Вещь.`,
+    title: "Доставка и оплата — 3Д Вещь",
+    description: `Доставка и оплата 3Д Вещь: самовывоз в ${CITY_PREP} или доставка по России. Понятные условия оформления, оплаты, получения, возврата и обмена.`,
     canonical: "/delivery",
     activeNav: "/delivery",
     bodyContent: body,
-    extraScripts: crumbScript([["Главная", "/"], ["Доставка", "/delivery"]]),
+    extraScripts: crumbScript([["Главная", "/"], ["Доставка и оплата", "/delivery"]]),
   });
 }
-
 function customOrderPage() {
   const body = `<section class="custom-hero"><div class="container"><div class="custom-hero-grid">
     <div class="custom-hero-copy"><span class="kicker">01 / Кастомный заказ</span><h1>Создадим вещь,<br><span>которой ещё нет.</span></h1>
