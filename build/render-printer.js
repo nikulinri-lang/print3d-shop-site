@@ -66,17 +66,20 @@ function materialCard(m) {
 }
 
 function printerPage() {
-  const body = `<section class="hero hero--printer">
-  <div class="hero-visual">
+  const body = `<section class="hero hero--printer premium-printer-hero">
+  <div class="hero-visual premium-printer-visual">
+    <div class="printer-hero-gridlines" aria-hidden="true"></div>
     <img src="/images/printer/p2s-front.webp"
       srcset="/images/printer/p2s-front-480.webp 480w, /images/printer/p2s-front-800.webp 800w, /images/printer/p2s-front.webp 1600w"
       sizes="(max-width: 767px) 90vw, 560px"
       alt="Bambu Lab P2S Combo" class="printer-hero-photo" loading="eager" fetchpriority="high">
   </div>
-  <div class="container hero-content">
+  <div class="container hero-content premium-printer-content">
+    <div class="premium-printer-topline"><span>HARDWARE / 01</span><span>PRINTLAB LAB</span></div>
     <span class="kicker">Наше оборудование</span>
-    <h1>Bambu Lab P2S Combo — наш принтер</h1>
-    <p class="lede">Именно на нём печатается каждый ваш заказ.</p>
+    <h1>Bambu Lab P2S Combo<br><span>— наш принтер.</span></h1>
+    <p class="lede">Именно на нём печатается каждый ваш заказ — от небольшой детали до серии готовых изделий.</p>
+    <div class="premium-printer-specline"><span><b>500</b> мм/с</span><span><b>0.05</b> мм</span><span><b>16</b> цветов</span><span><b>24/7</b> контроль</span></div>
   </div>
 </section>
 
