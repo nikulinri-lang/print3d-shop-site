@@ -309,8 +309,9 @@ function productPage(p, allProducts) {
     <a href="/">Главная</a> <span>/</span> <a href="/catalog">Каталог</a> <span>/</span> <span aria-current="page">${p.title}</span>
   </nav>`;
 
-  const body = `<section class="section product-detail">
+  const body = `<section class="section product-detail product-detail--premium">
   <div class="container">
+    <div class="product-page-topline"><span>PRINTLAB / PRODUCT</span><span>01 — 05</span></div>
     ${breadcrumbs}
   <div class="product-detail-grid">
     <div class="product-gallery">
