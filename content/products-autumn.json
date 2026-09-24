@@ -277,14 +277,13 @@
     "id": "xmas-tree-lamp",
     "slug": "xmas-tree-lamp",
     "title": "Ёлочка-светильник",
-    "category": "Освещение",
+    "category": "Декор",
     "price": 300,
     "stock": 5,
     "featured": false,
     "description": "Новогодняя ёлочка с ажурными звёздочками и просветами для свечи или гирлянды",
     "specs": {},
     "categories": [
-      "Освещение",
       "Декор",
       "Подарки",
       "Для дома"
