@@ -3602,3 +3602,17 @@ body.site-page .delivery-premium-card--accent{border-color:rgba(255,107,0,.24);b
   body.site-page .delivery-premium-meta{grid-column:2;}
   body.site-page .delivery-hero-visual{min-height:330px;}
 }
+
+
+/* ===== EQUIPMENT HERO — photo follows the text ===== */
+body.site-page .premium-printer-hero{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;min-height:0;}
+body.site-page .premium-printer-content{order:1;width:100%;}
+body.site-page .premium-printer-visual{order:2;position:relative;inset:auto;min-height:430px;width:100%;align-items:flex-end;justify-content:center;margin-top:-10px;}
+body.site-page .premium-printer-visual::after{background:linear-gradient(180deg,#0a0a0f 0%,rgba(10,10,15,.05) 28%,rgba(10,10,15,.08) 72%,#0a0a0f 100%);}
+body.site-page .premium-printer-visual img{width:min(820px,78vw);height:430px;object-position:center bottom;}
+body.site-page .premium-printer-content{padding-bottom:30px;}
+@media(max-width:767px){
+  body.site-page .premium-printer-visual{min-height:310px;margin-top:0;}
+  body.site-page .premium-printer-visual img{width:94vw;height:310px;}
+  body.site-page .premium-printer-content{padding-bottom:22px;}
+}
