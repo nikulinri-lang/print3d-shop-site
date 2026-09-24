@@ -3288,3 +3288,170 @@ body.site-page .cart-summary,body.site-page .checkout-form,body.site-page .check
  body.site-page .section{padding:48px 0;}
  body.site-page .section-head h2{font-size:clamp(32px,10vw,48px);}
 }
+
+
+/* ===== PRINTLAB / 3Д ВЕЩЬ — MASTER MOTION SYSTEM ===== */
+:root{
+  --motion-fast:.22s;
+  --motion-base:.42s;
+  --motion-slow:.72s;
+}
+body.site-page{
+  background:
+    radial-gradient(circle at 50% -15%,rgba(255,107,0,.045),transparent 34%),
+    var(--color-bg);
+}
+body.site-page .site-header{
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  background:rgba(10,10,15,.72);
+  border-bottom-color:rgba(255,107,0,.08);
+}
+body.site-page .logo{transition:transform var(--motion-base) var(--ease-out),filter var(--motion-base) ease;}
+body.site-page .logo:hover{transform:translateY(-1px);filter:drop-shadow(0 0 12px rgba(255,107,0,.28));}
+body.site-page .logo-mark{color:var(--color-accent-1);text-shadow:0 0 16px rgba(255,107,0,.35);}
+body.site-page .nav-links a{transition:color var(--motion-fast) ease,opacity var(--motion-fast) ease;}
+body.site-page .nav-links a:hover,
+body.site-page .nav-links a[aria-current="page"]{color:var(--color-accent-1);}
+body.site-page .btn{
+  position:relative;
+  overflow:hidden;
+  transition:transform var(--motion-fast) var(--ease-out),box-shadow var(--motion-base) ease,border-color var(--motion-fast) ease;
+}
+body.site-page .btn::after{
+  content:"";
+  position:absolute;
+  top:-120%;left:-35%;
+  width:28%;height:340%;
+  transform:rotate(22deg);
+  background:rgba(255,255,255,.14);
+  transition:left .65s var(--ease-out);
+  pointer-events:none;
+}
+body.site-page .btn:hover{transform:translateY(-2px);}
+body.site-page .btn:hover::after{left:125%;}
+body.site-page .btn-primary:hover{box-shadow:0 12px 42px rgba(255,107,0,.24),0 0 0 1px rgba(255,107,0,.16);}
+body.site-page .page-hero h1,
+body.site-page .section-head h2{ text-wrap:balance; }
+body.site-page .page-hero h1::selection,
+body.site-page h2::selection,
+body.site-page h3::selection{background:var(--color-accent-1);color:#0A0A0F;}
+body.site-page .page-hero::before{
+  content:"";
+  position:absolute;inset:0;pointer-events:none;opacity:.18;
+  background-image:linear-gradient(rgba(255,107,0,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,107,0,.07) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:linear-gradient(to bottom,black,transparent 85%);
+}
+body.site-page .info-card,
+body.site-page .delivery-card,
+body.site-page .printer-spec-card,
+body.site-page .material-card,
+body.site-page .product-card,
+body.site-page .step,
+body.site-page .cta-banner,
+body.site-page .cart-summary,
+body.site-page .checkout-form,
+body.site-page .checkout-summary{
+  position:relative;
+  overflow:hidden;
+  transition:transform var(--motion-base) var(--ease-out),border-color var(--motion-base) ease,box-shadow var(--motion-base) ease,background var(--motion-base) ease;
+}
+body.site-page .info-card::before,
+body.site-page .delivery-card::before,
+body.site-page .printer-spec-card::before,
+body.site-page .material-card::before,
+body.site-page .product-card::before,
+body.site-page .step::before{
+  content:"";
+  position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,0%),rgba(255,107,0,.12),transparent 32%);
+  opacity:0;
+  transition:opacity var(--motion-base) ease;
+}
+body.site-page .info-card:hover::before,
+body.site-page .delivery-card:hover::before,
+body.site-page .printer-spec-card:hover::before,
+body.site-page .material-card:hover::before,
+body.site-page .product-card:hover::before,
+body.site-page .step:hover::before{opacity:1;}
+body.site-page .info-card:hover,
+body.site-page .delivery-card:hover,
+body.site-page .printer-spec-card:hover,
+body.site-page .material-card:hover,
+body.site-page .product-card:hover,
+body.site-page .step:hover{
+  transform:translateY(-6px);
+  border-color:rgba(255,107,0,.32);
+  box-shadow:0 24px 70px rgba(0,0,0,.22),0 0 34px rgba(255,107,0,.07);
+}
+body.site-page .info-card-icon,
+body.site-page .delivery-card-icon,
+body.site-page .printer-spec-icon{
+  transition:transform var(--motion-base) var(--ease-out),background var(--motion-base) ease,box-shadow var(--motion-base) ease;
+}
+body.site-page .info-card:hover .info-card-icon,
+body.site-page .delivery-card:hover .delivery-card-icon,
+body.site-page .printer-spec-card:hover .printer-spec-icon{
+  transform:translateY(-2px) rotate(-3deg);
+  background:rgba(255,107,0,.11);
+  box-shadow:0 0 24px rgba(255,107,0,.13);
+}
+body.site-page .reveal-on-scroll{
+  opacity:0;
+  transform:translateY(26px);
+}
+body.site-page .reveal-on-scroll.is-revealed{
+  opacity:1;
+  transform:none;
+  transition:opacity .7s ease,transform .8s var(--ease-out);
+}
+body.site-page .section-divider{
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,107,0,.4),transparent);
+}
+body.site-page .kicker{color:var(--color-accent-1);}
+body.site-page .kicker::before{background:var(--color-accent-1);}
+body.site-page .site-footer a:hover{color:var(--color-accent-1);}
+body.site-page .site-footer .logo-mark{color:var(--color-accent-1);}
+
+/* Product cards: premium image treatment */
+body.site-page .product-card{
+  isolation:isolate;
+}
+body.site-page .product-card img{
+  transition:transform .7s var(--ease-out),filter .5s ease;
+}
+body.site-page .product-card:hover img{
+  transform:scale(1.035);
+  filter:saturate(1.05) contrast(1.02);
+}
+body.site-page .product-card .product-price{
+  color:var(--color-accent-1);
+}
+body.site-page input:focus,
+body.site-page textarea:focus,
+body.site-page select:focus{
+  outline:none;
+  border-color:rgba(255,107,0,.55);
+  box-shadow:0 0 0 3px rgba(255,107,0,.07),0 0 26px rgba(255,107,0,.05);
+}
+@media(max-width:767px){
+  body.site-page .info-card:hover,
+  body.site-page .delivery-card:hover,
+  body.site-page .printer-spec-card:hover,
+  body.site-page .material-card:hover,
+  body.site-page .product-card:hover,
+  body.site-page .step:hover{transform:translateY(-3px);}
+}
+@media(prefers-reduced-motion:reduce){
+  body.site-page .btn::after,
+  body.site-page .page-hero::before,
+  body.site-page .info-card::before,
+  body.site-page .delivery-card::before,
+  body.site-page .printer-spec-card::before,
+  body.site-page .material-card::before,
+  body.site-page .product-card::before,
+  body.site-page .step::before{display:none;}
+  body.site-page .reveal-on-scroll{opacity:1;transform:none;}
+}
