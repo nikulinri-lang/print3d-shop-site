@@ -3455,3 +3455,12 @@ body.site-page select:focus{
   body.site-page .step::before{display:none;}
   body.site-page .reveal-on-scroll{opacity:1;transform:none;}
 }
+
+/* ===== Brand detail polish: remove emoji-heavy UI in key trust blocks ===== */
+body.site-page .why-us-index,body.site-page .trust-index{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:28px;padding:0 7px;border:1px solid rgba(255,107,0,.25);border-radius:9px;color:var(--color-accent-1);background:rgba(255,107,0,.055);font-size:10px;letter-spacing:.04em}
+body.site-page .review-header{gap:10px}
+body.site-page .printer-teaser-spec-icon{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;flex:0 0 40px;border:1px solid rgba(255,107,0,.22);border-radius:12px;background:rgba(255,107,0,.055);color:var(--color-accent-1);font-size:10px;transition:transform .35s var(--ease-out),box-shadow .35s ease}
+body.site-page .printer-teaser-spec:hover .printer-teaser-spec-icon{transform:translateY(-2px) rotate(-4deg);box-shadow:0 0 24px rgba(255,107,0,.12)}
+body.site-page .product-trust-row span{transition:transform .25s ease,border-color .25s ease,background .25s ease}
+body.site-page .product-trust-row span:hover{transform:translateY(-2px);border-color:rgba(255,107,0,.24);background:rgba(255,107,0,.035)}
+body.site-page .trust-index{margin-right:4px}
