@@ -143,110 +143,29 @@ function deliveryPage() {
 }
 
 function customOrderPage() {
-  const body = `<section class="page-hero">
-  <div class="container">
-    <span class="kicker">Кастомный заказ</span>
-    <h1>Изготовим изделие специально для вас</h1>
-    <p class="lede">По фотографии, размерам, эскизу или готовой 3D-модели. Опишите задачу — оценим возможность и стоимость.</p>
-  </div>
-</section>
-
-<section class="section" style="padding-top:0;">
-  <div class="container">
-    <div class="custom-order-layout">
-      <form class="custom-order-form" id="customOrderForm">
-        <label class="form-field">
-          <span>Имя</span>
-          <input type="text" name="name" required>
-        </label>
-        <label class="form-field">
-          <span>Telegram или телефон</span>
-          <input type="text" name="contact" placeholder="@username или +7…" required>
-        </label>
-        <label class="form-field">
-          <span>Описание изделия</span>
-          <textarea name="description" rows="4" placeholder="Что нужно напечатать, для чего" required></textarea>
-        </label>
-        <div class="form-row">
-          <label class="form-field">
-            <span>Количество</span>
-            <input type="number" name="qty" min="1" value="1">
-          </label>
-          <label class="form-field">
-            <span>Желаемый размер</span>
-            <input type="text" name="size" placeholder="если важен">
-          </label>
-        </div>
-        <label class="form-field">
-          <span>Желаемый цвет</span>
-          <input type="text" name="color" placeholder="если важен">
-        </label>
-        <label class="form-field">
-          <span>Фото, эскиз или файл модели</span>
-          <input type="file" name="file" accept="image/*,.stl,.obj,.step,.pdf">
-          <span class="form-hint">Файл прикрепите тем же вложением при отправке сообщения в Telegram — сайт статический и не загружает файлы на сервер сам.</span>
-        </label>
-        <button type="submit" class="btn btn-primary btn-block">Сформировать заявку</button>
-      </form>
-
-      <div id="customOrderResult" hidden>
-        <div class="order-success" id="customOrderSuccess" hidden>
-          <div class="order-success-icon">✅</div>
-          <h3>Заявка отправлена!</h3>
-          <p>Наш менеджер свяжется с вами в ближайшее время, чтобы уточнить детали и стоимость.</p>
-          <a href="${TELEGRAM_BOT_URL}" class="btn btn-primary" target="_blank" rel="noopener">Написать в Telegram</a>
-        </div>
-        <div class="custom-order-result" id="customOrderFallback" hidden>
-          <h3>Заявка готова</h3>
-          <p>Не получилось отправить её автоматически — скопируйте текст и отправьте его первым сообщением в Telegram-боте, так мы сразу увидим все детали.</p>
-          <pre class="custom-order-summary" id="customOrderSummary"></pre>
-          <div class="custom-order-actions">
-            <button type="button" class="btn btn-ghost" id="copyOrderBtn">Скопировать заявку</button>
-            <a href="${TELEGRAM_BOT_URL}" class="btn btn-primary" target="_blank" rel="noopener" id="openTelegramBtn">Открыть Telegram-бота</a>
-          </div>
-        </div>
-      </div>
-
-      <aside class="custom-order-aside">
-        <div class="custom-order-aside-card">
-          <div class="printer-teaser-spec-icon">⚡</div>
-          <div>
-            <div class="printer-teaser-spec-value mono">${LEAD_TIME}</div>
-            <div class="printer-teaser-spec-label">обычно на изготовление после согласования</div>
-          </div>
-        </div>
-        <div class="custom-order-aside-card">
-          <div class="printer-teaser-spec-icon">🎨</div>
-          <div>
-            <div class="printer-teaser-spec-value mono">PLA / PETG / ABS / TPU</div>
-            <div class="printer-teaser-spec-label">материал подберём под задачу</div>
-          </div>
-        </div>
-        <p>Есть вопрос до того, как заполнять форму? Просто напишите в Telegram — ответим и подскажем, как лучше сформулировать заказ.</p>
-        <a href="${TELEGRAM_BOT_URL}" class="btn btn-ghost btn-block" target="_blank" rel="noopener">Написать в Telegram</a>
-      </aside>
-    </div>
-  </div>
-</section>
-
-<section class="section print-layers">
-  <div class="container">
-    <div class="section-head"><span class="kicker">Оптом</span><h2>Нужна партия изделий?</h2></div>
-    <div class="bulk-order-card">
-      <p>Изготавливаем небольшие серии, сувениры, корпоративные подарки и детали по индивидуальному заказу.</p>
-      <a href="${TELEGRAM_BOT_URL}" class="btn btn-primary" target="_blank" rel="noopener">Получить расчёт</a>
-    </div>
-  </div>
-</section>`;
-
-  return renderLayout({
-    title: "Кастомный заказ — изготовление изделий на заказ | 3Д Вещь",
-    description: "Изготовим 3D-печатное изделие по фотографии, эскизу, размерам или готовой модели. Оставьте заявку — оценим возможность и стоимость.",
-    canonical: "/custom-order",
-    activeNav: "/custom-order",
-    bodyContent: body,
-    extraScripts: `${crumbScript([["Главная", "/"], ["Кастомный заказ", "/custom-order"]])}\n<script defer src="/js/custom-order.js?v=4"></script>`,
-  });
+  const body = `<section class="custom-hero"><div class="container"><div class="custom-hero-grid">
+    <div class="custom-hero-copy"><span class="kicker">01 / Кастомный заказ</span><h1>Создадим вещь,<br><span>которой ещё нет.</span></h1>
+    <p class="lede">Присылайте фотографию, эскиз, размеры или 3D-модель. Мы поможем превратить идею в готовое изделие.</p>
+    <div class="custom-hero-actions"><a href="#custom-order" class="btn btn-primary">Рассказать об идее →</a><a href="${TELEGRAM_BOT_URL}" class="btn btn-ghost" target="_blank" rel="noopener">Сразу в Telegram</a></div>
+    <div class="custom-trust-row"><span><b>01</b> идея</span><span><b>02</b> расчёт</span><span><b>03</b> печать</span></div></div>
+    <div class="custom-hero-visual"><div class="custom-visual-orbit orbit-a"></div><div class="custom-visual-orbit orbit-b"></div><div class="custom-visual-core"><span>3D</span><small>YOUR IDEA</small></div><div class="custom-visual-label label-a">PHOTO / SKETCH</div><div class="custom-visual-label label-b">MODEL / SIZE</div><div class="custom-visual-label label-c">PRINT / RESULT</div></div>
+  </div></div></section>
+<section class="section custom-process-section"><div class="container"><div class="section-head"><span class="kicker">02 / Как это работает</span><h2>От идеи до <span>готовой вещи</span></h2><p>Не обязательно разбираться в 3D-моделировании. Покажите, что хотите получить — дальше разберёмся вместе.</p></div>
+<div class="custom-process-grid"><article class="custom-process-card"><span>01</span><h3>Покажите идею</h3><p>Фото, рисунок, ссылка, пример или описание словами.</p></article><article class="custom-process-card"><span>02</span><h3>Согласуем детали</h3><p>Размер, материал, цвет, количество и особенности изделия.</p></article><article class="custom-process-card"><span>03</span><h3>Рассчитаем стоимость</h3><p>Сообщим цену и срок до начала изготовления.</p></article><article class="custom-process-card custom-process-card--accent"><span>04</span><h3>Напечатаем</h3><p>Изготовим и передадим самовывозом или отправим по России.</p></article></div></div></section>
+<section class="section custom-order-section" id="custom-order"><div class="container"><div class="custom-order-heading"><span class="kicker">03 / Заявка</span><h2>Расскажите, <span>что придумали</span></h2><p>Чем больше деталей — тем точнее оценим задачу.</p></div>
+<div class="custom-order-layout custom-order-layout--premium"><form class="custom-order-form custom-order-form--premium" id="customOrderForm">
+<div class="custom-form-top"><span>НОВЫЙ ПРОЕКТ</span><span>PRINTLAB / 3D</span></div>
+<div class="custom-form-grid"><label class="form-field"><span>Ваше имя</span><input type="text" name="name" placeholder="Как к вам обращаться?" required></label><label class="form-field"><span>Telegram или телефон</span><input type="text" name="contact" placeholder="@username или +7…" required></label></div>
+<label class="form-field"><span>Что нужно изготовить?</span><textarea name="description" rows="5" placeholder="Например: органайзер по фотографии, деталь, фигурка или серия подарков…" required></textarea></label>
+<div class="custom-form-grid"><label class="form-field"><span>Количество</span><input type="number" name="qty" min="1" value="1"></label><label class="form-field"><span>Желаемый размер</span><input type="text" name="size" placeholder="Например: 120 × 80 × 40 мм"></label></div>
+<label class="form-field"><span>Цвет / материал</span><input type="text" name="color" placeholder="Если важен — укажите"></label>
+<label class="custom-file-drop form-field"><span>Файл проекта</span><input type="file" name="file" accept="image/*,.stl,.obj,.step,.pdf"><strong>Фото, эскиз или 3D-модель</strong><small>STL, OBJ, STEP, PDF или изображение. Можно приложить позже в Telegram.</small></label>
+<button type="submit" class="btn btn-primary btn-block custom-submit">Отправить проект →</button></form>
+<div class="custom-order-result-column"><div id="customOrderResult" hidden><div class="order-success" id="customOrderSuccess" hidden><div class="order-success-icon">✓</div><h3>Заявка отправлена</h3><p>Менеджер свяжется с вами, чтобы уточнить детали и стоимость.</p><a href="${TELEGRAM_BOT_URL}" class="btn btn-primary" target="_blank" rel="noopener">Открыть Telegram</a></div>
+<div class="custom-order-result" id="customOrderFallback" hidden><h3>Заявка готова</h3><p>Скопируйте текст и отправьте его первым сообщением в Telegram-боте.</p><pre class="custom-order-summary" id="customOrderSummary"></pre><div class="custom-order-actions"><button type="button" class="btn btn-ghost" id="copyOrderBtn">Скопировать</button><a href="${TELEGRAM_BOT_URL}" class="btn btn-primary" target="_blank" rel="noopener" id="openTelegramBtn">Открыть Telegram</a></div></div></div>
+<aside class="custom-order-aside custom-order-aside--premium"><span class="kicker">Что можно сделать</span><div class="custom-use-list"><div><b>01</b><span>Декор и интерьер</span></div><div><b>02</b><span>Органайзеры и полезные вещи</span></div><div><b>03</b><span>Подарки и сувениры</span></div><div><b>04</b><span>Детали и небольшие серии</span></div></div><div class="custom-aside-note"><span>⌁</span><p>Не знаете, как это смоделировать? Начните с фотографии или идеи.</p></div></aside></div></div></div></section>
+<section class="section custom-material-section"><div class="container"><div class="custom-material-strip"><div><span class="kicker">04 / Материалы</span><h2>Подберём материал под задачу</h2></div><div class="custom-materials"><span>PLA</span><span>PETG</span><span>ABS</span><span>TPU</span><span>и другие</span></div><a href="/printer" class="btn btn-ghost">Посмотреть принтер →</a></div></div></section>`;
+  return renderLayout({title:"Кастомный заказ — изготовление изделий на заказ | 3Д Вещь",description:"Изготовим 3D-печатное изделие по фотографии, эскизу, размерам или готовой модели. Оставьте заявку — оценим возможность и стоимость.",canonical:"/custom-order",activeNav:"/custom-order",bodyContent:body,extraScripts:`${crumbScript([["Главная","/"],["Кастомный заказ","/custom-order"]])}\n<script defer src="/js/custom-order.js?v=4"></script>`});
 }
 
 function cartPage() {
