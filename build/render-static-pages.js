@@ -9,11 +9,25 @@ function crumbScript(items) {
 }
 
 function aboutPage() {
-  const body = `<section class="page-hero">
+  const body = `<section class="page-hero premium-page-hero premium-page-hero--about">
   <div class="container">
-    <span class="kicker">О нас</span>
-    <h1>3Д Вещь — студия 3D-печати в Брянске</h1>
-    <p class="lede">Печатаем готовые вещи на продажу и изделия под заказ по вашим файлам, эскизам или фотографиям.</p>
+    <div class="premium-page-hero-grid">
+      <div class="premium-page-hero-copy">
+        <span class="kicker">О нас / 3Д Вещь</span>
+        <h1>Из идеи — в <span>реальную вещь.</span></h1>
+        <p class="lede">Студия 3D-печати в Брянске. Готовые изделия, кастомные проекты и печать по вашим файлам, эскизам или фотографиям.</p>
+        <div class="premium-page-hero-actions"><a href="/custom-order" class="btn btn-primary">Запустить проект →</a><a href="/catalog" class="btn btn-ghost">Смотреть каталог</a></div>
+      </div>
+      <div class="premium-hero-panel premium-hero-panel--metrics">
+        <div class="premium-hero-panel-top"><span>3D / STUDIO</span><span>BRYANSK</span></div>
+        <div class="premium-metric-list">
+          <div><b>01</b><strong>1 636</strong><span>продано</span></div>
+          <div><b>02</b><strong>178</strong><span>кастомных запросов</span></div>
+          <div><b>03</b><strong>1 247</strong><span>изделий по запросам</span></div>
+          <div><b>04</b><strong>48</strong><span>регионов доставки</span></div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -71,11 +85,22 @@ function aboutPage() {
 }
 
 function deliveryPage() {
-  const body = `<section class="page-hero">
+  const body = `<section class="page-hero premium-page-hero premium-page-hero--delivery">
   <div class="container">
-    <span class="kicker">Доставка и получение</span>
-    <h1>Как забрать или получить заказ</h1>
-    <p class="lede">Самовывоз в ${CITY_PREP} или доставка по России — договариваемся о деталях в Telegram при оформлении.</p>
+    <div class="premium-page-hero-grid">
+      <div class="premium-page-hero-copy">
+        <span class="kicker">Получение / Доставка</span>
+        <h1>От печати до <span>ваших рук.</span></h1>
+        <p class="lede">Самовывоз в ${CITY_PREP} или отправка по России. После изготовления согласуем способ получения и детали заказа.</p>
+        <div class="premium-page-hero-actions"><a href="${TELEGRAM_BOT_URL}" class="btn btn-primary" target="_blank" rel="noopener">Уточнить доставку →</a><a href="/catalog" class="btn btn-ghost">Вернуться в каталог</a></div>
+      </div>
+      <div class="premium-hero-panel premium-hero-panel--route">
+        <div class="premium-hero-panel-top"><span>ROUTE / ORDER</span><span>01 → 03</span></div>
+        <div class="route-line"><i></i><i></i><i></i></div>
+        <div class="route-stops"><div><b>01</b><span>ПЕЧАТЬ</span><small>готовим заказ</small></div><div><b>02</b><span>БРЯНСК</span><small>самовывоз</small></div><div><b>03</b><span>РОССИЯ</span><small>отправка</small></div></div>
+        <div class="premium-hero-note">Срок изготовления: <strong>${LEAD_TIME}</strong></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -169,10 +194,11 @@ function customOrderPage() {
 }
 
 function cartPage() {
-  const body = `<section class="page-hero">
+  const body = `<section class="page-hero page-hero--compact">
   <div class="container">
-    <span class="kicker">Корзина</span>
-    <h1>Ваша корзина</h1>
+    <div class="checkout-hero-line"><span class="kicker">Заказ / 01</span><span>КОРЗИНА</span></div>
+    <h1>Ваша <span>корзина.</span></h1>
+    <div class="checkout-progress"><b class="is-active">01 Корзина</b><span></span><b>02 Оформление</b><span></span><b>03 Подтверждение</b></div>
   </div>
 </section>
 
@@ -208,10 +234,11 @@ function cartPage() {
 }
 
 function checkoutPage() {
-  const body = `<section class="page-hero">
+  const body = `<section class="page-hero page-hero--compact">
   <div class="container">
-    <span class="kicker">Оформление заказа</span>
-    <h1 data-letter-reveal>Оформить заказ</h1>
+    <div class="checkout-hero-line"><span class="kicker">Заказ / 02</span><span>CHECKOUT</span></div>
+    <h1 data-letter-reveal>Оформить <span>заказ.</span></h1>
+    <div class="checkout-progress"><b class="is-active">01 Корзина</b><span></span><b class="is-active">02 Оформление</b><span></span><b>03 Подтверждение</b></div>
   </div>
 </section>
 
