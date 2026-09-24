@@ -130,11 +130,30 @@ function catalogPage(products, categories, colorNames) {
 
   const cards = products.map((p, i) => productCard(p, { withFilterData: true, index: i })).join("\n      ");
 
-  const body = `<section class="page-hero">
+  const body = `<section class="page-hero premium-page-hero premium-page-hero--catalog">
   <div class="container">
-    <span class="kicker">Каталог</span>
-    <h1>Все товары</h1>
-    <p class="lede">${products.length} готовых изделий — печатаются на нашем Bambu Lab P2S Combo. ${LEAD_TIME.replace("–", "-")} на изготовление.</p>
+    <div class="premium-page-hero-grid">
+      <div class="premium-page-hero-copy">
+        <span class="kicker">Каталог / PRINTLAB</span>
+        <h1>Вещи, которые <span>хочется оставить.</span></h1>
+        <p class="lede">${products.length} готовых изделий — печатаем на Bambu Lab P2S Combo. Выбирайте готовое или запускайте собственный проект.</p>
+        <div class="premium-page-hero-actions">
+          <a href="#catalogGrid" class="btn btn-primary">Смотреть изделия →</a>
+          <a href="/custom-order" class="btn btn-ghost">Нужна своя вещь</a>
+        </div>
+      </div>
+      <div class="premium-hero-panel">
+        <div class="premium-hero-panel-top"><span>CATALOG / 2026</span><span>ONLINE</span></div>
+        <div class="premium-hero-stat-main"><strong>${products.length}</strong><span>готовых<br>изделий</span></div>
+        <div class="premium-hero-stat-grid">
+          <div><b>01</b><span>печатаем<br>под заказ</span></div>
+          <div><b>02</b><span>выбор<br>цвета</span></div>
+          <div><b>03</b><span>Брянск +<br>Россия</span></div>
+          <div><b>04</b><span>свой<br>проект</span></div>
+        </div>
+        <div class="premium-hero-scan"><span></span><span></span><span></span><em>SELECT / PRINT / RECEIVE</em></div>
+      </div>
+    </div>
   </div>
 </section>
 
