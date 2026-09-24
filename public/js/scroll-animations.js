@@ -195,3 +195,42 @@ function schedule(fn) {
 
 if (document.readyState !== 'loading') schedule(initScrollAnimations);
 else document.addEventListener('DOMContentLoaded', () => schedule(initScrollAnimations));
+
+  // ---------- Универсальный premium reveal для всех страниц ----------
+  const revealEls = gsap.utils.toArray(
+    '.page-hero .container, .section-head, .info-card, .delivery-card, .printer-spec-card, .material-card, .cta-banner, .article-body, .cart-summary, .checkout-form, .checkout-summary, .custom-material-strip'
+  );
+  if (revealEls.length) {
+    if (prefersReducedMotion) {
+      gsap.set(revealEls, { opacity: 1, y: 0 });
+    } else {
+      revealEls.forEach((el) => el.classList.add('reveal-on-scroll'));
+      const reveal = () => {
+        revealEls.forEach((el, i) => {
+          if (el.dataset.motionReady) return;
+          const rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight * .9 && rect.bottom > 0) {
+            el.dataset.motionReady = '1';
+            requestAnimationFrame(() => {
+              el.classList.add('is-revealed');
+            });
+          }
+        });
+      };
+      reveal();
+      ScrollTrigger.create({start:'top top',end:'max',onUpdate:reveal});
+    }
+  }
+
+  // ---------- Cursor light: мягкое локальное свечение карточки ----------
+  if (!prefersReducedMotion && window.matchMedia('(hover:hover)').matches) {
+    const interactiveCards = document.querySelectorAll('.info-card,.delivery-card,.printer-spec-card,.material-card,.product-card,.step');
+    interactiveCards.forEach((card) => {
+      card.addEventListener('pointermove', (event) => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', ((event.clientX-r.left)/r.width*100)+'%');
+        card.style.setProperty('--my', ((event.clientY-r.top)/r.height*100)+'%');
+      }, {passive:true});
+    });
+  }
+
