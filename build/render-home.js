@@ -113,18 +113,16 @@ function popularSection(products) {
 }
 
 const WHY_US = [
-  { icon: "⚡", title: "Изготовление от 1 дня", text: "Печатаем сами на своём принтере — без посредников и без ожидания чужой очереди." },
-  { icon: "🎨", title: "Разные цвета и материалы", text: "PLA, PETG, ABS, TPU — подбираем материал под задачу, а не только под то, что есть." },
-  { icon: "🛠", title: "Изготовление под заказ", text: "Не нашли нужную вещь в каталоге — напечатаем по вашему файлу, эскизу или фото." },
-  { icon: "📦", title: "Доставка по России", text: "Самовывоз в Брянске или отправка в любой другой город." },
+  { icon: "01", title: "Изготовление от 1 дня", text: "Печатаем сами на своём принтере — без посредников и без ожидания чужой очереди." },
+  { icon: "02", title: "Разные цвета и материалы", text: "PLA, PETG, ABS, TPU — подбираем материал под задачу, а не только под то, что есть." },
+  { icon: "03", title: "Изготовление под заказ", text: "Не нашли нужную вещь в каталоге — напечатаем по вашему файлу, эскизу или фото." },
+  { icon: "04", title: "Доставка по России", text: "Самовывоз в Брянске или отправка в любой другой город." },
 ];
 
 function whyUsSection() {
   const cards = WHY_US.map(
     (w) => `<div class="review-card why-us-card">
-      <div class="review-header">
-        <span class="review-source">3Д Вещь</span>
-      </div>
+      <div class="review-header"><span class="why-us-index mono">${w.icon}</span><span class="review-source">3Д Вещь</span></div>
       <p class="review-text">${w.title}</p>
       <div class="review-footer">
         <span class="review-author">${w.text}</span>
@@ -220,19 +218,19 @@ function printerTeaserSection() {
       <p class="lede" style="margin-bottom: 0;">Быстро, точно и с многоцветной печатью за один проход — значит выше качество и короче срок изготовления вашего заказа.</p>
       <div class="printer-teaser-specs">
         <div class="printer-teaser-spec">
-          <span class="printer-teaser-spec-icon">⚡</span>
+          <span class="printer-teaser-spec-icon mono">01</span>
           <span class="printer-teaser-spec-text"><span class="printer-teaser-spec-value mono">Высокая скорость</span><span class="printer-teaser-spec-label">короче срок изготовления</span></span>
         </div>
         <div class="printer-teaser-spec">
-          <span class="printer-teaser-spec-icon">🎯</span>
+          <span class="printer-teaser-spec-icon mono">02</span>
           <span class="printer-teaser-spec-text"><span class="printer-teaser-spec-value mono">Высокая точность</span><span class="printer-teaser-spec-label">±0.05 мм, без доработки</span></span>
         </div>
         <div class="printer-teaser-spec">
-          <span class="printer-teaser-spec-icon">🎨</span>
+          <span class="printer-teaser-spec-icon mono">03</span>
           <span class="printer-teaser-spec-text"><span class="printer-teaser-spec-value mono">До 16 цветов</span><span class="printer-teaser-spec-label">за один проход печати</span></span>
         </div>
         <div class="printer-teaser-spec">
-          <span class="printer-teaser-spec-icon">🧪</span>
+          <span class="printer-teaser-spec-icon mono">04</span>
           <span class="printer-teaser-spec-text"><span class="printer-teaser-spec-value mono">4 материала</span><span class="printer-teaser-spec-label">PLA, PETG, ABS, TPU</span></span>
         </div>
       </div>
