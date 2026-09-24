@@ -17,28 +17,45 @@ function aboutPage() {
   </div>
 </section>
 
-<section class="section">
-  <div class="container container--article">
-    <div class="article-body">
-      <p>3Д Вещь — небольшая студия 3D-печати. Мы делаем две вещи: печатаем готовые изделия из каталога, которые можно заказать прямо сейчас, и изготавливаем вещи под заказ — по вашему файлу, эскизу, фотографии или размерам.</p>
-
-      <h2>Что можно купить</h2>
-      <p>В каталоге — товары для дома, подарки, полезные мелочи для телефона, антистресс-игрушки и функциональные детали. Это готовые к печати позиции: выбираете вариант и цвет, где это предусмотрено, — печатаем и передаём вам.</p>
-
-      <h2>Изготовление под заказ</h2>
-      <p>Если нужной вещи нет в каталоге — пришлите нам файл модели, фотографию или эскиз с размерами в Telegram, и мы оценим, сможем ли напечатать и сколько это будет стоить. Подробности и форма — на странице <a href="/custom-order">кастомного заказа</a>.</p>
-
-      <h2>Оборудование</h2>
-      <p>Печатаем на принтере Bambu Lab P2S Combo — подробно про него и про то, что это даёт по скорости и точности печати, на <a href="/printer">странице о производстве</a>.</p>
-
-      <h2>Материалы</h2>
-      <p>Работаем с PLA, PETG, ABS и TPU — выбор материала зависит от назначения изделия: PLA для декора и мелочей, PETG и ABS для функциональных нагруженных деталей, TPU для гибких вещей.</p>
-
-      <h2>Где мы</h2>
-      <p>Печатаем и собираем заказы в ${CITY_PREP}. Самовывоз — в городе, доставка — по всей России. Подробнее на странице <a href="/delivery">доставки</a>.</p>
-
-      <h2>Как связаться</h2>
-      <p>Быстрее всего — в Telegram: <a href="${TELEGRAM_BOT_URL}" target="_blank" rel="noopener">${TELEGRAM_HANDLE}</a>. Отвечаем на вопросы по товарам, срокам и кастомным заказам.</p>
+<section class="section section--tight">
+  <div class="container">
+    <div class="info-grid info-grid--about">
+      <article class="info-card">
+        <div class="info-card-icon" aria-hidden="true">▦</div>
+        <h2>Готовые изделия</h2>
+        <p>Товары для дома, подарки, полезные аксессуары и необычные вещи из каталога. Выбираете изделие — мы печатаем и передаём заказ.</p>
+        <a class="info-card-link" href="/catalog">Смотреть каталог →</a>
+      </article>
+      <article class="info-card">
+        <div class="info-card-icon" aria-hidden="true">⌁</div>
+        <h2>Изготовление под заказ</h2>
+        <p>Если нужной вещи нет в каталоге, пришлите фото, эскиз, размеры или готовую 3D-модель — оценим возможность и стоимость.</p>
+        <a class="info-card-link" href="/custom-order">Заказать по фото →</a>
+      </article>
+      <article class="info-card">
+        <div class="info-card-icon" aria-hidden="true">◇</div>
+        <h2>Наше оборудование</h2>
+        <p>Печатаем на Bambu Lab P2S Combo. Рассказываем, как оборудование влияет на скорость, точность и качество готовых изделий.</p>
+        <a class="info-card-link" href="/printer">Посмотреть принтер →</a>
+      </article>
+      <article class="info-card">
+        <div class="info-card-icon" aria-hidden="true">◌</div>
+        <h2>Материалы</h2>
+        <p>Используем PLA, PETG, ABS и TPU. Материал подбираем под назначение изделия, нагрузку, гибкость и условия эксплуатации.</p>
+        <a class="info-card-link" href="/printer">Материалы и характеристики →</a>
+      </article>
+      <article class="info-card">
+        <div class="info-card-icon" aria-hidden="true">⌖</div>
+        <h2>Брянск и доставка</h2>
+        <p>Самовывоз в ${CITY_PREP}, отправка по России. Способ получения и стоимость доставки согласуем после подтверждения заказа.</p>
+        <a class="info-card-link" href="/delivery">Условия доставки →</a>
+      </article>
+      <article class="info-card info-card--accent">
+        <div class="info-card-icon" aria-hidden="true">→</div>
+        <h2>Есть идея?</h2>
+        <p>Напишите нам в Telegram. Поможем понять, как лучше реализовать задумку и что потребуется для печати.</p>
+        <a class="info-card-link" href="${TELEGRAM_BOT_URL}" target="_blank" rel="noopener">Написать в Telegram →</a>
+      </article>
     </div>
   </div>
 </section>`;
@@ -66,13 +83,13 @@ function deliveryPage() {
   <div class="container">
     <div class="delivery-grid">
       <div class="delivery-card">
-        <div class="delivery-card-icon">📍</div>
+        <div class="delivery-card-icon" aria-hidden="true">⌖</div>
         <h3>${CITY}: самовывоз</h3>
         <p>Забираете готовое изделие сами. Точку и время встречи согласовываем в Telegram после того, как заказ напечатан — обычно это ${LEAD_TIME} с момента оформления.</p>
         <p>💳 Оплата после подтверждения заказа менеджером.</p>
       </div>
       <div class="delivery-card">
-        <div class="delivery-card-icon">📦</div>
+        <div class="delivery-card-icon" aria-hidden="true">▣</div>
         <h3>Россия: доставка</h3>
         <p>Отправляем в другие города транспортными компаниями и через Авито Доставку — способ и стоимость зависят от размера и веса изделия, уточняем индивидуально при оформлении заказа в Telegram.</p>
         <p>Если заказ оформлен через Авито — вся переписка и оплата по этому заказу идут через Авито, это не отменяет и не дублирует оформление на сайте.</p>
@@ -86,17 +103,17 @@ function deliveryPage() {
     <div class="section-head"><span class="kicker">Условия</span><h2>Возврат и обмен</h2></div>
     <div class="delivery-grid">
       <div class="delivery-card">
-        <div class="delivery-card-icon">✅</div>
+        <div class="delivery-card-icon" aria-hidden="true">✓</div>
         <h3>Готовые изделия из каталога</h3>
         <p>Если изделие не подошло и сохранило товарный вид (не использовалось, упаковка и бирки на месте) — можно вернуть или обменять в течение 7 дней с момента получения. Стоимость обратной пересылки в этом случае — за счёт покупателя.</p>
       </div>
       <div class="delivery-card">
-        <div class="delivery-card-icon">🛠</div>
+        <div class="delivery-card-icon" aria-hidden="true">⌁</div>
         <h3>Изделия на заказ (по фото, эскизу, размерам)</h3>
         <p>Такие изделия изготавливаются под конкретные параметры, которые указал заказчик, поэтому по общему правилу для товаров с индивидуально согласованными свойствами возврат надлежащего качества не предусмотрен. Перед печатью мы всегда согласовываем макет/размеры — уточняйте детали в Telegram до подтверждения заказа.</p>
       </div>
       <div class="delivery-card">
-        <div class="delivery-card-icon">⚠️</div>
+        <div class="delivery-card-icon" aria-hidden="true">!</div>
         <h3>Если пришёл брак или не тот товар</h3>
         <p>Это не ваши расходы. Если изделие повреждено при доставке, напечатано с явным дефектом или прислано не то, что заказывали — сообщите в Telegram с фото, обменяем или вернём деньги.</p>
       </div>
