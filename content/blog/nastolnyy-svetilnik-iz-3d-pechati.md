@@ -33,7 +33,6 @@ excerpt: Как 3D-печать превращает обычный настол
 
 ## Настольный светильник «Волна»
 
-image_group{"layout":"carousel","aspect_ratio":"16:9","query":["3D printed wave table lamp PLA","3D printed decorative table lamp warm light"]}
 
 Один из вариантов в каталоге PRINTLAB — [настольный светильник «Волна»](/catalog/lamp-wave). У него волнистый тонкостенный абажур, который рассеивает свет и одновременно остаётся заметной частью интерьера.
 
@@ -43,7 +42,6 @@ excerpt: Как 3D-печать превращает обычный настол
 
 ## 3D-светильник для дома или рабочего стола
 
-image_group{"layout":"carousel","aspect_ratio":"1:1","query":["3D printed lamp desk home decor","3D printed PLA lamp interior"]}
 
 Если хочется более универсальный вариант, в каталоге есть [3D-светильник](/catalog/3d-lamp) за 1700 ₽. Это декоративная модель, напечатанная на 3D-принтере из PLA.
 
