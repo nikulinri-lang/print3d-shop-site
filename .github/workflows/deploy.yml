@@ -21,9 +21,9 @@ jobs:
 
       - name: Optimize IMG_8110 and build favicon
         run: |
-          if [ -f public/images/IMG_8110.jpeg ]; then
-            magick public/images/IMG_8110.jpeg -auto-orient -resize '1600x1600>' -strip -interlace Plane -quality 82 public/images/IMG_8110.jpeg
-            magick public/images/IMG_8110.jpeg -auto-orient -thumbnail '512x512^' -gravity center -extent 512x512 -strip -define icon:auto-resize=256,128,64,48,32,16 public/favicon.ico
+          if [ -f public/images/IMG_8160.png ]; then
+            magick public/images/IMG_8160.png -auto-orient -resize '1600x1600>' -strip -define png:compression-level=9 public/images/IMG_8160.png
+            magick public/images/IMG_8160.png -auto-orient -thumbnail '512x512^' -gravity center -extent 512x512 -strip -define icon:auto-resize=256,128,64,48,32,16 public/favicon.ico
           fi
 
       - name: Install dependencies
