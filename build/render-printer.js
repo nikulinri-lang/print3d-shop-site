@@ -127,7 +127,7 @@ function printerPage() {
       <h2>Хотите увидеть, что можно напечатать?</h2>
       <p style="color: var(--color-text-muted); margin-bottom: var(--space-lg);">Смотрите готовые изделия в каталоге или пришлите свою модель в Telegram.</p>
       <div class="hero-actions" style="justify-content:center;">
-        <a href="/catalog" class="btn btn-primary">Смотреть каталог</a>
+        <a href="/catalog/" class="btn btn-primary">Смотреть каталог</a>
         <a href="https://t.me/Shop3D_online_bot" class="btn btn-ghost" target="_blank" rel="noopener">Написать в Telegram</a>
       </div>
     </div>
