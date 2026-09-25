@@ -16,7 +16,7 @@ function aboutPage() {
         <span class="kicker">О нас / 3Д Вещь</span>
         <h1>Из идеи — в <span>реальную вещь.</span></h1>
         <p class="lede">Студия 3D-печати в Брянске. Готовые изделия, кастомные проекты и печать по вашим файлам, эскизам или фотографиям.</p>
-        <div class="premium-page-hero-actions"><a href="/custom-order" class="btn btn-primary">Запустить проект →</a><a href="/catalog" class="btn btn-ghost">Смотреть каталог</a></div>
+        <div class="premium-page-hero-actions"><a href="/custom-order" class="btn btn-primary">Запустить проект →</a><a href="/catalog/" class="btn btn-ghost">Смотреть каталог</a></div>
       </div>
       <div class="premium-hero-panel premium-hero-panel--metrics">
         <div class="premium-hero-panel-top"><span>3D / STUDIO</span><span>BRYANSK</span></div>
@@ -38,7 +38,7 @@ function aboutPage() {
         <div class="info-card-icon" aria-hidden="true">▦</div>
         <h2>Готовые изделия</h2>
         <p>Товары для дома, подарки, полезные аксессуары и необычные вещи из каталога. Выбираете изделие — мы печатаем и передаём заказ.</p>
-        <a class="info-card-link" href="/catalog">Смотреть каталог →</a>
+        <a class="info-card-link" href="/catalog/">Смотреть каталог →</a>
       </article>
       <article class="info-card">
         <div class="info-card-icon" aria-hidden="true">⌁</div>
@@ -164,7 +164,7 @@ function cartPage() {
   <div class="container">
     <div id="cartEmpty" class="cart-empty" hidden>
       <p>Корзина пуста.</p>
-      <a href="/catalog" class="btn btn-primary">Перейти в каталог</a>
+      <a href="/catalog/" class="btn btn-primary">Перейти в каталог</a>
     </div>
     <div id="cartLayout" class="cart-layout" hidden>
       <div class="cart-lines" id="cartLines"></div>
@@ -204,7 +204,7 @@ function checkoutPage() {
   <div class="container">
     <div id="checkoutEmpty" class="cart-empty" hidden>
       <p>Корзина пуста — сначала добавьте товары.</p>
-      <a href="/catalog" class="btn btn-primary">Перейти в каталог</a>
+      <a href="/catalog/" class="btn btn-primary">Перейти в каталог</a>
     </div>
     <div id="checkoutLayout" class="cart-layout" hidden>
       <form class="custom-order-form" id="checkoutForm">
