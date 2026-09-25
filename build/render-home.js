@@ -320,7 +320,7 @@ function homePage() {
     <h1>Необычные вещи,<br>созданные на 3D-принтере</h1>
     <p class="lede">Готовые 3D-товары, подарки, полезные аксессуары и изделия на заказ.</p>
     <div class="hero-actions">
-      <a href="/catalog" class="btn btn-primary">Смотреть каталог</a>
+      <a href="/catalog/" class="btn btn-primary">Смотреть каталог</a>
       <a href="/custom-order" class="btn btn-ghost">Создать свою вещь</a>
     </div>
   </div>
