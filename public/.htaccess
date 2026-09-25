@@ -13,12 +13,9 @@ RewriteEngine On
 RewriteCond %{HTTP_HOST} ^www\\.3-d-shop\\.ru$ [NC]
 RewriteRule ^(.*)$ https://3-d-shop.ru/$1 [R=301,L]
 
-# Старые карточки товаров: перенаправляем посетителя в актуальный каталог.
-Redirect 301 /catalog/bottle-bike-mount /catalog/
-Redirect 301 /catalog/desk-cable-box /catalog/
-Redirect 301 /catalog/door-handle-cover /catalog/
-Redirect 301 /catalog/makeup-brush-holder /catalog/
-Redirect 301 /catalog/small-parts-organizer /catalog/
+# Старые карточки товаров -> актуальный каталог, сразу на HTTPS.
+RewriteRule ^catalog/(bottle-bike-mount|desk-cable-box|door-handle-cover|makeup-brush-holder|small-parts-organizer)$ https://3-d-shop.ru/catalog/ [R=301,L]
+
 
 # Принудительный HTTPS. %{HTTPS} тут всегда off (SSL терминируется до
 # Apache) — проверяем X-Forwarded-Proto вместо него. Диагностикой
