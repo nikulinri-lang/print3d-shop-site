@@ -9,12 +9,8 @@ DirectorySlash Off
 
 RewriteEngine On
 
-# Единое зеркало: www -> основной домен без www.
-RewriteCond %{HTTP_HOST} ^www\\.3-d-shop\\.ru$ [NC]
-RewriteRule ^(.*)$ https://3-d-shop.ru/$1 [R=301,L]
-
 # Старые карточки товаров -> актуальный каталог, сразу на HTTPS.
-RewriteRule ^catalog/(bottle-bike-mount|desk-cable-box|door-handle-cover|makeup-brush-holder|small-parts-organizer)$ https://3-d-shop.ru/catalog/ [R=301,L]
+RewriteRule ^catalog/(bottle-bike-mount|desk-cable-box|door-handle-cover|makeup-brush-holder|small-parts-organizer)$ https://3dvesh.ru/catalog/ [R=301,L]
 
 
 # Принудительный HTTPS. %{HTTPS} тут всегда off (SSL терминируется до
@@ -28,13 +24,13 @@ RewriteRule ^catalog/(bottle-bike-mount|desk-cable-box|door-handle-cover|makeup-
 # ставит "https" (проверено), так что уже-https запросы это условие не
 # матчат и повторно не редиректятся.
 RewriteCond %{HTTP:X-Forwarded-Proto} !=https
-RewriteRule ^(.*)$ https://3-d-shop.ru/$1 [R=301,L]
+RewriteRule ^(.*)$ https://3dvesh.ru/$1 [R=301,L]
 
 # /catalog, /blog (реальные директории) -> /catalog/, /blog/ — со своим
 # явным https://, без опоры на определение схемы сервером.
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteCond %{REQUEST_URI} !/$
-RewriteRule ^(.*[^/])$ https://3-d-shop.ru/$1/ [R=301,L]
+RewriteRule ^(.*[^/])$ https://3dvesh.ru/$1/ [R=301,L]
 
 # Файлы-подтверждения поисковиков (yandex_*.html, google*.html) должны
 # отвечать 200 РОВНО по адресу с .html — общее правило ниже сняло бы

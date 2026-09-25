@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const SITE_URL = "https://3-d-shop.ru";
+const SITE_URL = "https://3dvesh.ru";
 
 // Корзина и чекаут — служебные страницы без собственного контента для
 // индексации, в sitemap их не кладём (стандартная практика для e-commerce).
