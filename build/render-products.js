@@ -377,7 +377,7 @@ window.__PRODUCT__ = ${JSON.stringify(productData)};
 
   return renderLayout({
     title: `${p.title} — купить за ${p.price.toLocaleString("ru-RU")} ₽ | 3Д Вещь`,
-    description: `${p.shortDesc}. ${p.description}`.slice(0, 300),
+    description: `${p.shortDesc}. ${p.description || p.descriptionSections?.whatIsIt || ""} ${p.descriptionSections?.material || ""}`.replace(/\s+/g, " ").trim().slice(0, 300),
     canonical: `/catalog/${p.slug}`,
     activeNav: "/catalog/",
     bodyContent: body,
