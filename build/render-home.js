@@ -391,6 +391,7 @@ ${faqSection()}`;
     canonical: "/",
     activeNav: "/",
     bodyContent: body,
+    extraHead: '<script type="application/ld+json">' + JSON.stringify({"@context":"https://schema.org","@type":"WebSite","name":"3Д Вещь","url":"https://3-d-shop.ru/"}) + '</script>',
     extraScripts,
   });
 }
