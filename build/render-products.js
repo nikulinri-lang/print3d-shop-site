@@ -227,6 +227,11 @@ function productSchema(p) {
     name: p.title,
     description: p.description,
     image: images.length ? images : undefined,
+    sku: p.slug,
+    brand: {
+      "@type": "Brand",
+      name: "3Д Вещь",
+    },
     category: (p.categories || [])[0] || "",
     material: p.specs && p.specs.material ? p.specs.material : undefined,
     offers: {
