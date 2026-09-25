@@ -19,11 +19,10 @@ jobs:
       - name: Install ImageMagick
         run: sudo apt-get update && sudo apt-get install -y imagemagick
 
-      - name: Optimize IMG_8110 and build favicon
+      - name: Optimize article preview image
         run: |
           if [ -f public/images/IMG_8160.png ]; then
-            magick public/images/IMG_8160.png -auto-orient -resize '1600x1600>' -strip -define png:compression-level=9 public/images/IMG_8160.png
-            magick public/images/IMG_8160.png -auto-orient -thumbnail '512x512^' -gravity center -extent 512x512 -strip -define icon:auto-resize=256,128,64,48,32,16 public/favicon.ico
+            convert public/images/IMG_8160.png -auto-orient -resize '1600x1600>' -strip -define png:compression-level=9 public/images/IMG_8160.png
           fi
 
       - name: Install dependencies
