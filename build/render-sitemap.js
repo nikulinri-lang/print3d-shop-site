@@ -22,7 +22,7 @@ function render(distDir, { products, blogPosts }) {
     { loc: "/offer", lastmod: buildDate },
     { loc: "/privacy", lastmod: buildDate },
     { loc: "/blog/", lastmod: buildDate },
-    ...products.map((p) => ({ loc: `/catalog/${p.slug}`, lastmod: buildDate })),
+    ...products\n      .filter((p) => !["3d-lamp", "3d-lamp-1650"].includes(p.slug))\n      .map((p) => ({ loc: `/catalog/${p.slug}`, lastmod: buildDate })),
     ...blogPosts.map((p) => ({ loc: `/blog/${p.slug}`, lastmod: new Date(p.date).toISOString().slice(0, 10) })),
   ];
 
