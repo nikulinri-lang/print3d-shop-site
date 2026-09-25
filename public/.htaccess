@@ -9,6 +9,17 @@ DirectorySlash Off
 
 RewriteEngine On
 
+# Единое зеркало: www -> основной домен без www.
+RewriteCond %{HTTP_HOST} ^www\\.3-d-shop\\.ru$ [NC]
+RewriteRule ^(.*)$ https://3-d-shop.ru/$1 [R=301,L]
+
+# Старые карточки товаров: перенаправляем посетителя в актуальный каталог.
+Redirect 301 /catalog/bottle-bike-mount /catalog/
+Redirect 301 /catalog/desk-cable-box /catalog/
+Redirect 301 /catalog/door-handle-cover /catalog/
+Redirect 301 /catalog/makeup-brush-holder /catalog/
+Redirect 301 /catalog/small-parts-organizer /catalog/
+
 # Принудительный HTTPS. %{HTTPS} тут всегда off (SSL терминируется до
 # Apache) — проверяем X-Forwarded-Proto вместо него. Диагностикой
 # подтверждено (09.09.2026): при реальном HTTPS-запросе nginx кладёт сюда
