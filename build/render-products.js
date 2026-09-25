@@ -200,9 +200,9 @@ function catalogPage(products, categories, colorNames) {
     title: "Каталог 3D-печатных товаров — 3Д Вещь",
     description: `Каталог готовых 3D-печатных изделий: ${categories.join(", ").toLowerCase()}. Поиск, фильтры по цене и цвету, изготовление ${LEAD_TIME}.`,
     canonical: "/catalog/",
-    activeNav: "/catalog",
+    activeNav: "/catalog/",
     bodyContent: body,
-    extraScripts: `<script type="application/ld+json">${JSON.stringify(breadcrumbSchema([["Главная", "/"], ["Каталог", "/catalog"]]))}</script>\n<script defer src="/js/catalog-filters.js?v=2"></script>\n<script defer src="/js/product-tilt.js?v=2"></script>`,
+    extraScripts: `<script type="application/ld+json">${JSON.stringify(breadcrumbSchema([["Главная", "/"], ["Каталог", "/catalog/"]]))}</script>\n<script defer src="/js/catalog-filters.js?v=2"></script>\n<script defer src="/js/product-tilt.js?v=2"></script>`,
   });
 }
 
@@ -306,7 +306,7 @@ function productPage(p, allProducts) {
     : "";
 
   const breadcrumbs = `<nav class="breadcrumbs" aria-label="Хлебные крошки">
-    <a href="/">Главная</a> <span>/</span> <a href="/catalog">Каталог</a> <span>/</span> <span aria-current="page">${p.title}</span>
+    <a href="/">Главная</a> <span>/</span> <a href="/catalog/">Каталог</a> <span>/</span> <span aria-current="page">${p.title}</span>
   </nav>`;
 
   const body = `<section class="section product-detail product-detail--premium">
@@ -365,7 +365,7 @@ ${similarBlock}
   const productData = { slug: p.slug, title: p.title, price: p.price, icon: primaryIcon(p) };
 
   const script = `<script type="application/ld+json">${JSON.stringify(productSchema(p))}</script>
-<script type="application/ld+json">${JSON.stringify(breadcrumbSchema([["Главная", "/"], ["Каталог", "/catalog"], [p.title, `/catalog/${p.slug}`]]))}</script>
+<script type="application/ld+json">${JSON.stringify(breadcrumbSchema([["Главная", "/"], ["Каталог", "/catalog/"], [p.title, `/catalog/${p.slug}`]]))}</script>
 <script>
 window.__PRODUCT__ = ${JSON.stringify(productData)};
 </script>
@@ -376,7 +376,7 @@ window.__PRODUCT__ = ${JSON.stringify(productData)};
     title: `${p.title} — купить за ${p.price.toLocaleString("ru-RU")} ₽ | 3Д Вещь`,
     description: `${p.shortDesc}. ${p.description}`.slice(0, 300),
     canonical: `/catalog/${p.slug}`,
-    activeNav: "/catalog",
+    activeNav: "/catalog/",
     bodyContent: body,
     extraScripts: script,
   });
