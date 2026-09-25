@@ -15,7 +15,7 @@ const ORGANIZATION_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "3Д Вещь",
-  url: "https://3-d-shop.ru",
+  url: "https://3dvesh.ru",
   address: { "@type": "PostalAddress", addressLocality: CITY, addressCountry: "RU" },
   sameAs: [TELEGRAM_BOT_URL],
 };
@@ -75,10 +75,10 @@ function renderLayout({
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${title}</title>
 <meta name="description" content="${description}">
-<link rel="canonical" href="https://3-d-shop.ru${canonical}">
+<link rel="canonical" href="https://3dvesh.ru${canonical}">
 <meta property="og:title" content="${title}">
 <meta property="og:description" content="${description}">
-<meta property="og:image" content="https://3-d-shop.ru${ogImage}">
+<meta property="og:image" content="https://3dvesh.ru${ogImage}">
 <meta property="og:type" content="website">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
