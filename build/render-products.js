@@ -220,15 +220,13 @@ function breadcrumbSchema(items) {
 }
 
 function productSchema(p) {
-  // Поля image/gid/gtin не указываем — у товаров пока нет настоящих фото
-  // (только сгенерированные SVG-превью категории), а придумывать URL
-  // несуществующей фотографии хуже для доверия к разметке, чем пропустить
-  // необязательное поле.
+  const images = Array.isArray(p.images) ? p.images.filter(Boolean).map((src) => src.startsWith("http") ? src : SITE_URL + (src.startsWith("/") ? src : "/" + src)) : [];
   return {
     "@context": "https://schema.org",
     "@type": "Product",
     name: p.title,
     description: p.description,
+    image: images.length ? images : undefined,
     category: (p.categories || [])[0] || "",
     material: p.specs && p.specs.material ? p.specs.material : undefined,
     offers: {
