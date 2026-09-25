@@ -9,20 +9,16 @@ DirectorySlash Off
 
 RewriteEngine On
 
+# Старые страницы блога на старом домене -> соответствующие страницы
+# нового домена одним прямым 301. Это убирает цепочки редиректов.
+RewriteCond %{HTTP_HOST} ^(www\.)?3-d-shop\.ru$ [NC]
+RewriteRule ^blog/(top-10-podarkov|mnogocvetnaya-pechat|pla-vs-petg|stl-3mf-obj|3d-modeli-dlya-3d-printera)/?$ https://3dvesh.ru/blog/$1/ [R=301,L]
+
 # Старые карточки товаров -> актуальный каталог, сразу на HTTPS.
 RewriteRule ^catalog/(bottle-bike-mount|desk-cable-box|door-handle-cover|makeup-brush-holder|small-parts-organizer)$ https://3dvesh.ru/catalog/ [R=301,L]
 
-
 # Принудительный HTTPS. %{HTTPS} тут всегда off (SSL терминируется до
-# Apache) — проверяем X-Forwarded-Proto вместо него. Диагностикой
-# подтверждено (09.09.2026): при реальном HTTPS-запросе nginx кладёт сюда
-# ровно "https"; при реальном HTTP — заголовка нет вообще (пустая
-# строка), а НЕ "http". Поэтому сравнение !=https (а не =http) — иначе
-# редирект никогда не срабатывал для большинства страниц, кроме тех, что
-# ловились соседним directory-slash правилом ниже. !=https безопасен от
-# зацикливания именно потому, что для настоящего HTTPS сервер всегда
-# ставит "https" (проверено), так что уже-https запросы это условие не
-# матчат и повторно не редиректятся.
+# Apache) — проверяем X-Forwarded-Proto вместо него.
 RewriteCond %{HTTP:X-Forwarded-Proto} !=https
 RewriteRule ^(.*)$ https://3dvesh.ru/$1 [R=301,L]
 
@@ -33,8 +29,7 @@ RewriteCond %{REQUEST_URI} !/$
 RewriteRule ^(.*[^/])$ https://3dvesh.ru/$1/ [R=301,L]
 
 # Файлы-подтверждения поисковиков (yandex_*.html, google*.html) должны
-# отвечать 200 РОВНО по адресу с .html — общее правило ниже сняло бы
-# .html 301-редиректом и сломало бы верификацию сайта.
+# отвечать 200 РОВНО по адресу с .html.
 RewriteRule ^(yandex_[a-f0-9]+\.html|google[a-f0-9]+\.html)$ - [L]
 
 # example.html -> example (канонические extensionless-ссылки)
@@ -46,8 +41,6 @@ RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(.*)index\.html[\s?] [NC]
 RewriteRule ^ /%1 [R=301,L]
 
 # Внутренний rewrite extensionless-запроса в соответствующий .html-файл
-# (только если запрошенный путь — не реальная директория, чтобы не
-# конфликтовать с /catalog/, /blog/, где лежат страницы товаров/статей)
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^(.*)$ $1.html [L]
