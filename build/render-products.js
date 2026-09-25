@@ -6,7 +6,7 @@ const { productArt, primaryIcon } = require("./placeholder-art");
 
 const ROOT = path.resolve(__dirname, "..");
 const PRODUCTS_JSON = path.join(ROOT, "content", "products.json");
-const SITE_URL = "https://3-d-shop.ru";
+const SITE_URL = "https://3dvesh.ru";
 
 function loadProducts() {
   return JSON.parse(fs.readFileSync(PRODUCTS_JSON, "utf8"));
