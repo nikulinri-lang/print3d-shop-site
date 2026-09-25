@@ -108,8 +108,8 @@ ${extraHead}
   <div class="container">
     <a href="/" class="logo"><span class="logo-mark">◆</span> 3Д Вещь</a>
     <ul class="nav-links">
-      ${navLink("/catalog", "Каталог", activeNav)}
-      ${navLink("/blog", "Блог", activeNav)}
+      ${navLink("/catalog/", "Каталог", activeNav)}
+      ${navLink("/blog/", "Блог", activeNav)}
       ${navLink("/printer", "Производство", activeNav)}
       ${navLink("/about", "О нас", activeNav)}
     </ul>
@@ -133,8 +133,8 @@ ${bodyContent}
       <!-- TODO: добавить реквизиты (ИП/самозанятость) после оформления -->
     </div>
     <ul class="footer-links">
-      <li><a href="/catalog">Каталог</a></li>
-      <li><a href="/blog">Блог</a></li>
+      <li><a href="/catalog/">Каталог</a></li>
+      <li><a href="/blog/">Блог</a></li>
       <li><a href="/printer">Производство</a></li>
       <li><a href="/about">О нас</a></li>
       <li><a href="/delivery">Доставка</a></li>
