@@ -199,7 +199,7 @@ function catalogPage(products, categories, colorNames) {
   return renderLayout({
     title: "Каталог 3D-печатных товаров — 3Д Вещь",
     description: `Каталог готовых 3D-печатных изделий: ${categories.join(", ").toLowerCase()}. Поиск, фильтры по цене и цвету, изготовление ${LEAD_TIME}.`,
-    canonical: "/catalog",
+    canonical: "/catalog/",
     activeNav: "/catalog",
     bodyContent: body,
     extraScripts: `<script type="application/ld+json">${JSON.stringify(breadcrumbSchema([["Главная", "/"], ["Каталог", "/catalog"]]))}</script>\n<script defer src="/js/catalog-filters.js?v=2"></script>\n<script defer src="/js/product-tilt.js?v=2"></script>`,
@@ -214,7 +214,7 @@ function breadcrumbSchema(items) {
       "@type": "ListItem",
       position: i + 1,
       name,
-      item: SITE_URL + url,
+      item: SITE_URL + (url === "/catalog" ? "/catalog/" : url),
     })),
   };
 }
@@ -373,7 +373,7 @@ window.__PRODUCT__ = ${JSON.stringify(productData)};
 <script defer src="/js/product-tilt.js?v=2"></script>`;
 
   return renderLayout({
-    title: `${p.title} — купить за ${p.price.toLocaleString("ru-RU")} ₽ | PRINTLAB`,
+    title: `${p.title} — купить за ${p.price.toLocaleString("ru-RU")} ₽ | 3Д Вещь`,
     description: `${p.shortDesc}. ${p.description}`.slice(0, 300),
     canonical: `/catalog/${p.slug}`,
     activeNav: "/catalog",
