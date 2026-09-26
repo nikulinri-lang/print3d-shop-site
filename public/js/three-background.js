@@ -7,6 +7,10 @@ import * as THREE from '/js/vendor/three.module.js';
 
 function initBackground() {
   const canvas = document.getElementById('bg-canvas');
+  // На главной уже есть отдельная hero-сцена Three.js. Не создаём второй
+  // WebGL-контекст: Safari может потерять контекст, из-за чего верхняя
+  // геометрическая анимация исчезает с ошибкой "WebGL: context lost".
+  if (document.getElementById('hero-canvas')) return;
   if (!canvas || !window.WebGLRenderingContext) return;
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
