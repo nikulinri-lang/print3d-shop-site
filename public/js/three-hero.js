@@ -38,7 +38,13 @@ function initHero() {
   // визуально уменьшилась.
   camera.position.z = isMobile ? 20 : 7;
 
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  let renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  } catch (err) {
+    console.warn('[three-hero] WebGL renderer unavailable:', err);
+    return;
+  }
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, simplified ? 1.5 : 2));
   renderer.setSize(w, h);
 
@@ -112,6 +118,16 @@ function initHero() {
   });
 
   let running = true;
+  canvas.addEventListener('webglcontextlost', (event) => {
+    event.preventDefault();
+    running = false;
+    console.warn('[three-hero] WebGL context lost');
+  }, { passive: false });
+  canvas.addEventListener('webglcontextrestored', () => {
+    // Safari can restore a lost context; rebuild the hero scene cleanly.
+    running = false;
+    schedule(initHero);
+  });
   document.addEventListener('visibilitychange', () => {
     running = document.visibilityState === 'visible';
     if (running) requestAnimationFrame(animate);
@@ -129,7 +145,8 @@ function initHero() {
 
     if (particles) particles.rotation.y = t * 0.02;
 
-    composer.render();
+    if (composer) composer.render();
+    else renderer.render(scene, camera);
     requestAnimationFrame(animate);
   }
   animate();
@@ -158,12 +175,11 @@ function initHero() {
   }
 }
 
-// Та же логика, что в three-background.js — тяжёлая сцена (плюс
-// bloom-постпроцессинг) откладывается до простоя браузера, чтобы не
-// блокировать первую отрисовку заголовка hero.
+// Не откладываем hero-сцену через requestIdleCallback: на Safari/мобильных
+// браузерах idle callback может срабатывать слишком поздно или быть
+// прерванным, из-за чего верхняя геометрия визуально пропадает.
 function schedule(fn) {
-  if ('requestIdleCallback' in window) requestIdleCallback(fn, { timeout: 1500 });
-  else setTimeout(fn, 200);
+  requestAnimationFrame(() => fn());
 }
 
 if (document.readyState !== 'loading') schedule(initHero);
