@@ -221,11 +221,20 @@ function breadcrumbSchema(items) {
 
 function productSchema(p) {
   const images = Array.isArray(p.images) ? p.images.filter(Boolean).map((src) => src.startsWith("http") ? src : SITE_URL + (src.startsWith("/") ? src : "/" + src)) : [];
+  // Google Product rich results require a non-empty description.
+  // Some newer products use descriptionSections instead of the legacy
+  // top-level description, so always provide a useful fallback.
+  const schemaDescription = String(
+    p.description ||
+    p.descriptionSections?.whatIsIt ||
+    p.shortDesc ||
+    p.title
+  ).replace(/\s+/g, " ").trim();
   return {
     "@context": "https://schema.org",
     "@type": "Product",
     name: p.title,
-    description: p.description,
+    description: schemaDescription,
     image: images.length ? images : undefined,
     sku: p.slug,
     brand: {
