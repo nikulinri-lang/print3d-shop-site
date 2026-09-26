@@ -1,12 +1,5 @@
 DirectoryIndex index.html index.htm
 
-# Apache отдаёт автоматический 301 на /path/ для реальных директорий
-# (catalog/, blog/) сам, но не знает, что соединение пришло по HTTPS —
-# Timeweb терминирует SSL до Apache, поэтому такой редирект уходит на
-# http://, понижая протокол у живых пользователей. Отключаем встроенный
-# редирект и делаем его сами ниже с явным https://.
-DirectorySlash Off
-
 RewriteEngine On
 
 # Старые страницы блога на старом домене -> соответствующие страницы
@@ -28,8 +21,7 @@ RewriteCond %{REQUEST_FILENAME} -d
 RewriteCond %{REQUEST_URI} !/$
 RewriteRule ^(.*[^/])$ https://3dvesh.ru/$1/ [R=301,L]
 
-# Файлы-подтверждения поисковиков (yandex_*.html, google*.html) должны
-# отвечать 200 РОВНО по адресу с .html.
+# Файлы-подтверждения поисковиков должны отвечать 200 ровно по адресу с .html.
 RewriteRule ^(yandex_[a-f0-9]+\.html|google[a-f0-9]+\.html)$ - [L]
 
 # example.html -> example (канонические extensionless-ссылки)
