@@ -30,7 +30,7 @@ const CATEGORY_TILES = [
 // - YANDEX_VERIFICATION: код с webmaster.yandex.ru -> Добавить сайт -> HTML-тег
 // - GOOGLE_VERIFICATION: код с search.google.com/search-console -> HTML-тег
 // Пока пусто — соответствующий тег/скрипт просто не выводится (см. layout.js).
-const YANDEX_METRIKA_ID = "112399054";
+const YANDEX_METRIKA_ID = "113079521";
 // Яндекс подтверждается отдельным файлом (public/yandex_c95da4ec46ec707d.html),
 // не мета-тегом — см. .htaccess (исключение из .html-редиректа) — так что
 // эта константа для Яндекса не используется.
