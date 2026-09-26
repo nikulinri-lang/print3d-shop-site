@@ -381,7 +381,7 @@ ${blogPreviewSection(posts)}
 ${faqSection()}`;
 
   const extraScripts = `<script type="application/ld+json">${JSON.stringify(faqSchema())}</script>
-<script type="module" src="/js/three-hero.js?v=4"></script>
+<script type="module" src="/js/three-hero.js?v=5"></script>
 <script defer src="/js/hero-text-reveal.js?v=3"></script>
 <script defer src="/js/product-tilt.js?v=2"></script>`;
 
