@@ -25,7 +25,7 @@
         const page=location.pathname+(location.search||"");
         const product=document.querySelector("[data-product-title]")?.textContent?.trim()||"";
         const history=state.messages.slice(-18);
-        const controller=new AbortController(); const timer=setTimeout(()=>controller.abort(),20000); const r=await fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},signal:controller.signal,body:JSON.stringify({kind:"chat",sessionId:state.sessionId,userMessage:text,history,page,product,customer:state.order,isNew:!state.started,consent:true})}); clearTimeout(timer);
+        const controller=new AbortController(); const timer=setTimeout(()=>controller.abort(),45000); const r=await fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},signal:controller.signal,body:JSON.stringify({kind:"chat",sessionId:state.sessionId,userMessage:text,history,page,product,customer:state.order,isNew:!state.started,consent:true})}); clearTimeout(timer);
         const d=await r.json();
         if(!r.ok||!d.ok)throw new Error(d.error||"Ошибка соединения");
         state.started=true;state.messages.push({role:"assistant",content:d.reply||"Готов помочь с выбором."});
