@@ -80,7 +80,6 @@ function renderLayout({
 <meta property="og:description" content="${description}">
 <meta property="og:image" content="https://3dvesh.ru${ogImage}">
 <meta property="og:type" content="website">
-<link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 ${verificationTags()}
 <link rel="preconnect" href="https://fonts.googleapis.com">
