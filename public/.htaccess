@@ -2,6 +2,13 @@ DirectoryIndex index.html index.htm
 
 RewriteEngine On
 
+# robots.txt старого домена отдаём локально с HTTP 200.
+# Это важно для Google: robots.txt не должен попадать в цепочку 301 при
+# миграции домена, иначе Google может считать файл недоступным.
+RewriteCond %{HTTP_HOST} ^(www\.)?3-d-shop\.ru$ [NC]
+RewriteRule ^robots\.txt$ robots.txt [L]
+
+
 # Старые страницы блога на старом домене -> соответствующие страницы
 # нового домена одним прямым 301. Это убирает цепочки редиректов.
 RewriteCond %{HTTP_HOST} ^(www\.)?3-d-shop\.ru$ [NC]
