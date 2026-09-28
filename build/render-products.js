@@ -110,7 +110,15 @@ function customOrderTeaser() {
 }
 
 function catalogPage(products, categories, colorNames) {
-  // Показываем все утверждённые категории, даже если пока в них нет товаров.\n  // Это важно для плитки на главной: пустая категория должна открываться\n  // как пустая, а не сбрасываться обратно на «Все».\n  const approvedCategoryKeys = ["Освещение", "Подарки", "Для детей", "Декор", "Для дома", "Аксессуары"];\n\n  const tileButtons = CATEGORY_TILES\n    .filter((t) => approvedCategoryKeys.includes(t.key))\n    .map((t) => \`<button class="filter-btn" data-filter-category="\${t.key}">\${t.icon} \${t.label}</button>\`)\n    .join("\\n      ");
+  // Показываем все утверждённые категории, даже если пока в них нет товаров.
+  // Это важно для плитки на главной: пустая категория должна открываться
+  // как пустая, а не сбрасываться обратно на «Все».
+  const approvedCategoryKeys = ["Освещение", "Подарки", "Для детей", "Декор", "Для дома", "Аксессуары"];
+
+  const tileButtons = CATEGORY_TILES
+    .filter((t) => approvedCategoryKeys.includes(t.key))
+    .map((t) => `<button class="filter-btn" data-filter-category="${t.key}">${t.icon} ${t.label}</button>`)
+    .join("\n      ");
 
   const colorOptions = colorNames.map((c) => `<option value="${c.hex}">${c.name}</option>`).join("");
 
