@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /cart
+Disallow: /checkout
+Disallow: /catalog?
+Disallow: /catalog/?
+
+Sitemap: https://3dvesh.ru/sitemap.xml
