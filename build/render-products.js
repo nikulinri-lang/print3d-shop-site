@@ -110,21 +110,7 @@ function customOrderTeaser() {
 }
 
 function catalogPage(products, categories, colorNames) {
-  // Собираем категории, в которых есть хотя бы один товар
-  const usedCategories = new Set();
-  products.forEach((p) => {
-    (p.categories || [p.category]).forEach((c) => usedCategories.add(c));
-    if (p.featured) usedCategories.add("__featured__");
-  });
-
-  const tileButtons = CATEGORY_TILES
-    .filter((t) => {
-      if (t.kind === "custom") return false; // «На заказ» — отдельная ссылка
-      if (t.kind === "featured") return usedCategories.has("__featured__");
-      return usedCategories.has(t.key);
-    })
-    .map((t) => `<button class="filter-btn" data-filter-category="${t.kind === "featured" ? "__featured__" : t.key}">${t.icon} ${t.label}</button>`)
-    .join("\n      ");
+  // Показываем все утверждённые категории, даже если пока в них нет товаров.\n  // Это важно для плитки на главной: пустая категория должна открываться\n  // как пустая, а не сбрасываться обратно на «Все».\n  const approvedCategoryKeys = ["Освещение", "Подарки", "Для детей", "Декор", "Для дома", "Аксессуары"];\n\n  const tileButtons = CATEGORY_TILES\n    .filter((t) => approvedCategoryKeys.includes(t.key))\n    .map((t) => \`<button class="filter-btn" data-filter-category="\${t.key}">\${t.icon} \${t.label}</button>\`)\n    .join("\\n      ");
 
   const colorOptions = colorNames.map((c) => `<option value="${c.hex}">${c.name}</option>`).join("");
 
