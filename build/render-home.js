@@ -26,8 +26,8 @@ function categoriesSection(products) {
     `<a href="${categoryHref(t)}" class="cat-slide${i === 0 ? " active" : ""}" data-index="${i}">
         <div class="cat-slide-img">
           <picture>
-            <source srcset="/images/categories/${t.img}.webp" type="image/webp">
-            <img src="/images/categories/${t.img}.jpg" alt="${t.label}" loading="lazy">
+            <source srcset="${t.img.startsWith("copy_") ? `/images/${t.img}` : `/images/categories/${t.img}.webp`}" type="image/webp">
+            <img src="${t.img.startsWith("copy_") ? `/images/${t.img}` : `/images/categories/${t.img}.jpg`}" alt="${t.label}" loading="lazy">
           </picture>
         </div>
       </a>`
