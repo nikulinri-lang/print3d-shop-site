@@ -222,8 +222,6 @@ function breadcrumbSchema(items) {
 function productSchema(p) {
   const images = Array.isArray(p.images) ? p.images.filter(Boolean).map((src) => src.startsWith("http") ? src : SITE_URL + (src.startsWith("/") ? src : "/" + src)) : [];
   // Google Product rich results require a non-empty description.
-  // Some newer products use descriptionSections instead of the legacy
-  // top-level description, so always provide a useful fallback.
   const schemaDescription = String(
     p.description ||
     p.descriptionSections?.whatIsIt ||
@@ -241,7 +239,6 @@ function productSchema(p) {
       "@type": "Brand",
       name: "3Д Вещь",
     },
-    category: (p.categories || [])[0] || "",
     material: p.specs && p.specs.material ? p.specs.material : undefined,
     offers: {
       "@type": "Offer",
@@ -249,6 +246,42 @@ function productSchema(p) {
       price: String(p.price),
       availability: p.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/PreOrder",
       url: `${SITE_URL}/catalog/${p.slug}`,
+      shippingDetails: {
+        "@type": "OfferShippingDetails",
+        shippingRate: {
+          "@type": "MonetaryAmount",
+          minValue: 200,
+          maxValue: 800,
+          currency: "RUB"
+        },
+        shippingDestination: {
+          "@type": "DefinedRegion",
+          addressCountry: "RU"
+        },
+        deliveryTime: {
+          "@type": "ShippingDeliveryTime",
+          handlingTime: {
+            "@type": "QuantitativeValue",
+            minValue: 1,
+            maxValue: 3,
+            unitCode: "DAY"
+          },
+          transitTime: {
+            "@type": "QuantitativeValue",
+            minValue: 1,
+            maxValue: 7,
+            unitCode: "DAY"
+          }
+        }
+      },
+      hasMerchantReturnPolicy: {
+        "@type": "MerchantReturnPolicy",
+        applicableCountry: "RU",
+        returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+        merchantReturnDays: 7,
+        returnMethod: "https://schema.org/ReturnByMail",
+        returnFees: "https://schema.org/ReturnShippingFees"
+      }
     },
   };
 }
