@@ -12,16 +12,11 @@ function categoryHref(tile) {
 }
 
 function categoriesSection(products) {
-  const usedCategories = new Set();
-  products.forEach((p) => {
-    (p.categories || [p.category]).forEach((c) => usedCategories.add(c));
-    if (p.featured) usedCategories.add("__featured__");
-  });
-  const visibleTiles = CATEGORY_TILES.filter((t) => {
-    if (t.kind === "custom") return true;
-    if (t.kind === "featured") return usedCategories.has("__featured__");
-    return usedCategories.has(t.key);
-  });
+  // Показываем все семь основных категорий сразу, даже если часть пока
+  // пустая. По мере появления товаров они автоматически начнут заполняться.
+  const visibleTiles = CATEGORY_TILES.filter((t) =>
+    ["Освещение", "Подарки", "Для детей", "custom", "Декор", "Для дома", "Аксессуары"].includes(t.key)
+  );
   const slideHtml = visibleTiles.map((t, i) =>
     `<a href="${categoryHref(t)}" class="cat-slide${i === 0 ? " active" : ""}" data-index="${i}">
         <div class="cat-slide-img">
@@ -30,6 +25,7 @@ function categoriesSection(products) {
             <img src="${t.img.startsWith("copy_") ? `/images/${t.img}` : `/images/categories/${t.img}.jpg`}" alt="${t.label}" loading="lazy">
           </picture>
         </div>
+        <span class="cat-slide-label">${t.icon} ${t.label}</span>
       </a>`
   ).join("\n      ");
   const dotsHtml = visibleTiles.map((_, i) =>
