@@ -113,7 +113,7 @@ function catalogPage(products, categories, colorNames) {
   // Показываем все утверждённые категории, даже если пока в них нет товаров.
   // Это важно для плитки на главной: пустая категория должна открываться
   // как пустая, а не сбрасываться обратно на «Все».
-  const approvedCategoryKeys = ["Освещение", "Подарки", "Для детей", "Декор", "Для дома", "Аксессуары"];
+  const approvedCategoryKeys = ["Освещение", "Декор", "Для детей", "Подарки", "Для дома", "Аксессуары"];
 
   const tileButtons = CATEGORY_TILES
     .filter((t) => approvedCategoryKeys.includes(t.key))
