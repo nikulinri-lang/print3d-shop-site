@@ -15,11 +15,11 @@ const LEAD_TIME_LONG = "Изготовление занимает 1–3 дня �
 const CATEGORY_TILES = [
   { key: "Освещение", label: "Освещение", icon: "💡", kind: "category", img: "copy_5DE84F5F-079D-4436-80EB-22A06F4093A6.jpeg" },
   { key: "Декор", label: "Декор", icon: "🪴", kind: "category", img: "copy_B42D38E1-5E44-41F3-87AE-5D00622E6B09.jpeg" },
-  { key: "Для детей", label: "Для детей", icon: "🧸", kind: "category", img: "copy_6C7B3CB8-AF54-4B54-9C0C-0455C519B73F.jpeg" },
+  { key: "Для детей", label: "Для детей", icon: "🧸", kind: "category", img: "copy_522296B7-CF6A-4F49-A12E-402FCFFBE5BA.jpeg" },
   { key: "custom", label: "На заказ", icon: "🛠", kind: "custom", img: "copy_49BF10C0-5ABA-40DC-B5A4-121775BA0BF9.jpeg" },
   { key: "Подарки", label: "Подарки", icon: "🎁", kind: "category", img: "copy_62565173-13C3-4401-A745-B543F15C901F.jpeg" },
   { key: "Для дома", label: "Для дома", icon: "🏠", kind: "category", img: "copy_AA75305E-F29F-4E7D-BA95-B49E1A3FD016.jpeg" },
-  { key: "Аксессуары", label: "Аксессуары", icon: "🧩", kind: "category", img: "copy_522296B7-CF6A-4F49-A12E-402FCFFBE5BA.jpeg" },
+  { key: "Аксессуары", label: "Аксессуары", icon: "🧩", kind: "category", img: "copy_6C7B3CB8-AF54-4B54-9C0C-0455C519B73F.jpeg" },
 ];
 
 // Заполнить, когда придут реальные значения (см. finalный отчёт в чате):
