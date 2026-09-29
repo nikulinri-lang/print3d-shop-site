@@ -2,7 +2,7 @@
   {
     "id": "autumn-gnome",
     "slug": "autumn-gnome",
-    "title": "Осенний гном с кленовым листом",
+    "title": "Осенний гном",
     "category": "Декор",
     "price": 650,
     "variants": [
@@ -39,7 +39,7 @@
   {
     "id": "pumpkin-vase",
     "slug": "pumpkin-vase",
-    "title": "Кашпо-ваза Тыква с листочком",
+    "title": "Ваза-тыква",
     "category": "Декор",
     "price": 800,
     "variants": [
@@ -80,7 +80,7 @@
   {
     "id": "mushroom-trinket-box",
     "slug": "mushroom-trinket-box",
-    "title": "Шкатулка-грибочек на резьбе",
+    "title": "Шкатулка-грибочек",
     "category": "Декор",
     "price": 750,
     "variants": [
@@ -302,7 +302,7 @@
   {
     "id": "lamp-wave",
     "slug": "lamp-wave",
-    "title": "Настольный светильник «Волна»",
+    "title": "Светильник «Волна»",
     "category": "Освещение",
     "price": 1700,
     "stock": 2,
@@ -335,7 +335,7 @@
   {
     "id": "lamp-amber",
     "slug": "lamp-amber",
-    "title": "Настольный светильник «Янтарь»",
+    "title": "Светильник «Янтарь»",
     "category": "Освещение",
     "price": 1800,
     "stock": 2,
@@ -365,7 +365,7 @@
   {
     "id": "lamp-coral",
     "slug": "lamp-coral",
-    "title": "Настольный светильник «Коралл»",
+    "title": "Светильник «Коралл»",
     "category": "Освещение",
     "price": 1700,
     "stock": 2,
