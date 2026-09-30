@@ -17,10 +17,21 @@ RewriteRule ^blog/(top-10-podarkov|mnogocvetnaya-pechat|pla-vs-petg|stl-3mf-obj|
 # Старые карточки товаров -> актуальный каталог, сразу на HTTPS.
 RewriteRule ^catalog/(bottle-bike-mount|desk-cable-box|door-handle-cover|makeup-brush-holder|small-parts-organizer)$ https://3dvesh.ru/catalog/ [R=301,L]
 
-# Принудительный HTTPS. %{HTTPS} тут всегда off (SSL терминируется до
-# Apache) — проверяем X-Forwarded-Proto вместо него.
+# Перенос со старого домена: редиректим только реально существующие
+# страницы/файлы. Несуществующие URL старого домена должны получать 404,
+# а не превращаться в 301 на новый домен.
+RewriteCond %{HTTP_HOST} ^(www\.)?3-d-shop\.ru$ [NC]
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d [OR]
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.*)$ https://3dvesh.ru/$1 [R=301,L,NE]
+
+# Принудительный HTTPS для нового домена.
+# %{HTTPS} тут всегда off (SSL терминируется до Apache) — проверяем
+# X-Forwarded-Proto вместо него.
+RewriteCond %{HTTP_HOST} ^(www\.)?3dvesh\.ru$ [NC]
 RewriteCond %{HTTP:X-Forwarded-Proto} !=https
-RewriteRule ^(.*)$ https://3dvesh.ru/$1 [R=301,L]
+RewriteRule ^(.*)$ https://3dvesh.ru/$1 [R=301,L,NE]
 
 # Виртуальные страницы (например /blog/article/) не являются
 # реальными директориями: убираем завершающий slash и оставляем
