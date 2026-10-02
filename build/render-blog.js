@@ -7,6 +7,8 @@ const ROOT = path.resolve(__dirname, "..");
 const BLOG_DIR = path.join(ROOT, "content", "blog");
 const WORDS_PER_MINUTE = 200;
 const BLOG_COVERS = {
+  "kompas-3d-dlya-3d-pechati": "/images/IMG_8372.png",
+  "3d-printer-kak-rabotaet": "/images/IMG_8373.png",
   "mnogocvetnaya-pechat": "/images/blog/mnogocvetnaya-pechat.svg",
   "zakaz-po-foto": "/images/blog/zakaz-po-foto.svg",
   "top-10-podarkov": "/images/blog-top10-gifts.png",
