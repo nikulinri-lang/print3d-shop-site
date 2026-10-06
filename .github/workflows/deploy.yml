@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -69,3 +71,14 @@ jobs:
             **/.github/**
           
           # Trigger deployment for the latest homepage typography changes.
+
+      - name: Notify Yandex via IndexNow
+        env:
+          INDEXNOW_KEY: 2ab9241ecd26599bc25c600f1ec008367b243097fc310f9e9
+        run: |
+          CHANGED_FILES="$(git diff --name-only HEAD^ HEAD || true)"
+          if [ -n "$CHANGED_FILES" ]; then
+            node scripts/indexnow.js $CHANGED_FILES
+          else
+            echo "IndexNow: no changed files detected."
+          fi
