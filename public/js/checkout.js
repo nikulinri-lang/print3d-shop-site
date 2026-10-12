@@ -27,7 +27,7 @@
     layoutEl.hidden = false;
     linesEl.innerHTML = items.map(function (item) {
       var unit = item.price + (item.variantExtra || 0);
-      var label = [item.variantName, item.colorName ? "цвет: " + item.colorName : ""].filter(Boolean).join(" · ");
+      var label = [item.variantName, item.colorName ? "цвет: " + item.colorName : "", item.colorRequest ? "желаемый цвет: " + (item.desiredColor || "не указан") : ""].filter(Boolean).join(" · ");
       return `<div class="checkout-line">
         <span>${item.title}${label ? " (" + label + ")" : ""} × ${item.qty}</span>
         <span class="mono">${(unit * item.qty).toLocaleString("ru-RU")} ₽</span>
@@ -61,7 +61,7 @@
     var items = window.PrintlabCart.get();
     var lines = items.map(function (item) {
       var unit = item.price + (item.variantExtra || 0);
-      var label = [item.variantName, item.colorName ? "цвет: " + item.colorName : ""].filter(Boolean).join(", ");
+      var label = [item.variantName, item.colorName ? "цвет: " + item.colorName : "", item.colorRequest ? "желаемый цвет: " + (item.desiredColor || "не указан") : ""].filter(Boolean).join(", ");
       return "— " + item.title + (label ? " (" + label + ")" : "") + " × " + item.qty + " = " + (unit * item.qty).toLocaleString("ru-RU") + " ₽";
     });
     var out = [
@@ -92,7 +92,7 @@
       comment: data.comment,
       items: items.map(function (item) {
         var label = [item.variantName, item.colorName ? "цвет: " + item.colorName : ""].filter(Boolean).join(", ");
-        return { title: item.title, variant: label, qty: item.qty };
+        return { title: item.title, variant: label, colorRequest: !!item.colorRequest, desiredColor: item.desiredColor || "", qty: item.qty };
       }),
     };
   }
