@@ -9,6 +9,7 @@
     var parts = [];
     if (item.variantName) parts.push(item.variantName);
     if (item.colorName) parts.push("цвет: " + item.colorName);
+    if (item.colorRequest) parts.push("заказ в другом цвете");
     return parts.join(" · ");
   }
 
@@ -25,11 +26,12 @@
     linesEl.innerHTML = items.map(function (item) {
       var unit = item.price + (item.variantExtra || 0);
       var label = lineLabel(item);
-      return `<div class="cart-line" data-slug="${item.slug}" data-variant="${item.variantName || ""}">
+      return `<div class="cart-line" data-slug="${item.slug}" data-variant="${item.variantName || ""}" data-color-request="${item.colorRequest ? "1" : "0"}">
         <div class="cart-line-icon" aria-hidden="true">${item.icon}</div>
         <div class="cart-line-body">
           <a href="/catalog/${item.slug}" class="cart-line-title">${item.title}</a>
           ${label ? `<div class="cart-line-variant">${label}</div>` : ""}
+          ${item.colorRequest ? `<label class="cart-desired-color"><span>Желаемый цвет</span><input type="text" data-desired-color maxlength="100" value="${String(item.desiredColor || "").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;")}" placeholder="Например, матовый чёрный или пастельный розовый"></label>` : ""}
           <div class="cart-line-price mono">${unit.toLocaleString("ru-RU")} ₽ / шт</div>
         </div>
         <div class="qty-stepper qty-stepper--sm">
@@ -45,21 +47,30 @@
     subtotalEl.textContent = window.PrintlabCart.subtotal().toLocaleString("ru-RU") + " ₽";
   }
 
+  linesEl.addEventListener("input", function (e) {
+    var input = e.target.closest("[data-desired-color]");
+    if (!input) return;
+    var line = input.closest(".cart-line");
+    if (!line) return;
+    window.PrintlabCart.updateDesiredColor(line.dataset.slug, line.dataset.variant, line.dataset.colorRequest === "1", input.value);
+  });
+
   linesEl.addEventListener("click", function (e) {
     var line = e.target.closest(".cart-line");
     if (!line) return;
     var slug = line.dataset.slug;
     var variant = line.dataset.variant;
+    var colorRequest = line.dataset.colorRequest === "1";
     var items = window.PrintlabCart.get();
-    var current = items.find(function (i) { return i.slug === slug && (i.variantName || "") === variant; });
+    var current = items.find(function (i) { return i.slug === slug && (i.variantName || "") === variant && !!i.colorRequest === colorRequest; });
     if (!current) return;
 
     if (e.target.closest('[data-action="plus"]')) {
-      window.PrintlabCart.setQty(slug, variant, current.qty + 1);
+      window.PrintlabCart.setQty(slug, variant, current.qty + 1, colorRequest);
     } else if (e.target.closest('[data-action="minus"]')) {
-      window.PrintlabCart.setQty(slug, variant, current.qty - 1);
+      window.PrintlabCart.setQty(slug, variant, current.qty - 1, colorRequest);
     } else if (e.target.closest(".cart-line-remove")) {
-      window.PrintlabCart.remove(slug, variant);
+      window.PrintlabCart.remove(slug, variant, colorRequest);
     } else {
       return;
     }
