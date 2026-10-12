@@ -17,6 +17,7 @@
   var stickyBar = document.getElementById("stickyBuyBar");
   var stickyPriceEl = document.getElementById("stickyPrice");
   var stickyAddBtn = document.getElementById("stickyAddToCartBtn");
+  var otherColorBtn = document.getElementById("orderOtherColorBtn");
 
   function getQty() {
     var n = parseInt(qtyInput.value, 10);
@@ -74,6 +75,8 @@
       variantName: hasVariantRadios ? variant.name : "",
       variantExtra: variant.extra,
       colorName: colorName,
+      colorRequest: false,
+      desiredColor: "",
     };
   }
 
@@ -95,6 +98,18 @@
   if (buyBtn) {
     buyBtn.addEventListener("click", function () {
       window.PrintlabCart.add(buildCartItem(), getQty());
+      track();
+      location.href = "/cart";
+    });
+  }
+
+  if (otherColorBtn) {
+    otherColorBtn.addEventListener("click", function () {
+      var item = buildCartItem();
+      item.colorRequest = true;
+      item.colorName = "";
+      item.desiredColor = "";
+      window.PrintlabCart.add(item, getQty());
       track();
       location.href = "/cart";
     });
