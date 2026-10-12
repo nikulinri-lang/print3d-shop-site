@@ -408,7 +408,7 @@ ${similarBlock}
 <script>
 window.__PRODUCT__ = ${JSON.stringify(productData)};
 </script>
-<script defer src="/js/product-page.js?v=6"></script>
+<script defer src="/js/product-page.js?v=7"></script>
 <script defer src="/js/product-tilt.js?v=2"></script>`;
 
   return renderLayout({
