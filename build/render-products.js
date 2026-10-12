@@ -364,7 +364,6 @@ function productPage(p, allProducts) {
       <div class="product-price mono" id="productPrice">${p.price.toLocaleString("ru-RU")} ₽</div>
       ${availability}
       ${descriptionSectionsHTML(p)}
-      ${colorSwatches(p)}
       ${variantsBlock}
       <div class="qty-stepper" aria-label="Количество">
         <button type="button" class="qty-btn" id="qtyMinus" aria-label="Уменьшить количество">−</button>
@@ -374,11 +373,12 @@ function productPage(p, allProducts) {
       <div class="product-actions">
         <button type="button" class="btn btn-primary" id="addToCartBtn">В корзину</button>
         <button type="button" class="btn btn-ghost" id="buyNowBtn">Купить сейчас</button>
+        <button type="button" class="btn btn-ghost" id="orderOtherColorBtn">Заказать в другом цвете</button>
       </div>
       <div class="product-trust-row">
         <span><b class="trust-index mono">01</b> Изготовление: ${LEAD_TIME}</span>
         <span><b class="trust-index mono">02</b> Доставка по России</span>
-        ${p.colors && p.colors.length ? '<span><b class="trust-index mono">03</b> Можно выбрать цвет</span>' : ""}
+        ${p.colors && p.colors.length ? '<span><b class="trust-index mono">03</b> Можно заказать другой цвет</span>' : ""}
         <span><b class="trust-index mono">04</b> Оплата после подтверждения заказа менеджером</span>
         <span><b class="trust-index mono">05</b> <a href="/delivery#vozvrat">Возврат и обмен</a></span>
       </div>
