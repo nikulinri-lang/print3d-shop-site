@@ -78,7 +78,8 @@
         ? Object.assign({}, i, { desiredColor: String(desiredColor || "").slice(0, 100) })
         : i;
     });
-    write(items);
+    // Не перерисовываем корзину при каждом символе: иначе поле теряет фокус.
+    try { localStorage.setItem(KEY, JSON.stringify(items)); } catch (e) {}
     return items;
   }
 
