@@ -27,15 +27,15 @@
     window.dispatchEvent(new CustomEvent("cart:change", { detail: { items: items } }));
   }
 
-  function lineKey(slug, variantName) {
-    return slug + "::" + (variantName || "");
+  function lineKey(slug, variantName, colorRequest) {
+    return slug + "::" + (variantName || "") + "::" + (colorRequest ? "custom-color" : "standard");
   }
 
   function add(product, qty) {
     qty = Math.max(1, qty || 1);
     var items = read();
-    var key = lineKey(product.slug, product.variantName);
-    var existing = items.find(function (i) { return lineKey(i.slug, i.variantName) === key; });
+    var key = lineKey(product.slug, product.variantName, product.colorRequest);
+    var existing = items.find(function (i) { return lineKey(i.slug, i.variantName, i.colorRequest) === key; });
     if (existing) {
       existing.qty += qty;
     } else {
@@ -47,6 +47,8 @@
         variantName: product.variantName || "",
         variantExtra: product.variantExtra || 0,
         colorName: product.colorName || "",
+        colorRequest: !!product.colorRequest,
+        desiredColor: product.desiredColor || "",
         qty: qty,
       });
     }
@@ -54,18 +56,28 @@
     return items;
   }
 
-  function setQty(slug, variantName, qty) {
+  function setQty(slug, variantName, qty, colorRequest) {
     var items = read();
-    var key = lineKey(slug, variantName);
+    var key = lineKey(slug, variantName, colorRequest);
     items = items
-      .map(function (i) { return lineKey(i.slug, i.variantName) === key ? Object.assign({}, i, { qty: qty }) : i; })
+      .map(function (i) { return lineKey(i.slug, i.variantName, i.colorRequest) === key ? Object.assign({}, i, { qty: qty }) : i; })
       .filter(function (i) { return i.qty > 0; });
     write(items);
     return items;
   }
 
-  function removeLine(slug, variantName) {
-    var items = read().filter(function (i) { return lineKey(i.slug, i.variantName) !== lineKey(slug, variantName); });
+  function removeLine(slug, variantName, colorRequest) {
+    var items = read().filter(function (i) { return lineKey(i.slug, i.variantName, i.colorRequest) !== lineKey(slug, variantName, colorRequest); });
+    write(items);
+    return items;
+  }
+
+  function updateDesiredColor(slug, variantName, colorRequest, desiredColor) {
+    var items = read().map(function (i) {
+      return lineKey(i.slug, i.variantName, i.colorRequest) === lineKey(slug, variantName, colorRequest)
+        ? Object.assign({}, i, { desiredColor: String(desiredColor || "").slice(0, 100) })
+        : i;
+    });
     write(items);
     return items;
   }
@@ -123,6 +135,7 @@
     add: add,
     setQty: setQty,
     remove: removeLine,
+    updateDesiredColor: updateDesiredColor,
     clear: clear,
     count: count,
     subtotal: subtotal,
