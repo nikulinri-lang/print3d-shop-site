@@ -62,9 +62,9 @@ jobs:
             for (const item of fs.readdirSync(dir, { withFileTypes: true })) {
               const file = path.join(dir, item.name);
               if (item.isDirectory()) walk(file);
-              else if (/\\.(html|css|js|json|webmanifest|xml|svg)$/i.test(item.name)) {
+              else if (/\.(html|css|js|json|webmanifest|xml|svg)$/i.test(item.name)) {
                 let data = fs.readFileSync(file, 'utf8');
-                data = data.replace(/(["'(=:\\s])\\/(?!\\/|print3d-shop-site\\/)/g, '$1' + prefix);
+                data = data.replace(/(["'(=:\s])\/(?!\/|print3d-shop-site\/)/g, '$1' + prefix);
                 fs.writeFileSync(file, data);
               }
             }
