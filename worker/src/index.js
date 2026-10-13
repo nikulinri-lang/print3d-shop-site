@@ -35,10 +35,16 @@ function formatOrderMessage(d){
   if(d.address) lines.push("🏠 Адрес: "+esc(d.address));
   lines.push("🛍 Товары:",
     ...(Array.isArray(d.items)?d.items:[]).map(i=>{
+      const qty=Math.max(1,Number(i.qty)||1);
+      const unitPrice=Number(i.unitPrice)||0;
+      const lineTotal=Number.isFinite(Number(i.lineTotal))?Number(i.lineTotal):unitPrice*qty;
       const colorRequest=i.colorRequest?("заказ в другом цвете"+(i.desiredColor?"; желаемый цвет: "+esc(i.desiredColor):"")):"";
       const variant=[i.variant?esc(i.variant):"",colorRequest].filter(Boolean).join("; ");
-      return "  — "+esc(i.title||i.slug)+(variant?" ("+variant+")":"")+" × "+esc(i.qty||1);
+      const priceText=unitPrice>0?" · "+unitPrice.toLocaleString("ru-RU")+" ₽/шт":"";
+      const totalText=lineTotal>0?" = "+lineTotal.toLocaleString("ru-RU")+" ₽":"";
+      return "  — "+esc(i.title||i.slug)+(variant?" ("+variant+")":"")+" × "+qty+priceText+totalText;
     }));
+  if(Number.isFinite(Number(d.subtotal))&&Number(d.subtotal)>=0) lines.push("💰 Итого: "+Number(d.subtotal).toLocaleString("ru-RU")+" ₽");
   if(d.comment) lines.push("💬 Комментарий: "+esc(d.comment));
   lines.push("🕐 "+new Date().toISOString()); return lines.join("\n");
 }
