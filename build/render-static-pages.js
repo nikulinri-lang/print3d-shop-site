@@ -257,7 +257,10 @@ function checkoutPage() {
         <div class="order-success-icon">✅</div>
         <h3>Спасибо за заказ!</h3>
         <p>Наш менеджер свяжется с вами в ближайшее время для подтверждения и оплаты.</p>
-        <a href="${TELEGRAM_BOT_URL}" class="btn btn-primary" target="_blank" rel="noopener">Написать в Telegram</a>
+        <div class="custom-order-actions">
+          <a href="${TELEGRAM_BOT_URL}" class="btn btn-primary" target="_blank" rel="noopener">Написать в Telegram</a>
+          <a href="/catalog/" class="btn btn-ghost">Продолжить покупки</a>
+        </div>
       </div>
       <div class="custom-order-result" id="checkoutFallback" hidden>
         <h3>Заказ сформирован</h3>
@@ -266,9 +269,9 @@ function checkoutPage() {
         <div class="custom-order-actions">
           <button type="button" class="btn btn-ghost" id="copyCheckoutBtn">Скопировать заказ</button>
           <a href="${TELEGRAM_BOT_URL}" class="btn btn-primary" target="_blank" rel="noopener">Открыть Telegram-бота</a>
+          <button type="button" class="btn btn-ghost" id="clearCartBtn">Очистить корзину</button>
         </div>
       </div>
-      <button type="button" class="btn btn-ghost" id="clearCartBtn" style="margin-top: var(--space-md);">Очистить корзину</button>
     </div>
   </div>
 </section>`;
@@ -279,7 +282,7 @@ function checkoutPage() {
     canonical: "/checkout",
     activeNav: "/checkout",
     bodyContent: body,
-    extraScripts: `<script defer src="/js/hero-text-reveal.js?v=3"></script>\n<script defer src="/js/checkout.js?v=5"></script>`,
+    extraScripts: `<script defer src="/js/hero-text-reveal.js?v=3"></script>\n<script defer src="/js/checkout.js?v=6"></script>`,
   });
 }
 
