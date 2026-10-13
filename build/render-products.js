@@ -352,7 +352,7 @@ function productPage(p, allProducts) {
 
   const body = `<section class="section product-detail product-detail--premium">
   <div class="container">
-    <div class="product-page-topline"><span>PRINTLAB / PRODUCT</span><span>01 — 05</span></div>
+    <div class="product-page-topline"><span>3Д ВЕЩЬ / ИЗДЕЛИЕ</span><span>ГОТОВО К ЗАКАЗУ</span></div>
     ${breadcrumbs}
   <div class="product-detail-grid">
     <div class="product-gallery">
@@ -380,15 +380,13 @@ function productPage(p, allProducts) {
       <div class="product-price mono" id="productPrice">${p.price.toLocaleString("ru-RU")} ₽</div>
       ${availability}
       ${variantsBlock}
-      <div class="product-trust-row">
-        <span><b class="trust-index mono">01</b> Изготовление: ${LEAD_TIME}</span>
-        <span><b class="trust-index mono">02</b> Доставка по России</span>
-        ${p.colors && p.colors.length ? '<span><b class="trust-index mono">03</b> Можно заказать другой цвет</span>' : ""}
-        <span><b class="trust-index mono">04</b> Оплата после подтверждения заказа менеджером</span>
-        <span><b class="trust-index mono">05</b> <a href="/delivery#vozvrat">Возврат и обмен</a></span>
+      ${descriptionSectionsHTML(p)}
+      <div class="product-trust-row" aria-label="Условия заказа">
+        <div class="product-trust-item"><span class="product-trust-icon" aria-hidden="true">↗</span><div><strong>Изготовление и доставка</strong><p>Срок изготовления: ${LEAD_TIME}. Доставляем по России.</p></div></div>
+        <div class="product-trust-item"><span class="product-trust-icon" aria-hidden="true">✓</span><div><strong>Оплата</strong><p>После подтверждения заказа менеджером.</p></div></div>
+        <div class="product-trust-item"><span class="product-trust-icon" aria-hidden="true">↺</span><div><strong><a href="/delivery#vozvrat">Возврат и обмен</a></strong><p>Условия покупки — в отдельном разделе.</p></div></div>
       </div>
       <a href="${TELEGRAM_BOT_URL}" class="product-telegram-link" target="_blank" rel="noopener">Есть вопрос? Написать в Telegram →</a>
-      ${descriptionSectionsHTML(p)}
     </div>
   </div>
   </div>
