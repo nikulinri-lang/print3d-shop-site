@@ -307,18 +307,27 @@ function homePage() {
   const products = loadProducts();
   const posts = loadPosts();
 
-  const body = `<section class="hero">
-  <div class="hero-visual">
-    <canvas id="hero-canvas" aria-hidden="true"></canvas>
+  const body = `<section class="hero premium-home-hero">
+  <div class="hero-visual" aria-hidden="true">
+    <canvas id="hero-canvas"></canvas>
   </div>
-  <div class="container hero-content">
-    <span class="kicker">Магазин 3D-печатных товаров</span>
-    <h1>Необычные вещи,<br>созданные на 3D-принтере</h1>
-    <p class="lede">Готовые 3D-товары, подарки, полезные аксессуары и изделия на заказ.</p>
-    <div class="hero-actions">
-      <a href="/catalog/" class="btn btn-primary">Смотреть каталог</a>
-      <a href="/custom-order" class="btn btn-ghost">Создать свою вещь</a>
+  <div class="container premium-home-grid">
+    <div class="hero-content premium-home-copy">
+      <span class="kicker">3Д Вещь / коллекция предметов</span>
+      <h1>Дизайн, который<br><span>можно потрогать.</span></h1>
+      <p class="lede">Необычные предметы для дома, подарки с характером и 3D-печать по вашей идее.</p>
+      <div class="hero-actions">
+        <a href="/catalog/" class="btn btn-primary">Выбрать предмет <span aria-hidden="true">↗</span></a>
+        <a href="/custom-order" class="btn btn-ghost">Создать своё изделие</a>
+      </div>
+      <div class="premium-home-note"><span class="premium-home-note-dot"></span> Собственное производство · Брянск · Доставка по России</div>
     </div>
+    <a class="premium-home-feature" href="/catalog/lamp-wave" aria-label="Посмотреть светильник «Волна»">
+      <img src="/images/lamp-wave-night.jpeg" alt="Дизайнерский светильник «Волна» в вечернем освещении" fetchpriority="high">
+      <span class="premium-home-feature-shade"></span>
+      <span class="premium-home-feature-label"><span class="premium-home-feature-kicker">Предмет с характером</span><strong>Светильник «Волна»</strong><span class="premium-home-feature-link">Открыть изделие <span aria-hidden="true">↗</span></span></span>
+      <span class="premium-home-feature-index">01 / 3Д ВЕЩЬ</span>
+    </a>
   </div>
 </section>
 

@@ -1,0 +1,91 @@
+name: Build premium homepage preview
+
+on:
+  push:
+    branches:
+      - "feature/premium-homepage-review"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "build/**"
+      - "public/**"
+      - "content/**"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/preview-build.yml"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout preview branch
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install ImageMagick
+        run: sudo apt-get update && sudo apt-get install -y imagemagick
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund || npm install --no-audit --no-fund
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Upload preview build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: premium-homepage-preview
+          path: dist/
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Adapt paths for GitHub Pages project URL
+        if: github.event_name == 'push'
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const path = require('path');
+          const root = path.resolve('dist');
+          const prefix = '/print3d-shop-site/';
+          function walk(dir) {
+            for (const item of fs.readdirSync(dir, { withFileTypes: true })) {
+              const file = path.join(dir, item.name);
+              if (item.isDirectory()) walk(file);
+              else if (/\.(html|css|js|json|webmanifest|xml|svg)$/i.test(item.name)) {
+                let data = fs.readFileSync(file, 'utf8');
+                data = data.replace(/(["'(=:\s])\/(?!\/|print3d-shop-site\/)/g, '$1' + prefix);
+                fs.writeFileSync(file, data);
+              }
+            }
+          }
+          walk(root);
+          fs.writeFileSync(path.join(root, '.nojekyll'), '');
+          NODE
+
+      - name: Configure GitHub Pages
+        if: github.event_name == 'push'
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload GitHub Pages artifact
+        if: github.event_name == 'push'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - name: Deploy mobile preview only
+        if: github.event_name == 'push'
+        id: deployment
+        uses: actions/deploy-pages@v4
