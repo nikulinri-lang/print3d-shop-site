@@ -111,7 +111,9 @@
     if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Отправляем…"; }
 
     window.PrintlabOrderApi.send(buildApiPayload(data)).then(function (result) {
-      if (window.PrintlabAnalytics) window.PrintlabAnalytics.trackGoal("order_sent");
+      if (window.PrintlabAnalytics) {
+        window.PrintlabAnalytics.trackGoal(result.ok ? "order_sent" : "order_send_failed");
+      }
       layoutEl.hidden = true;
       resultEl.hidden = false;
 
