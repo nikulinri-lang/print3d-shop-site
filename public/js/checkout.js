@@ -92,8 +92,10 @@
       comment: data.comment,
       items: items.map(function (item) {
         var label = [item.variantName, item.colorName ? "цвет: " + item.colorName : ""].filter(Boolean).join(", ");
-        return { title: item.title, variant: label, colorRequest: !!item.colorRequest, desiredColor: item.desiredColor || "", qty: item.qty };
+        var unitPrice = item.price + (item.variantExtra || 0);
+        return { title: item.title, variant: label, colorRequest: !!item.colorRequest, desiredColor: item.desiredColor || "", qty: item.qty, unitPrice: unitPrice, lineTotal: unitPrice * item.qty };
       }),
+      subtotal: window.PrintlabCart.subtotal(),
     };
   }
 
@@ -125,6 +127,15 @@
         successEl.hidden = true;
         fallbackEl.hidden = false;
       }
+      resultEl.scrollIntoView({ behavior: "smooth", block: "start" });
+    }).catch(function () {
+      // Даже при неожиданном сбое JS показываем покупателю резервный текст заказа.
+      if (window.PrintlabAnalytics) window.PrintlabAnalytics.trackGoal("order_send_failed");
+      layoutEl.hidden = true;
+      resultEl.hidden = false;
+      summaryEl.textContent = buildOrderText(data);
+      successEl.hidden = true;
+      fallbackEl.hidden = false;
       resultEl.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   });
