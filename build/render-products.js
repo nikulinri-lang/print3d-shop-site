@@ -355,6 +355,20 @@ function productPage(p, allProducts) {
   <div class="product-detail-grid">
     <div class="product-gallery">
       ${productArt(p, "gallery")}
+      <div class="product-purchase-panel">
+        <div class="product-purchase-label"><span class="product-purchase-dot"></span> Оформление заказа</div>
+        <div class="qty-stepper" aria-label="Количество">
+          <button type="button" class="qty-btn" id="qtyMinus" aria-label="Уменьшить количество">−</button>
+          <input type="text" id="qtyValue" class="qty-value" value="1" inputmode="numeric" aria-label="Количество">
+          <button type="button" class="qty-btn" id="qtyPlus" aria-label="Увеличить количество">+</button>
+        </div>
+        <div class="product-actions">
+          <button type="button" class="btn btn-primary" id="addToCartBtn">В корзину <span aria-hidden="true">↗</span></button>
+          <button type="button" class="btn btn-ghost" id="buyNowBtn">Купить сейчас</button>
+          <button type="button" class="btn btn-ghost product-other-color-btn" id="orderOtherColorBtn">Заказать в другом цвете <span aria-hidden="true">✳</span></button>
+        </div>
+        <p class="product-purchase-note">Безопасное оформление · Подтвердим заказ перед оплатой</p>
+      </div>
     </div>
     <div class="product-info">
       <span class="kicker">${(p.categories || [])[0] || ""}</span>
@@ -364,16 +378,6 @@ function productPage(p, allProducts) {
       <div class="product-price mono" id="productPrice">${p.price.toLocaleString("ru-RU")} ₽</div>
       ${availability}
       ${variantsBlock}
-      <div class="qty-stepper" aria-label="Количество">
-        <button type="button" class="qty-btn" id="qtyMinus" aria-label="Уменьшить количество">−</button>
-        <input type="text" id="qtyValue" class="qty-value" value="1" inputmode="numeric" aria-label="Количество">
-        <button type="button" class="qty-btn" id="qtyPlus" aria-label="Увеличить количество">+</button>
-      </div>
-      <div class="product-actions">
-        <button type="button" class="btn btn-primary" id="addToCartBtn">В корзину</button>
-        <button type="button" class="btn btn-ghost" id="buyNowBtn">Купить сейчас</button>
-        <button type="button" class="btn btn-ghost" id="orderOtherColorBtn">Заказать в другом цвете</button>
-      </div>
       <div class="product-trust-row">
         <span><b class="trust-index mono">01</b> Изготовление: ${LEAD_TIME}</span>
         <span><b class="trust-index mono">02</b> Доставка по России</span>
