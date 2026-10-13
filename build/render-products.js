@@ -363,7 +363,6 @@ function productPage(p, allProducts) {
       <p class="product-shortdesc">${p.shortDesc}</p>
       <div class="product-price mono" id="productPrice">${p.price.toLocaleString("ru-RU")} ₽</div>
       ${availability}
-      ${descriptionSectionsHTML(p)}
       ${variantsBlock}
       <div class="qty-stepper" aria-label="Количество">
         <button type="button" class="qty-btn" id="qtyMinus" aria-label="Уменьшить количество">−</button>
@@ -383,6 +382,7 @@ function productPage(p, allProducts) {
         <span><b class="trust-index mono">05</b> <a href="/delivery#vozvrat">Возврат и обмен</a></span>
       </div>
       <a href="${TELEGRAM_BOT_URL}" class="product-telegram-link" target="_blank" rel="noopener">Есть вопрос? Написать в Telegram →</a>
+      ${descriptionSectionsHTML(p)}
     </div>
   </div>
   </div>
