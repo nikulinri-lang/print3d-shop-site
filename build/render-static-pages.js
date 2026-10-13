@@ -87,7 +87,7 @@ function aboutPage() {
 function deliveryPage() {
   const body = `<section class="custom-hero delivery-custom-hero"><div class="container"><div class="custom-hero-grid">
     <div class="custom-hero-copy"><span class="kicker">02 / Доставка и оплата</span><h1>От печати —<br><span>до ваших рук.</span></h1>
-    <p class="lede">Сначала согласуем заказ, затем изготовим, после чего вы выбираете удобный способ получения. Никаких сложных схем — всё по шагам.</p>
+    <p class="lede">Сначала согласуем заказ и стоимость, затем изготовим и передадим вам. Оплата — при получении, без предоплаты за товар.</p>
     <div class="custom-hero-actions"><a href="#delivery-process" class="btn btn-primary">Как это работает →</a><a href="${TELEGRAM_BOT_URL}" class="btn btn-ghost" target="_blank" rel="noopener">Уточнить условия</a></div>
     <div class="custom-trust-row"><span><b>01</b> заказ</span><span><b>02</b> печать</span><span><b>03</b> получение</span></div></div>
     <div class="custom-hero-visual delivery-hero-visual"><div class="custom-visual-orbit orbit-a"></div><div class="custom-visual-orbit orbit-b"></div><div class="custom-visual-core delivery-visual-core"><span>01 → 03</span><small>ORDER / DELIVERY</small></div><div class="custom-visual-label label-a">PAYMENT</div><div class="custom-visual-label label-b">PRINT</div><div class="custom-visual-label label-c">DELIVERY</div></div>
@@ -96,15 +96,15 @@ function deliveryPage() {
 <section class="section custom-process-section" id="delivery-process"><div class="container"><div class="section-head"><span class="kicker">03 / Как это работает</span><h2>Просто и <span>по шагам</span></h2><p>Вы не оплачиваете заказ вслепую: сначала подтверждаем состав, стоимость и срок.</p></div>
 <div class="custom-process-grid delivery-process-grid">
   <article class="custom-process-card"><span>01</span><h3>Оформляем заказ</h3><p>Вы выбираете товар или присылаете идею для изготовления. Уточняем количество, цвет и другие детали.</p></article>
-  <article class="custom-process-card"><span>02</span><h3>Подтверждаем оплату</h3><p>После согласования заказа менеджер сообщает итоговую стоимость и удобный способ оплаты.</p></article>
+  <article class="custom-process-card"><span>02</span><h3>Согласуем заказ</h3><p>Менеджер подтверждает состав заказа, итоговую стоимость и способ получения. Оплачиваете при получении.</p></article>
   <article class="custom-process-card"><span>03</span><h3>Печатаем</h3><p>Изготавливаем заказ. Ориентировочный срок — ${LEAD_TIME}, если отдельно не согласован другой срок.</p></article>
   <article class="custom-process-card custom-process-card--accent"><span>04</span><h3>Получаете</h3><p>Самовывоз в ${CITY_PREP} или отправка по России согласованным способом.</p></article>
 </div></div></section>
 
 <section class="section"><div class="container"><div class="custom-order-heading"><span class="kicker">04 / Получение</span><h2>Два способа <span>забрать заказ</span></h2></div>
 <div class="delivery-premium-grid">
-  <article class="delivery-premium-card"><div class="delivery-premium-number">01</div><div><span class="kicker">БРЯНСК</span><h3>Самовывоз</h3><p>Готовый заказ можно забрать в ${CITY_PREP}. Точку и время встречи согласуем в Telegram после изготовления.</p></div><div class="delivery-premium-meta"><span>ПОЛУЧЕНИЕ</span><strong>ЛИЧНО</strong></div></article>
-  <article class="delivery-premium-card"><div class="delivery-premium-number">02</div><div><span class="kicker">РОССИЯ</span><h3>Доставка</h3><p>Отправляем транспортной компанией или через Авито Доставку. Стоимость зависит от размера, веса и города.</p></div><div class="delivery-premium-meta"><span>МАРШРУТ</span><strong>ПО РОССИИ</strong></div></article>
+  <article class="delivery-premium-card"><div class="delivery-premium-number">01</div><div><span class="kicker">БРЯНСК</span><h3>Самовывоз</h3><p>Готовый заказ можно забрать в ${CITY_PREP}. Точку и время встречи согласуем в Telegram после изготовления. Оплата — при получении.</p></div><div class="delivery-premium-meta"><span>ПОЛУЧЕНИЕ</span><strong>ЛИЧНО</strong></div></article>
+  <article class="delivery-premium-card"><div class="delivery-premium-number">02</div><div><span class="kicker">РОССИЯ</span><h3>Доставка</h3><p>Отправляем транспортной компанией или через Авито Доставку. Оплата — при получении заказа. Стоимость доставки зависит от размера, веса и города.</p></div><div class="delivery-premium-meta"><span>МАРШРУТ</span><strong>ПО РОССИИ</strong></div></article>
 </div></div></section>
 
 <section class="section" id="vozvrat"><div class="container"><div class="custom-order-heading"><span class="kicker">05 / Условия</span><h2>Возврат и <span>обмен</span></h2></div>
@@ -174,7 +174,7 @@ function cartPage() {
           <span class="mono" id="cartSubtotal">0 ₽</span>
         </div>
         <p class="form-hint">Стоимость доставки по России уточняем в Telegram при оформлении — зависит от размера и веса изделий.</p>
-        <p class="form-hint">💳 Оплата после подтверждения заказа менеджером.</p>
+        <p class="form-hint">✓ Оплата при получении заказа.</p>
         <a href="/checkout" class="btn btn-primary btn-block">Оформить заказ</a>
       </aside>
     </div>
@@ -256,7 +256,7 @@ function checkoutPage() {
       <div class="order-success" id="checkoutSuccess" hidden>
         <div class="order-success-icon">✅</div>
         <h3>Спасибо за заказ!</h3>
-        <p>Наш менеджер свяжется с вами в ближайшее время для подтверждения и оплаты.</p>
+        <p>Наш менеджер свяжется с вами в ближайшее время, чтобы подтвердить заказ и согласовать получение. Оплата — при получении.</p>
         <div class="custom-order-actions">
           <a href="${TELEGRAM_BOT_URL}" class="btn btn-primary" target="_blank" rel="noopener">Написать в Telegram</a>
           <a href="/catalog/" class="btn btn-ghost">Продолжить покупки</a>
@@ -278,7 +278,7 @@ function checkoutPage() {
 
   return renderLayout({
     title: "Оформление заказа — 3Д Вещь",
-    description: "Оформление заказа 3Д Вещь: самовывоз в Брянске или доставка по России, оплата после подтверждения менеджером.",
+    description: "Оформление заказа 3Д Вещь: самовывоз в Брянске или доставка по России. Оплата при получении заказа.",
     canonical: "/checkout",
     activeNav: "/checkout",
     bodyContent: body,
@@ -311,7 +311,7 @@ function offerPage() {
       <p>Заказ оформляется через корзину на сайте или форму кастомного заказа. После оформления с Заказчиком связывается менеджер в Telegram (${TELEGRAM_HANDLE}) для подтверждения деталей, сроков и стоимости.</p>
 
       <h2>4. Цена и оплата</h2>
-      <p>Стоимость изделия указывается на сайте либо согласуется индивидуально для кастомных заказов. Оплата производится после подтверждения заказа менеджером — при самовывозе в ${CITY_PREP} или по согласованному способу при доставке. Онлайн-оплата на сайте не предусмотрена.</p>
+      <p>Стоимость изделия указывается на сайте либо согласуется индивидуально для кастомных заказов. Оплата производится при получении заказа. Способ получения и порядок расчёта согласуются с менеджером до изготовления. Онлайн-оплата на сайте не предусмотрена.</p>
 
       <h2>5. Получение</h2>
       <p>Самовывоз — в ${CITY_PREP}, точка и время согласовываются в Telegram. Доставка по России — способом, согласованным с Заказчиком при оформлении.</p>
