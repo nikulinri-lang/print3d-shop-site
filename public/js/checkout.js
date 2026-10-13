@@ -122,6 +122,8 @@
       if (result.ok) {
         successEl.hidden = false;
         fallbackEl.hidden = true;
+        // Очищаем корзину только после подтверждённой отправки.
+        window.PrintlabCart.clear();
       } else {
         summaryEl.textContent = buildOrderText(data);
         successEl.hidden = true;
