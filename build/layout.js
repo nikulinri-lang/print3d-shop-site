@@ -24,7 +24,7 @@ const ORGANIZATION_SCHEMA = {
 // собственного billing-хэша — единственный способ инвалидировать кэш
 // у уже заходивших посетителей — вручную бампать эту версию при правке
 // tokens/base/components.css или любого /js/*.js.
-const ASSET_V = 45;
+const ASSET_V = 46
 
 function metrikaSnippet() {
   if (!YANDEX_METRIKA_ID) return "";
@@ -120,6 +120,7 @@ ${extraHead}
     </div>
   </div>
 </header>
+<div class="payment-receipt-strip" role="note"><span aria-hidden="true">✓</span><strong>Оплата при получении</strong><span class="payment-receipt-detail">Без предоплаты за товар</span><a href="/delivery">Условия доставки →</a></div>
 
 <main>
 ${bodyContent}
@@ -131,6 +132,7 @@ ${bodyContent}
       <div class="logo"><span class="logo-mark">◆</span> 3Д Вещь</div>
       <div class="footer-meta">© 2026 3Д Вещь · Самовывоз: ${CITY}<!-- TODO: добавить точный адрес самовывоза после уточнения у владельца --></div>
       <div class="footer-meta"><a href="${TELEGRAM_BOT_URL}" target="_blank" rel="noopener">${TELEGRAM_HANDLE}</a></div>
+      <div class="footer-meta footer-payment-note">✓ Оплата при получении</div>
       <!-- TODO: добавить реквизиты (ИП/самозанятость) после оформления -->
     </div>
     <ul class="footer-links">
