@@ -49,11 +49,13 @@ function productCard(p, opts = {}) {
     ? ` data-categories="${(p.categories || []).join("|")}" data-featured="${p.featured ? 1 : 0}" data-price="${p.price}" data-colors="${(p.colors || []).map((c) => c.hex).join("|")}" data-index="${opts.index}" data-search="${escAttr(searchText(p))}"`
     : "";
   const itemClass = opts.withFilterData ? "product-card catalog-item" : "product-card";
-  return `<a href="/catalog/${p.slug}" class="${itemClass}"${dataAttrs}>
-        ${productArt(p)}
+  return `<article class="${itemClass}"${dataAttrs}>
+        <a href="/catalog/${p.slug}" class="product-card-image-link" aria-label="Открыть товар: ${escAttr(p.title)}">
+          ${productArt(p)}
+        </a>
         ${badgesHTML(p)}
         <div class="product-card-body">
-          <div class="product-card-title">${p.title}</div>
+          <a href="/catalog/${p.slug}" class="product-card-title-link"><div class="product-card-title">${p.title}</div></a>
           <div class="product-card-desc">${p.shortDesc}</div>
           <div class="product-card-bottom">
             <div class="product-card-price mono">${fmtPrice(p.price)}</div>
@@ -62,7 +64,7 @@ function productCard(p, opts = {}) {
             </button>
           </div>
         </div>
-      </a>`;
+      </article>`;
 }
 
 
