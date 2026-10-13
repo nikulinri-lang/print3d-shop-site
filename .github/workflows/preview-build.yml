@@ -17,6 +17,8 @@ on:
 
 permissions:
   contents: read
+  pages: write
+  id-token: write
 
 jobs:
   build-preview:
@@ -40,10 +42,50 @@ jobs:
       - name: Build static site
         run: npm run build
 
-      - name: Upload preview build (does not deploy)
+      - name: Upload preview build artifact
         uses: actions/upload-artifact@v4
         with:
           name: premium-homepage-preview
           path: dist/
           if-no-files-found: error
           retention-days: 7
+
+      - name: Adapt paths for GitHub Pages project URL
+        if: github.event_name == 'push'
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const path = require('path');
+          const root = path.resolve('dist');
+          const prefix = '/print3d-shop-site/';
+          function walk(dir) {
+            for (const item of fs.readdirSync(dir, { withFileTypes: true })) {
+              const file = path.join(dir, item.name);
+              if (item.isDirectory()) walk(file);
+              else if (/\\.(html|css|js|json|webmanifest|xml|svg)$/i.test(item.name)) {
+                let data = fs.readFileSync(file, 'utf8');
+                data = data.replace(/(["'(=:\\s])\\/(?!\\/|print3d-shop-site\\/)/g, '$1' + prefix);
+                fs.writeFileSync(file, data);
+              }
+            }
+          }
+          walk(root);
+          fs.writeFileSync(path.join(root, '.nojekyll'), '');
+          NODE
+
+      - name: Configure GitHub Pages
+        if: github.event_name == 'push'
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload GitHub Pages artifact
+        if: github.event_name == 'push'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - name: Deploy mobile preview only
+        if: github.event_name == 'push'
+        id: deployment
+        uses: actions/deploy-pages@v4
