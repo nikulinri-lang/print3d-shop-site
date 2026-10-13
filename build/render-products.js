@@ -382,9 +382,9 @@ function productPage(p, allProducts) {
       ${variantsBlock}
       ${descriptionSectionsHTML(p)}
       <div class="product-trust-row" aria-label="Условия заказа">
-        <div class="product-trust-item"><span class="product-trust-icon" aria-hidden="true">↗</span><div><strong>Изготовление и доставка</strong><p>Срок изготовления: ${LEAD_TIME}. Доставляем по России.</p></div></div>
-        <div class="product-trust-item"><span class="product-trust-icon" aria-hidden="true">✓</span><div><strong>Оплата</strong><p>После подтверждения заказа менеджером.</p></div></div>
-        <div class="product-trust-item"><span class="product-trust-icon" aria-hidden="true">↺</span><div><strong><a href="/delivery#vozvrat">Возврат и обмен</a></strong><p>Условия покупки — в отдельном разделе.</p></div></div>
+        <span><b class="trust-index mono">↗</b> Изготовление: ${LEAD_TIME}. Доставка по России.</span>
+        <span><b class="trust-index mono">✓</b> Оплата после подтверждения заказа менеджером.</span>
+        <span><b class="trust-index mono">↺</b> <a href="/delivery#vozvrat">Возврат и обмен</a></span>
       </div>
       <a href="${TELEGRAM_BOT_URL}" class="product-telegram-link" target="_blank" rel="noopener">Есть вопрос? Написать в Telegram →</a>
     </div>
