@@ -3,7 +3,7 @@
  *   BOT_TOKEN, OWNER_CHAT_ID, OPENAI_API_KEY
  * Не хранить секреты в Git.
  */
-const ALLOWED_ORIGIN = "https://3-d-shop.ru";
+const ALLOWED_ORIGIN = "https://3dvesh.ru";
 const CATALOG_URL = "https://3-d-shop.ru/products-autumn.json";
 const DEFAULT_MODEL = "gpt-5.6-luna";
 
@@ -29,8 +29,16 @@ async function getProducts(){
   const d=await r.json(); if(!Array.isArray(d)) throw new Error("catalog must be an array"); return d.map(normalizeProduct);
 }
 function formatOrderMessage(d){
-  const lines=["🛒 Новый заказ","","👤 ФИО: "+esc(d.name),`📞 Телефон: ${esc(d.phone||d.contact)}`,`📍 Город: ${esc(d.city)}`,"📦 Товары:",
-    ...(Array.isArray(d.items)?d.items:[]).map(i=>`  — ${esc(i.title||i.slug)}${i.variant?` (${esc(i.variant)})`:""} × ${esc(i.qty||1)}`)];
+  const lines=["🛒 Новый заказ с сайта 3Д Вещь","","👤 Имя: "+esc(d.name),"📞 Контакт: "+esc(d.phone||d.contact)];
+  if(d.method) lines.push("📦 Получение: "+esc(d.method));
+  else if(d.city) lines.push("📍 Город: "+esc(d.city));
+  if(d.address) lines.push("🏠 Адрес: "+esc(d.address));
+  lines.push("🛍 Товары:",
+    ...(Array.isArray(d.items)?d.items:[]).map(i=>{
+      const colorRequest=i.colorRequest?("заказ в другом цвете"+(i.desiredColor?"; желаемый цвет: "+esc(i.desiredColor):"")):"";
+      const variant=[i.variant?esc(i.variant):"",colorRequest].filter(Boolean).join("; ");
+      return "  — "+esc(i.title||i.slug)+(variant?" ("+variant+")":"")+" × "+esc(i.qty||1);
+    }));
   if(d.comment) lines.push("💬 Комментарий: "+esc(d.comment));
   lines.push("🕐 "+new Date().toISOString()); return lines.join("\n");
 }
