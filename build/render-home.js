@@ -329,7 +329,7 @@ function homePage() {
       <span class="premium-home-feature-index">01 / 3Д ВЕЩЬ</span>
     </a>
   </div>
-</section>`;
+</section>
 
 ${trustStatsSection()}
 
