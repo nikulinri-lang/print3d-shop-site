@@ -248,7 +248,7 @@ function checkoutPage() {
           <span>Товары</span>
           <span class="mono" id="checkoutSubtotal">0 ₽</span>
         </div>
-        <p class="form-hint">💳 Оплата после подтверждения заказа менеджером.</p>
+        <p class="form-hint">✓ Оплата при получении заказа.</p>
       </aside>
     </div>
 
