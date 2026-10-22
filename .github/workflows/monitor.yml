@@ -88,7 +88,7 @@ jobs:
             exit 1
           fi
           if [ "$HEALTHY" = "false" ]; then
-            TEXT="🚨 3Д Вещь: обнаружен сбой сайта или каталога%0A$DETAILS"
+            TEXT="$(printf '🚨 3Д Вещь: обнаружен сбой сайта или каталога\\n%s' "$DETAILS")"
           else
             TEXT="✅ 3Д Вещь: сайт и каталог снова работают."
           fi
