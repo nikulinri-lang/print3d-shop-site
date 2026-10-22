@@ -56,6 +56,12 @@ async function sendTelegramMessage(env,text){
   const r=await fetch(`https://api.telegram.org/bot${env.BOT_TOKEN}/sendMessage`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:env.OWNER_CHAT_ID,text})});
   if(!r.ok) throw new Error("Telegram API "+r.status+": "+await r.text());
 }
+async function notifyWorkerError(env,where,error){
+  if(!env.BOT_TOKEN||!env.OWNER_CHAT_ID) return;
+  const detail=String(error&&error.message||error||"unknown error").replace(/\s+/g," ").slice(0,900);
+  const message=["🚨 3Д Вещь — ошибка сайта","","Компонент: "+where,"Время UTC: "+new Date().toISOString(),"Ошибка: "+detail,"","Проверьте чат и каталог: https://3dvesh.ru"].join("\\n");
+  try{await sendTelegramMessage(env,message)}catch(e){console.error("Telegram error alert failed:",String(e))}
+}
 function chatLogMessage(d,role,text){
   const prefix=role==="user"?"👤 Клиент":"🧑‍💼 Консультант 3Д Вещь";
   return [d.isNew&&role==="user"?"💬 Новый диалог с консультантом 3Д Вещь":"",`🌐 ${d.page||"сайт"}`,d.product?`📦 ${esc(d.product)}`:"",prefix+": "+esc(text),`🆔 ${esc(d.sessionId)}`].filter(Boolean).join("\n");
@@ -75,7 +81,7 @@ export default {
   if(request.method==="OPTIONS") return new Response(null,{headers:corsHeaders()});
   const url=new URL(request.url);
   if(request.method==="GET"&&url.pathname==="/products"){
-    try{return json({ok:true,products:await getProducts(),source:CATALOG_URL})}catch(e){return json({ok:false,error:String(e)},502)}
+    try{return json({ok:true,products:await getProducts(),source:CATALOG_URL})}catch(e){await notifyWorkerError(env,"каталог /products",e);return json({ok:false,error:String(e)},502)}
   }
   if(request.method!=="POST") return json({ok:false,error:"method not allowed"},405);
   let d; try{d=await request.json()}catch{return json({ok:false,error:"invalid json"},400)}
