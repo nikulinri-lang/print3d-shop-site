@@ -1,0 +1,96 @@
+name: Monitor 3D Vesh
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+concurrency:
+  group: monitor-3dvesh
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Check site and Worker catalog
+        id: check
+        shell: bash
+        run: |
+          set +e
+          SITE_CODE=$(curl -L -sS --max-time 15 -o /tmp/site.html -w '%{http_code}' https://3dvesh.ru/)
+          SITE_RC=$?
+          PRODUCTS_CODE=$(curl -sS --max-time 15 -o /tmp/products.json -w '%{http_code}' https://printlab-order-notifier.printlab3d.workers.dev/products)
+          PRODUCTS_RC=$?
+          PRODUCTS_OK=$(python3 - <<'PY'
+          import json
+          try:
+              d=json.load(open('/tmp/products.json'))
+              print('true' if d.get('ok') is True and isinstance(d.get('products'), list) else 'false')
+          except Exception:
+              print('false')
+          PY
+          )
+          if [ "$SITE_RC" -eq 0 ] && [ "$SITE_CODE" = "200" ] && [ "$PRODUCTS_RC" -eq 0 ] && [ "$PRODUCTS_CODE" = "200" ] && [ "$PRODUCTS_OK" = "true" ]; then
+            echo "healthy=true" >> "$GITHUB_OUTPUT"
+            echo "Site and catalog are healthy."
+          else
+            echo "healthy=false" >> "$GITHUB_OUTPUT"
+            {
+              echo "details<<EOF"
+              echo "Сайт https://3dvesh.ru/: HTTP=${SITE_CODE:-curl_error} (curl rc $SITE_RC)"
+              echo "Worker /products: HTTP=${PRODUCTS_CODE:-curl_error} (curl rc $PRODUCTS_RC), JSON ok=$PRODUCTS_OK"
+              if [ -f /tmp/products.json ]; then head -c 700 /tmp/products.json; echo; fi
+              echo "EOF"
+            } >> "$GITHUB_OUTPUT"
+            echo "Health check failed."
+          fi
+
+      - name: Detect previous monitor state
+        id: previous
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          CURRENT_RUN: ${{ github.run_id }}
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.request
+          repo=os.environ['REPO']
+          current=os.environ['CURRENT_RUN']
+          req=urllib.request.Request(
+              f'https://api.github.com/repos/{repo}/actions/workflows/monitor.yml/runs?per_page=10',
+              headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json'})
+          try:
+              with urllib.request.urlopen(req, timeout=10) as r: data=json.load(r)
+              runs=[x for x in data.get('workflow_runs',[]) if str(x.get('id')) != current and x.get('status') == 'completed']
+              prev=runs[0] if runs else None
+              state='failure' if prev and prev.get('conclusion') == 'failure' else 'success'
+          except Exception:
+              state='unknown'
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f: f.write('state='+state+'\n')
+          PY
+
+      - name: Send Telegram alert on failure or recovery
+        if: always() && steps.check.outputs.healthy != '' && (steps.check.outputs.healthy == 'false' && steps.previous.outputs.state != 'failure' || steps.check.outputs.healthy == 'true' && steps.previous.outputs.state == 'failure')
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          HEALTHY: ${{ steps.check.outputs.healthy }}
+          DETAILS: ${{ steps.check.outputs.details }}
+        run: |
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
+            echo "::error::Add TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID in GitHub repository Actions secrets."
+            exit 1
+          fi
+          if [ "$HEALTHY" = "false" ]; then
+            TEXT="🚨 3Д Вещь: обнаружен сбой сайта или каталога%0A$DETAILS"
+          else
+            TEXT="✅ 3Д Вещь: сайт и каталог снова работают."
+          fi
+          curl -sS --fail --max-time 15 -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            -d "chat_id=${TELEGRAM_CHAT_ID}" --data-urlencode "text=$TEXT"
