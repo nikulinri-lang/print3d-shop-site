@@ -101,6 +101,6 @@ export default {
     if(!d.name||!d.contact) return json({ok:false,error:"missing name/contact"},400);
     const text=d.kind==="custom"?formatCustomMessage(d):formatOrderMessage(d);
     await sendTelegramMessage(env,text); return json({ok:true});
-  }catch(e){return json({ok:false,error:String(e)},502)}
+  }catch(e){await notifyWorkerError(env,d.kind==="chat"?"AI-чат":"обработка заявки",e);return json({ok:false,error:String(e)},502)}
  }
 };
