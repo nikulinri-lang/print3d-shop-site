@@ -4,7 +4,7 @@
  * Не хранить секреты в Git.
  */
 const ALLOWED_ORIGIN = "https://3dvesh.ru";
-const CATALOG_URL = "https://3-d-shop.ru/products-autumn.json";
+const CATALOG_URL = "https://3dvesh.ru/products-autumn.json";
 const DEFAULT_MODEL = "gpt-4.1-mini";
 
 function corsHeaders() {
