@@ -5,7 +5,7 @@
  */
 const ALLOWED_ORIGIN = "https://3dvesh.ru";
 const CATALOG_URL = "https://3-d-shop.ru/products-autumn.json";
-const DEFAULT_MODEL = "gpt-5.6-luna";
+const DEFAULT_MODEL = "gpt-4.1-mini";
 
 function corsHeaders() {
   return {
