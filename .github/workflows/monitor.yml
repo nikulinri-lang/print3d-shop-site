@@ -76,18 +76,21 @@ jobs:
           PY
 
       - name: Send Telegram alert on failure or recovery
-        if: always() && steps.check.outputs.healthy != '' && (steps.check.outputs.healthy == 'false' && steps.previous.outputs.state != 'failure' || steps.check.outputs.healthy == 'true' && steps.previous.outputs.state == 'failure')
+        if: always() && steps.check.outputs.healthy != '' && (github.event_name == 'workflow_dispatch' || steps.check.outputs.healthy == 'false' && steps.previous.outputs.state != 'failure' || steps.check.outputs.healthy == 'true' && steps.previous.outputs.state == 'failure')
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           HEALTHY: ${{ steps.check.outputs.healthy }}
+          EVENT_NAME: ${{ github.event_name }}
           DETAILS: ${{ steps.check.outputs.details }}
         run: |
           if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
             echo "::error::Add TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID in GitHub repository Actions secrets."
             exit 1
           fi
-          if [ "$HEALTHY" = "false" ]; then
+          if [ "$EVENT_NAME" = "workflow_dispatch" ] && [ "$HEALTHY" = "true" ]; then
+            TEXT="🧪 Тест мониторинга 3Д Вещь: Telegram-оповещения работают. Сайт и каталог доступны."
+          elif [ "$HEALTHY" = "false" ]; then
             TEXT="$(printf '🚨 3Д Вещь: обнаружен сбой сайта или каталога\\n%s' "$DETAILS")"
           else
             TEXT="✅ 3Д Вещь: сайт и каталог снова работают."
