@@ -82,13 +82,13 @@ export default {
   if(!d) return json({ok:false,error:"empty body"},400);
   try{
     if(d.kind==="chat"){
-      if(!env.OPENAI_API_KEY||!env.BOT_TOKEN||!env.OWNER_CHAT_ID) return json({ok:false,error:"chat backend is not configured"},503);
+      if(!env.OPENAI_API_KEY) return json({ok:false,error:"AI chat is not configured"},503);
       const catalog=await getProducts();
-      if(d.userMessage) await sendTelegramMessage(env,chatLogMessage(d,"user",d.userMessage));
+      if(d.userMessage&&env.BOT_TOKEN&&env.OWNER_CHAT_ID){try{await sendTelegramMessage(env,chatLogMessage(d,"user",d.userMessage));}catch(e){console.error("Telegram chat-log (user) failed:",String(e));}}
       const result=await askOpenAI(env,{history:Array.isArray(d.history)?d.history:[],catalog,page:d.page,customer:d.customer});
-      if(result.reply) await sendTelegramMessage(env,chatLogMessage(d,"assistant",result.reply));
+      if(result.reply&&env.BOT_TOKEN&&env.OWNER_CHAT_ID){try{await sendTelegramMessage(env,chatLogMessage(d,"assistant",result.reply));}catch(e){console.error("Telegram chat-log (assistant) failed:",String(e));}}
       if(result.order_ready&&result.order?.name&&result.order?.city&&result.order?.phone){
-        await sendTelegramMessage(env,formatOrderMessage({...result.order,items:result.order.items||[]}));
+        if(env.BOT_TOKEN&&env.OWNER_CHAT_ID){try{await sendTelegramMessage(env,formatOrderMessage({...result.order,items:result.order.items||[]}));}catch(e){console.error("Telegram ready-order notification failed:",String(e));}}
       }
       return json({ok:true,reply:result.reply||"Подскажите, что хотите напечатать?",order_ready:Boolean(result.order_ready),order:result.order||{}});
     }
