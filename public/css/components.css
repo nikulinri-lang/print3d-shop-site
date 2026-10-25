@@ -3918,3 +3918,21 @@ body.site-page .product-card-image-link:focus-visible {
   outline-offset: -3px;
   border-radius: 8px;
 }
+
+
+/* ===== Оплата при получении: единый аргумент доверия ===== */
+.payment-receipt-strip {
+  display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:9px;
+  padding:9px 16px; background:rgba(217,107,62,.11); border-bottom:1px solid rgba(217,107,62,.24);
+  color:var(--color-text); font-size:12px; line-height:1.4;
+}
+.payment-receipt-strip > span:first-child { color:var(--color-accent-1); font-weight:700; }
+.payment-receipt-strip strong { font-weight:700; }
+.payment-receipt-detail { color:var(--color-text-muted); }
+.payment-receipt-strip a { color:var(--color-accent-1); text-decoration:underline; text-underline-offset:3px; }
+.footer-payment-note { color:var(--color-accent-1); }
+.product-card-payment { display:flex; align-items:center; gap:6px; margin-top:10px; color:var(--color-accent-1); font-size:11px; font-weight:600; }
+.product-card-payment::before { content:'✓'; font-size:13px; }
+.product-payment-note { display:flex; align-items:center; gap:8px; margin:14px 0 0; padding:11px 13px; border:1px solid rgba(217,107,62,.28); border-radius:var(--radius-sm); background:rgba(217,107,62,.07); font-size:12px; line-height:1.5; }
+.product-payment-note strong { color:var(--color-accent-1); }
+@media(max-width:560px) { .payment-receipt-strip { gap:5px 7px; padding:8px 10px; font-size:11px; } .payment-receipt-detail { display:none; } .product-card-payment { font-size:10px; } }

@@ -63,6 +63,7 @@ function productCard(p, opts = {}) {
               <span class="add-label">В корзину</span>
             </button>
           </div>
+          <div class="product-card-payment">Оплата при получении</div>
         </div>
       </article>`;
 }
@@ -369,7 +370,7 @@ function productPage(p, allProducts) {
           <button type="button" class="btn btn-ghost" id="buyNowBtn">Купить сейчас</button>
           <button type="button" class="btn btn-ghost product-other-color-btn" id="orderOtherColorBtn">Заказать в другом цвете <span aria-hidden="true">✳</span></button>
         </div>
-        <p class="product-purchase-note">Безопасное оформление · Подтвердим заказ перед оплатой</p>
+        <p class="product-purchase-note">Безопасное оформление · Оплата при получении</p>
       </div>
     </div>
     <div class="product-info">
@@ -378,12 +379,13 @@ function productPage(p, allProducts) {
       ${badgesHTML(p)}
       <p class="product-shortdesc">${p.shortDesc}</p>
       <div class="product-price mono" id="productPrice">${p.price.toLocaleString("ru-RU")} ₽</div>
+      <div class="product-payment-note"><span aria-hidden="true">✓</span><span><strong>Оплата при получении</strong><br>Без предоплаты за товар</span></div>
       ${availability}
       ${variantsBlock}
       ${descriptionSectionsHTML(p)}
       <div class="product-trust-row" aria-label="Условия заказа">
         <span><b class="trust-index mono">↗</b> Изготовление: ${LEAD_TIME}. Доставка по России.</span>
-        <span><b class="trust-index mono">✓</b> Оплата после подтверждения заказа менеджером.</span>
+        <span><b class="trust-index mono">✓</b> Оплата при получении заказа.</span>
         <span><b class="trust-index mono">↺</b> <a href="/delivery#vozvrat">Возврат и обмен</a></span>
       </div>
       <a href="${TELEGRAM_BOT_URL}" class="product-telegram-link" target="_blank" rel="noopener">Есть вопрос? Написать в Telegram →</a>
