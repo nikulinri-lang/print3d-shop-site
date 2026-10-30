@@ -31,7 +31,8 @@ function render(distDir, { products, blogPosts }) {
     ...products
       .filter((p) => !["3d-lamp", "3d-lamp-1650"].includes(p.slug))
       .map((p) => ({ loc: `/catalog/${p.slug}`, lastmod: buildDate })),
-    ...blogPosts.map((p) => ({ loc: `/blog/${p.slug}`, lastmod: new Date(p.date).toISOString().slice(0, 10) })),
+    // Blog canonicals and internal links use trailing slashes; keep sitemap identical.
+    ...blogPosts.map((p) => ({ loc: `/blog/${p.slug}/`, lastmod: new Date(p.date).toISOString().slice(0, 10) })),
   ];
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
