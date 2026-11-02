@@ -140,35 +140,6 @@
   z-index: 0;
 }
 
-/* Hero: фото вместо 3D-сцены (вариант 2) */
-.hero-visual--photo { overflow: hidden; background: #0b0b0e; }
-.hero-photo {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 28% 45%;
-  transform-origin: 30% 50%;
-  animation: heroPhotoDrift 22s ease-in-out infinite alternate;
-  will-change: transform;
-}
-.hero-photo-shade {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 50% 42%, rgba(11,11,14,0.18) 0%, rgba(11,11,14,0.6) 75%),
-    linear-gradient(180deg, rgba(11,11,14,0.45) 0%, rgba(11,11,14,0.08) 42%, rgba(11,11,14,0.8) 100%);
-  pointer-events: none;
-}
-@keyframes heroPhotoDrift {
-  from { transform: scale(1.0) translate3d(0, 0, 0); }
-  to   { transform: scale(1.08) translate3d(-1.5%, -1%, 0); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .hero-photo { animation: none; transform: none; }
-}
-
 #hero-canvas {
   width: 100%;
   height: 100%;

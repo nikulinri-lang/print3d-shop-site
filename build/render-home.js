@@ -308,9 +308,8 @@ function homePage() {
   const posts = loadPosts();
 
   const body = `<section class="hero">
-  <div class="hero-visual hero-visual--photo">
-    <img class="hero-photo" src="/images/lamp-wave-night.jpeg" alt="Светильник «Волна» из 3D-печати в вечернем интерьере" width="900" height="1200" fetchpriority="high" decoding="async">
-    <div class="hero-photo-shade" aria-hidden="true"></div>
+  <div class="hero-visual">
+    <canvas id="hero-canvas" aria-hidden="true"></canvas>
   </div>
   <div class="container hero-content">
     <span class="kicker">Магазин 3D-печатных товаров</span>
@@ -378,6 +377,7 @@ ${blogPreviewSection(posts)}
 ${faqSection()}`;
 
   const extraScripts = `<script type="application/ld+json">${JSON.stringify(faqSchema())}</script>
+<script type="module" src="/js/three-hero.js?v=5"></script>
 <script defer src="/js/hero-text-reveal.js?v=3"></script>
 <script defer src="/js/product-tilt.js?v=2"></script>`;
 
