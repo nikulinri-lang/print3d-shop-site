@@ -7,6 +7,9 @@ const ROOT = path.resolve(__dirname, "..");
 const BLOG_DIR = path.join(ROOT, "content", "blog");
 const WORDS_PER_MINUTE = 200;
 const BLOG_COVERS = {
+  "3d-model-po-foto-kak-eto-rabotaet": "/images/blog-3d-model-po-foto.png",
+  "3d-paneli-na-stenu-dekor": "/images/blog-3d-paneli.png",
+  "3d-ruchka-ili-3d-printer-v-chem-raznica": "/images/blog-3d-ruchka-vs-printer.png",
   "kompas-3d-dlya-3d-pechati": "/images/IMG_8372.png",
   "3d-printer-kak-rabotaet": "/images/IMG_8373.png",
   "mnogocvetnaya-pechat": "/images/blog/mnogocvetnaya-pechat.svg",
